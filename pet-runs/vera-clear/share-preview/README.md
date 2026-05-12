@@ -1,6 +1,6 @@
 # Vera Clear Preview Package
 
-절대 고장 나지 않는 랩탑으로 당신의 일을 대신 처리해 주는 AI 동료.
+An AI teammate with an indestructible laptop, ready to handle your work for you.
 
 Open `index.html` in a browser to see every pet state animated.
 
