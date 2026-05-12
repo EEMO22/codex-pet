@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "run_dir": "C:\\Projects\\dives\\.codex\\pet-runs\\scopey-anime",
+  "spritesheet": "C:\\Projects\\dives\\.codex\\pet-runs\\scopey-anime\\final\\spritesheet.webp",
+  "validation": "C:\\Projects\\dives\\.codex\\pet-runs\\scopey-anime\\final\\validation.json",
+  "contact_sheet": "C:\\Projects\\dives\\.codex\\pet-runs\\scopey-anime\\qa\\contact-sheet.png",
+  "review": "C:\\Projects\\dives\\.codex\\pet-runs\\scopey-anime\\qa\\review.json",
+  "videos": null,
+  "package": "C:\\Projects\\dives\\.codex\\pets\\scopey"
+}

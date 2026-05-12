@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vera Clear Pet Preview</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #f4f2ee; color: #202124; }
+    header { padding: 28px 28px 18px; background: #ffffff; border-bottom: 1px solid #dedbd3; }
+    h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.1; }
+    header p { margin: 0; max-width: 840px; color: #5a5751; line-height: 1.5; }
+    main { padding: 24px 28px 40px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+    .card { background: #fff; border: 1px solid #dedbd3; border-radius: 8px; padding: 16px; box-shadow: 0 10px 24px rgba(20, 20, 20, .06); }
+    .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+    h2 { margin: 0; font-size: 18px; }
+    code { color: #66615a; background: #f1efe9; border: 1px solid #e1ded6; border-radius: 4px; padding: 2px 6px; }
+    .card p { margin: 0 0 12px; color: #5a5751; line-height: 1.45; }
+    .preview-row { display: grid; grid-template-columns: minmax(0, 1fr) 132px; gap: 14px; align-items: start; }
+    .caption { font-size: 12px; color: #6b675f; margin-bottom: 6px; }
+    img { display: block; image-rendering: pixelated; background: #f8f8f6; border: 1px solid #e1ded6; border-radius: 6px; }
+    .zoom { width: 100%; max-width: 384px; height: auto; }
+    .actual { width: 113px; height: 122px; }
+    .assets { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .assets a { color: #1f4f82; text-decoration: none; background: #fff; border: 1px solid #dedbd3; border-radius: 6px; padding: 8px 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vera Clear Pet Preview</h1>
+    <p>절대 고장 나지 않는 랩탑으로 당신의 일을 대신 처리해 주는 AI 동료. Zoom preview는 공유/검수용 확대판이고, Actual app size는 Codex overlay에 가까운 113 x 122px 크기입니다.</p>
+  </header>
+  <main>
+    <section class="grid">
+      
+      <article class="card" id="idle">
+        <div class="card-head">
+          <h2>Idle</h2>
+          <code>idle</code>
+        </div>
+        <p>기본 대기 루프</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/idle.gif" alt="idle zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/idle.gif" alt="idle actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="running">
+        <div class="card-head">
+          <h2>Running / Working</h2>
+          <code>running</code>
+        </div>
+        <p>작업 실행 중/Thinking</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/running.gif" alt="running zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/running.gif" alt="running actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="review">
+        <div class="card-head">
+          <h2>Review / Ready</h2>
+          <code>review</code>
+        </div>
+        <p>완료 결과가 아직 읽히지 않은 Ready 상태</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/review.gif" alt="review zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/review.gif" alt="review actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="waiting">
+        <div class="card-head">
+          <h2>Waiting / Needs Input</h2>
+          <code>waiting</code>
+        </div>
+        <p>사용자 입력 대기/Needs input 알림</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/waiting.gif" alt="waiting zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/waiting.gif" alt="waiting actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="failed">
+        <div class="card-head">
+          <h2>Failed / Blocked</h2>
+          <code>failed</code>
+        </div>
+        <p>노트북 폭발, 검댕 얼굴, 폭탄머리, 짜증 눈, 남은 바닥판 내려침</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/failed.gif" alt="failed zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/failed.gif" alt="failed actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="jumping">
+        <div class="card-head">
+          <h2>Jumping / Hover</h2>
+          <code>jumping</code>
+        </div>
+        <p>펫에 포인터가 올라갔을 때의 hover/transient 동작</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/jumping.gif" alt="jumping zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/jumping.gif" alt="jumping actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="waving">
+        <div class="card-head">
+          <h2>Waving</h2>
+          <code>waving</code>
+        </div>
+        <p>현재 앱에서는 거의 예비 row에 가까움</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/waving.gif" alt="waving zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/waving.gif" alt="waving actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="running-right">
+        <div class="card-head">
+          <h2>Running Right</h2>
+          <code>running-right</code>
+        </div>
+        <p>펫을 오른쪽으로 드래그할 때</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/running-right.gif" alt="running-right zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/running-right.gif" alt="running-right actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+      <article class="card" id="running-left">
+        <div class="card-head">
+          <h2>Running Left</h2>
+          <code>running-left</code>
+        </div>
+        <p>펫을 왼쪽으로 드래그할 때</p>
+        <div class="preview-row">
+          <div>
+            <div class="caption">Zoom preview</div>
+            <img class="zoom" src="gifs/zoom/running-left.gif" alt="running-left zoom animated preview">
+          </div>
+          <div>
+            <div class="caption">Actual app size</div>
+            <img class="actual" src="gifs/actual/running-left.gif" alt="running-left actual-size animated preview">
+          </div>
+        </div>
+      </article>
+    
+    </section>
+    <nav class="assets" aria-label="assets">
+      <a href="assets/contact-sheet.png">Contact Sheet</a>
+      <a href="assets/spritesheet.webp">Spritesheet</a>
+      <a href="assets/pet.json">pet.json</a>
+      <a href="preview-manifest.json">Preview Manifest</a>
+    </nav>
+  </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "source": "C:\\Users\\powers\\.codex\\generated_images\\019e147d-e2c8-7643-80cd-2a270a479b58\\ig_0a630a3ea343a70b016a013eaa36808191a422555ea5e8d112.png",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "raw_foreground_bbox": [
+    235,
+    122,
+    1031,
+    1070,
+    796,
+    948
+  ],
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-candidate-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-candidate-actual-113x122.png",
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-candidate-comparison.png",
+  "cell_bbox": [
+    32,
+    28,
+    160,
+    180,
+    128,
+    152
+  ],
+  "actual_bbox": [
+    19,
+    16,
+    94,
+    106,
+    75,
+    90
+  ],
+  "scale_into_cell": 0.16080402010050251
+}

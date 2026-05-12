@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "run_dir": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear",
+  "spritesheet": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\final\\spritesheet.webp",
+  "validation": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\final\\validation.json",
+  "contact_sheet": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\qa\\contact-sheet.png",
+  "review": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\qa\\review.json",
+  "videos": null,
+  "package": "C:\\Projects\\codex-pet\\pets\\vera-clear"
+}

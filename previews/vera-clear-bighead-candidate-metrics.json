@@ -1,0 +1,44 @@
+{
+  "source": "C:\\Users\\powers\\.codex\\generated_images\\019e147d-e2c8-7643-80cd-2a270a479b58\\ig_0a630a3ea343a70b016a013c29a2008191a17e69fbc3f53d46.png",
+  "raw_size": [
+    1205,
+    1305
+  ],
+  "raw_foreground_bbox": [
+    248,
+    87,
+    952,
+    1238,
+    704,
+    1151
+  ],
+  "green_pixel_fraction": 0.6042352267849478,
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-bighead-candidate-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-bighead-candidate-actual-113x122.png",
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-bighead-candidate-comparison.png",
+  "candidate_cell_bbox": [
+    41,
+    14,
+    151,
+    194,
+    110,
+    180
+  ],
+  "candidate_actual_bbox": [
+    24,
+    8,
+    89,
+    114,
+    65,
+    106
+  ],
+  "previous_actual_bbox": [
+    21,
+    8,
+    92,
+    114,
+    71,
+    106
+  ],
+  "scale_into_cell": 0.15638575152041703
+}

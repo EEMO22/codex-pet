@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "chroma_key": {
+    "hex": "#00FF00",
+    "rgb": [
+      0,
+      255,
+      0
+    ],
+    "threshold": 90.0
+  },
+  "rows": [
+    {
+      "state": "idle",
+      "frames": [
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\00.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\01.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\02.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\03.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\04.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\idle\\05.png"
+      ],
+      "method": "components"
+    },
+    {
+      "state": "running-right",
+      "frames": [
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\00.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\01.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\02.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\03.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\04.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\05.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\06.png",
+        "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\frames-check-repaired-running-right\\running-right\\07.png"
+      ],
+      "method": "components"
+    }
+  ]
+}

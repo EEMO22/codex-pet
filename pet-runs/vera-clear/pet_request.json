@@ -1,0 +1,207 @@
+{
+  "pet_id": "vera-clear",
+  "display_name": "Vera Clear",
+  "description": "절대 고장 나지 않는 랩탑으로 당신의 일을 대신 처리해 주는 AI 동료.",
+  "created_at": "2026-05-11T02:05:17.853193+00:00",
+  "atlas": {
+    "columns": 8,
+    "rows": 9,
+    "cell_width": 192,
+    "cell_height": 208,
+    "width": 1536,
+    "height": 1872
+  },
+  "rows": [
+    {
+      "state": "idle",
+      "row": 0,
+      "frames": 6,
+      "purpose": "quiet baseline idle: breathing, blinking, and tiny head/body motion."
+    },
+    {
+      "state": "running-right",
+      "row": 1,
+      "frames": 8,
+      "purpose": "rightward pointing travel pose with hair flowing left."
+    },
+    {
+      "state": "running-left",
+      "row": 2,
+      "frames": 8,
+      "purpose": "leftward pointing travel pose with hair flowing right."
+    },
+    {
+      "state": "waving",
+      "row": 3,
+      "frames": 4,
+      "purpose": "hand-to-mouth kiss gesture with forward blown kiss and wink."
+    },
+    {
+      "state": "jumping",
+      "row": 4,
+      "frames": 5,
+      "purpose": "cute self-conscious hair-flick pose beside the ear/back hair."
+    },
+    {
+      "state": "failed",
+      "row": 5,
+      "frames": 8,
+      "purpose": "failed reaction where the laptop explodes near the face, the lid flies off, only the base plate remains, soot covers the face, hair becomes frizzed, the shirt burns away into a damaged inner layer, surprised eyes turn annoyed, and a raised fist slams the remaining laptop base."
+    },
+    {
+      "state": "waiting",
+      "row": 6,
+      "frames": 6,
+      "purpose": "bored waiting at laptop with chin resting on one hand."
+    },
+    {
+      "state": "running",
+      "row": 7,
+      "frames": 6,
+      "purpose": "active laptop-working loop."
+    },
+    {
+      "state": "review",
+      "row": 8,
+      "frames": 6,
+      "purpose": "serious arms-crossed review at laptop with head tilt."
+    }
+  ],
+  "layout_guides": [
+    {
+      "state": "idle",
+      "path": "references\\layout-guides\\idle.png",
+      "width": 1152,
+      "height": 208,
+      "frames": 6,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "running-right",
+      "path": "references\\layout-guides\\running-right.png",
+      "width": 1536,
+      "height": 208,
+      "frames": 8,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "running-left",
+      "path": "references\\layout-guides\\running-left.png",
+      "width": 1536,
+      "height": 208,
+      "frames": 8,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "waving",
+      "path": "references\\layout-guides\\waving.png",
+      "width": 768,
+      "height": 208,
+      "frames": 4,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "jumping",
+      "path": "references\\layout-guides\\jumping.png",
+      "width": 960,
+      "height": 208,
+      "frames": 5,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "failed",
+      "path": "references\\layout-guides\\failed.png",
+      "width": 1536,
+      "height": 208,
+      "frames": 8,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "waiting",
+      "path": "references\\layout-guides\\waiting.png",
+      "width": 1152,
+      "height": 208,
+      "frames": 6,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "running",
+      "path": "references\\layout-guides\\running.png",
+      "width": 1152,
+      "height": 208,
+      "frames": 6,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    },
+    {
+      "state": "review",
+      "path": "references\\layout-guides\\review.png",
+      "width": 1152,
+      "height": 208,
+      "frames": 6,
+      "cell_width": 192,
+      "cell_height": 208,
+      "safe_margin_x": 18,
+      "safe_margin_y": 16,
+      "usage": "layout guide input only; do not copy visible guide lines into generated sprite strips"
+    }
+  ],
+  "references": [],
+  "chroma_key": {
+    "hex": "#00FF00",
+    "rgb": [
+      0,
+      255,
+      0
+    ],
+    "name": "user-selected",
+    "selection": "manual"
+  },
+  "pet_notes": "Adult anime-style female chibi bust-only Codex pet named Vera Clear. Modern female AI assistant with black rounded bob hair, a large readable head, slim compact upper body, no glasses, no headband, no badge, no earrings, and no asymmetric accessories. Clear warm gray-brown eyes with thick eyelids, tiny readable mouth, slightly longer soft oval face, side-swept black bob, broad simple hair highlights, and a deep V-neck fitted short-sleeve white shirt simplified for tiny sprite scale. Dark lower torso hint only, no visible legs. Small hands near the lower edge. Laptop appears only in waiting, running, and review rows; every other row must have no laptop. When laptop appears, it must be dark charcoal or black and the lid must show one very large centered high-contrast light OpenAI knot logo matching the supplied openai.svg shape, simplified but recognizable, not tiny. Adult and tasteful; no nudity, no lingerie, no see-through fabric, no sexual pose, no exaggerated cleavage.",
+  "style_notes": "Codex digital pet sprite style optimized for the real app render at about 113 x 122 CSS pixels. Use thick dark 1-2 px outlines, high-contrast readable eyes and mouth, large head with small slim torso, simple flat colors, limited palette, and no tiny body details that shimmer or disappear. In the 192 x 208 source cell, target a visible character bbox about 120-130 px wide and 170-180 px tall; keep the face and laptop logo large enough to survive the final app scale. Avoid polished anime key art, painterly rendering, soft gradients, glossy lighting, texture, micro-accessories, loose effects, shadows, text, UI, scenery, and high-detail anti-aliased edges.",
+  "character_lock": "Preserve the first approved base's slightly longer soft oval face, warm gray-brown eyes, tiny friendly smile, side-swept black bob, and broad simple hair highlights. Keep the eyebrow-to-crown hair volume low; do not puff up the top hair. Preserve the larger readable face area and expression. Keep the head-to-body ratio large while preserving a short fitted torso down to just below the start of the waist, small hands, and a slight inward waist taper. Do not show hips, legs, feet, a long torso, oversized arms, or a body-heavy silhouette.",
+  "house_style": "Codex digital pet sprite style: pixel-art-adjacent low-resolution mascot sprite, compact chibi proportions, chunky whole-body silhouette, thick dark 1-2 px outline, visible stepped/pixel edges, limited palette, flat cel shading with at most one small highlight and one shadow step, simple readable face, tiny limbs, and no detail that disappears at 192x208. Avoid polished illustration, painterly rendering, anime key art, 3D render, vector app-icon polish, glossy lighting, soft gradients, realistic fur or material texture, anti-aliased high-detail edges, and complex tiny accessories.",
+  "primary_generation_skill": "$imagegen",
+  "canonical_identity_reference": {
+    "path": "references\\canonical-base.png",
+    "source_job": "base",
+    "sha256": "11a602bdff23a127613af99567346940325c5b90e78bb3d0dc7b2f9067af2083",
+    "metadata": {
+      "width": 1205,
+      "height": 1305,
+      "mode": "RGB",
+      "format": "PNG"
+    }
+  }
+}

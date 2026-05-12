@@ -1,0 +1,174 @@
+{
+  "pet": "vera-clear",
+  "source_run": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear",
+  "actual_size_px": [
+    113,
+    122
+  ],
+  "source_cell_px": [
+    192,
+    208
+  ],
+  "zoom_size_px": [
+    384,
+    416
+  ],
+  "states": [
+    {
+      "state": "idle",
+      "label": "Idle",
+      "note": "기본 대기 루프",
+      "frame_count": 6,
+      "durations_ms": [
+        1680,
+        660,
+        660,
+        840,
+        840,
+        1920
+      ],
+      "actual_gif": "gifs/actual/idle.gif",
+      "zoom_gif": "gifs/zoom/idle.gif",
+      "transparent_gif": "gifs/transparent/idle.gif"
+    },
+    {
+      "state": "running",
+      "label": "Running / Working",
+      "note": "작업 실행 중/Thinking",
+      "frame_count": 6,
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "actual_gif": "gifs/actual/running.gif",
+      "zoom_gif": "gifs/zoom/running.gif",
+      "transparent_gif": "gifs/transparent/running.gif"
+    },
+    {
+      "state": "review",
+      "label": "Review / Ready",
+      "note": "완료 결과가 아직 읽히지 않은 Ready 상태",
+      "frame_count": 6,
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        280
+      ],
+      "actual_gif": "gifs/actual/review.gif",
+      "zoom_gif": "gifs/zoom/review.gif",
+      "transparent_gif": "gifs/transparent/review.gif"
+    },
+    {
+      "state": "waiting",
+      "label": "Waiting / Needs Input",
+      "note": "사용자 입력 대기/Needs input 알림",
+      "frame_count": 6,
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        260
+      ],
+      "actual_gif": "gifs/actual/waiting.gif",
+      "zoom_gif": "gifs/zoom/waiting.gif",
+      "transparent_gif": "gifs/transparent/waiting.gif"
+    },
+    {
+      "state": "failed",
+      "label": "Failed / Blocked",
+      "note": "노트북 폭발, 검댕 얼굴, 폭탄머리, 짜증 눈, 남은 바닥판 내려침",
+      "frame_count": 8,
+      "durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        240
+      ],
+      "actual_gif": "gifs/actual/failed.gif",
+      "zoom_gif": "gifs/zoom/failed.gif",
+      "transparent_gif": "gifs/transparent/failed.gif"
+    },
+    {
+      "state": "jumping",
+      "label": "Jumping / Hover",
+      "note": "펫에 포인터가 올라갔을 때의 hover/transient 동작",
+      "frame_count": 5,
+      "durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        280
+      ],
+      "actual_gif": "gifs/actual/jumping.gif",
+      "zoom_gif": "gifs/zoom/jumping.gif",
+      "transparent_gif": "gifs/transparent/jumping.gif"
+    },
+    {
+      "state": "waving",
+      "label": "Waving",
+      "note": "현재 앱에서는 거의 예비 row에 가까움",
+      "frame_count": 4,
+      "durations_ms": [
+        140,
+        140,
+        140,
+        280
+      ],
+      "actual_gif": "gifs/actual/waving.gif",
+      "zoom_gif": "gifs/zoom/waving.gif",
+      "transparent_gif": "gifs/transparent/waving.gif"
+    },
+    {
+      "state": "running-right",
+      "label": "Running Right",
+      "note": "펫을 오른쪽으로 드래그할 때",
+      "frame_count": 8,
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "actual_gif": "gifs/actual/running-right.gif",
+      "zoom_gif": "gifs/zoom/running-right.gif",
+      "transparent_gif": "gifs/transparent/running-right.gif"
+    },
+    {
+      "state": "running-left",
+      "label": "Running Left",
+      "note": "펫을 왼쪽으로 드래그할 때",
+      "frame_count": 8,
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "actual_gif": "gifs/actual/running-left.gif",
+      "zoom_gif": "gifs/zoom/running-left.gif",
+      "transparent_gif": "gifs/transparent/running-left.gif"
+    }
+  ]
+}

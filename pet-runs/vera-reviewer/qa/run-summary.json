@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "run_dir": "C:\\Projects\\dives\\.codex\\pet-runs\\vera-reviewer",
+  "spritesheet": "C:\\Projects\\dives\\.codex\\pet-runs\\vera-reviewer\\final\\spritesheet.webp",
+  "validation": "C:\\Projects\\dives\\.codex\\pet-runs\\vera-reviewer\\final\\validation.json",
+  "contact_sheet": "C:\\Projects\\dives\\.codex\\pet-runs\\vera-reviewer\\qa\\contact-sheet.png",
+  "review": "C:\\Projects\\dives\\.codex\\pet-runs\\vera-reviewer\\qa\\review.json",
+  "videos": null,
+  "package": "C:\\Projects\\dives\\.codex\\pets\\vera-reviewer"
+}

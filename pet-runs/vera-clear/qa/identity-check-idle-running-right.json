@@ -1,0 +1,196 @@
+{
+  "idle": [
+    {
+      "frame": 0,
+      "exists": true,
+      "bbox": [
+        33,
+        5,
+        158,
+        203,
+        125,
+        198
+      ],
+      "nonzero_alpha": 18925
+    },
+    {
+      "frame": 1,
+      "exists": true,
+      "bbox": [
+        33,
+        5,
+        158,
+        203,
+        125,
+        198
+      ],
+      "nonzero_alpha": 18945
+    },
+    {
+      "frame": 2,
+      "exists": true,
+      "bbox": [
+        33,
+        5,
+        158,
+        203,
+        125,
+        198
+      ],
+      "nonzero_alpha": 18936
+    },
+    {
+      "frame": 3,
+      "exists": true,
+      "bbox": [
+        33,
+        5,
+        158,
+        203,
+        125,
+        198
+      ],
+      "nonzero_alpha": 18912
+    },
+    {
+      "frame": 4,
+      "exists": true,
+      "bbox": [
+        34,
+        5,
+        158,
+        203,
+        124,
+        198
+      ],
+      "nonzero_alpha": 18741
+    },
+    {
+      "frame": 5,
+      "exists": true,
+      "bbox": [
+        33,
+        5,
+        158,
+        203,
+        125,
+        198
+      ],
+      "nonzero_alpha": 18925
+    },
+    {
+      "frame": 6,
+      "exists": false
+    },
+    {
+      "frame": 7,
+      "exists": false
+    }
+  ],
+  "running-right": [
+    {
+      "frame": 0,
+      "exists": true,
+      "bbox": [
+        25,
+        5,
+        166,
+        203,
+        141,
+        198
+      ],
+      "nonzero_alpha": 20672
+    },
+    {
+      "frame": 1,
+      "exists": true,
+      "bbox": [
+        24,
+        5,
+        168,
+        203,
+        144,
+        198
+      ],
+      "nonzero_alpha": 21407
+    },
+    {
+      "frame": 2,
+      "exists": true,
+      "bbox": [
+        25,
+        5,
+        167,
+        203,
+        142,
+        198
+      ],
+      "nonzero_alpha": 20489
+    },
+    {
+      "frame": 3,
+      "exists": true,
+      "bbox": [
+        27,
+        5,
+        165,
+        203,
+        138,
+        198
+      ],
+      "nonzero_alpha": 20204
+    },
+    {
+      "frame": 4,
+      "exists": true,
+      "bbox": [
+        26,
+        5,
+        166,
+        203,
+        140,
+        198
+      ],
+      "nonzero_alpha": 20657
+    },
+    {
+      "frame": 5,
+      "exists": true,
+      "bbox": [
+        25,
+        5,
+        166,
+        203,
+        141,
+        198
+      ],
+      "nonzero_alpha": 20459
+    },
+    {
+      "frame": 6,
+      "exists": true,
+      "bbox": [
+        25,
+        5,
+        167,
+        203,
+        142,
+        198
+      ],
+      "nonzero_alpha": 20778
+    },
+    {
+      "frame": 7,
+      "exists": true,
+      "bbox": [
+        25,
+        5,
+        166,
+        203,
+        141,
+        198
+      ],
+      "nonzero_alpha": 20360
+    }
+  ]
+}

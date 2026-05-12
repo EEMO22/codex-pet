@@ -1,0 +1,51 @@
+{
+  "source": "C:\\Users\\powers\\.codex\\generated_images\\019e147d-e2c8-7643-80cd-2a270a479b58\\ig_0a630a3ea343a70b016a014278f81c819188f1dd80ca590fd1.png",
+  "raw_size": [
+    1201,
+    1309
+  ],
+  "raw_foreground_bbox": [
+    220,
+    97,
+    1015,
+    1197,
+    795,
+    1100
+  ],
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-ratio-strict-candidate-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-ratio-strict-candidate-actual-113x122.png",
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-ratio-strict-candidate-comparison.png",
+  "candidate_cell_bbox": [
+    31,
+    14,
+    161,
+    194,
+    130,
+    180
+  ],
+  "candidate_actual_bbox": [
+    18,
+    8,
+    95,
+    114,
+    77,
+    106
+  ],
+  "current_cell_bbox": [
+    34,
+    14,
+    158,
+    194,
+    124,
+    180
+  ],
+  "current_actual_bbox": [
+    20,
+    8,
+    93,
+    114,
+    73,
+    106
+  ],
+  "scale_into_cell": 0.16363636363636364
+}

@@ -1,0 +1,35 @@
+{
+  "base": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\decoded\\base.png",
+  "raw_size": [
+    1086,
+    1448
+  ],
+  "raw_foreground_bbox": [
+    221,
+    182,
+    888,
+    1201,
+    667,
+    1019
+  ],
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-crown-fixed-base-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-crown-fixed-base-actual-113x122.png",
+  "single_preview": "C:\\Projects\\codex-pet\\previews\\vera-clear-crown-fixed-base-single-preview.png",
+  "cell_bbox": [
+    37,
+    14,
+    155,
+    194,
+    118,
+    180
+  ],
+  "actual_bbox": [
+    22,
+    8,
+    91,
+    114,
+    69,
+    106
+  ],
+  "scale_into_cell": 0.17664376840039253
+}

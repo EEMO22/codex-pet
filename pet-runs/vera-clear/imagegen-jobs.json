@@ -1,0 +1,527 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-05-11T02:05:17.867099+00:00",
+  "run_dir": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear",
+  "primary_generation_skill": "$imagegen",
+  "jobs": [
+    {
+      "id": "base",
+      "kind": "base-pet",
+      "status": "complete",
+      "prompt_file": "prompts/base-pet.md",
+      "input_images": [],
+      "output_path": "decoded/base.png",
+      "depends_on": [],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": false,
+      "allow_prompt_only_generation": true,
+      "recording_owner": "parent",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e153a-f137-7e91-93bd-f87806f9f2f1\\ig_0ce8e95aa5f319f5016a0157a3d3d48191b4e1406f69648752.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "11a602bdff23a127613af99567346940325c5b90e78bb3d0dc7b2f9067af2083",
+      "output_sha256": "11a602bdff23a127613af99567346940325c5b90e78bb3d0dc7b2f9067af2083",
+      "completed_at": "2026-05-11T04:42:31.257360+00:00",
+      "metadata": {
+        "width": 1205,
+        "height": 1305,
+        "mode": "RGB",
+        "format": "PNG"
+      },
+      "canonical_reference_path": "references\\canonical-base.png"
+    },
+    {
+      "id": "idle",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/idle.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/idle.png",
+          "role": "layout guide for 6 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/vera-reviewer-motion-reference.png",
+          "role": "vera-reviewer motion reference only; copy row timing and broad pose rhythm, not character identity or blurry detail"
+        },
+        {
+          "path": "references/vera-reviewer-running-left-reference.png",
+          "role": "specific vera-reviewer running-left motion reference; copy leftward gaze progression and hair swept right/opposite travel direction only, not character identity"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/idle.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "Updated from user-provided 2026-05-11 motion orders: laptop only in running/review/waiting; failed has shirt-over-head no laptop.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1559-598e-7061-8cdc-18f228a78bc5\\ig_0303502cee903df3016a015eb591888191b6b3e00afc69aaf2.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "38771d6f1a1df0a2022bdbfecfa48d948e26abf8e425d18b2042c17c78a2e39a",
+      "output_sha256": "38771d6f1a1df0a2022bdbfecfa48d948e26abf8e425d18b2042c17c78a2e39a",
+      "completed_at": "2026-05-11T04:47:54.730056+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "running-right",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/running-right.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/running-right.png",
+          "role": "layout guide for 8 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/running-right.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "repair_attempt": 1,
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\running-right-attempt-1-previous.png",
+          "archived_at": "2026-05-11T03:53:28.976525+00:00"
+        }
+      ],
+      "prompt_revision_note": "Updated from user-provided 2026-05-11 motion orders: laptop only in running/review/waiting; failed has shirt-over-head no laptop.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1559-59f4-73f3-a427-c568195643c8\\ig_0617e8991e63a4d3016a015eb6adf08191b9da8d39b590c239.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "bea38db5ea3368a21c5e2f4bb48865679a5c1c081ec9f3fbc6ade27ade584298",
+      "output_sha256": "bea38db5ea3368a21c5e2f4bb48865679a5c1c081ec9f3fbc6ade27ade584298",
+      "completed_at": "2026-05-11T04:47:54.757804+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "running-left",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/running-left.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/running-left.png",
+          "role": "layout guide for 8 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/running-left.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {
+        "fallback_generation_skill": "$imagegen",
+        "note": "Do not mirror; user requested explicit left-facing pose with left arm pointing left and hair flowing right."
+      },
+      "recording_owner": "parent",
+      "prompt_revision_note": "Updated from user-provided 2026-05-11 motion orders: laptop only in running/review/waiting; failed has shirt-over-head no laptop.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1559-5a60-7002-b378-8ec73aebca05\\ig_00f203484a3e1aca016a015eb436e48191af474990ce693e3c.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "2ed6de1412afbc4b79984e7de9e09f034c13cbfa9c24e93582f9e5ebac5504db",
+      "output_sha256": "2ed6de1412afbc4b79984e7de9e09f034c13cbfa9c24e93582f9e5ebac5504db",
+      "completed_at": "2026-05-11T04:46:28.020687+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "waving",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/waving.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/waving.png",
+          "role": "layout guide for 4 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/waving.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "Updated from user-provided 2026-05-11 motion orders: laptop only in running/review/waiting; failed has shirt-over-head no laptop.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e155b-de33-7873-8d93-324c938bad10\\ig_0c79d2c2825c42ec016a015f5483988191ad5d2aafac05391d.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "e0f921c4014ee2d69451da135039bc172a858d4cd89fe68722351bdf75d35b30",
+      "output_sha256": "e0f921c4014ee2d69451da135039bc172a858d4cd89fe68722351bdf75d35b30",
+      "completed_at": "2026-05-11T04:50:03.384144+00:00",
+      "metadata": {
+        "width": 2087,
+        "height": 753,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "jumping",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/jumping.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/jumping.png",
+          "role": "layout guide for 5 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/jumping.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "2026-05-11 targeted jumping revision: one-side outward hair flick showing off hair texture with slightly smug pretty expression, restore visible dark/black pants-start waistline, shorten torso, preserve head-dominant chibi proportion.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e15ce-cb50-78b0-a1ee-d2a23cd6fe50\\ig_08944a568eeab043016a017eeafaa08191b8cf991d5f1760a1.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "423a4bb8a5b570bf33c877fce8995c804d3be92ae6cafa98d7e20de44b2c0199",
+      "output_sha256": "423a4bb8a5b570bf33c877fce8995c804d3be92ae6cafa98d7e20de44b2c0199",
+      "completed_at": "2026-05-11T07:07:16.315294+00:00",
+      "metadata": {
+        "width": 1880,
+        "height": 837,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "failed",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/failed.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/failed.png",
+          "role": "layout guide for 8 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/openai-logo-reference-on-white.png",
+          "role": "large laptop logo shape reference; use this OpenAI knot shape as a very large high-contrast light logo on the dark laptop lid"
+        },
+        {
+          "path": "decoded/running.png",
+          "role": "approved running row reference for laptop size, laptop angle, character scale, and character-to-laptop placement only"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/failed.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "2026-05-11 targeted failed revision: follow running laptop/character layout, large blast reaches and covers face/hair before soot and bomb hair appear, laptop lid blows off, only plain logo-free base plate remains, T-shirt burns from lower hem upward into charred white base-layer costume, shocked eyes shift to annoyed eyes, fist raise then slam base plate.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1601-2ea9-72c1-ace8-cbe057a0498b\\ig_07d85e922fe5b400016a018bc42af0819184dc90c03ed25916.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "c925811f7b2855eebdd1e8176008f480a78c19f733c5e18d730f6f23da74bcd1",
+      "output_sha256": "c925811f7b2855eebdd1e8176008f480a78c19f733c5e18d730f6f23da74bcd1",
+      "completed_at": "2026-05-11T08:01:48.496265+00:00",
+      "metadata": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "waiting",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/waiting.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/waiting.png",
+          "role": "layout guide for 6 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/openai-logo-reference-on-white.png",
+          "role": "large laptop logo shape reference; use this OpenAI knot shape as a very large high-contrast light logo on the dark laptop lid"
+        },
+        {
+          "path": "decoded/running.png",
+          "role": "approved running row reference for laptop size, laptop angle, character scale, and character-to-laptop placement only"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/waiting.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "Review and waiting must use running row laptop/character placement, scale, and angle.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1591-33a7-7060-be0b-ac295cc19872\\ig_09ecaf32359f1da2016a016dc897888191be192b00cdb7cc3f.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "164b8fb37092715fb5f66a5c4b1fc49cd864e284846b833948c9cb1088058832",
+      "output_sha256": "164b8fb37092715fb5f66a5c4b1fc49cd864e284846b833948c9cb1088058832",
+      "completed_at": "2026-05-11T05:53:39.622123+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "running",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/running.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/running.png",
+          "role": "layout guide for 6 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/openai-logo-reference-on-white.png",
+          "role": "large laptop logo shape reference; use this OpenAI knot shape as a very large high-contrast light logo on the dark laptop lid"
+        },
+        {
+          "path": "decoded/running.png",
+          "role": "approved current running row reference for laptop angle, laptop size, character scale, and character-to-laptop placement only"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/running.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "2026-05-12 targeted running revision: preserve current laptop angle/size and character placement, add oversized work glasses, replace noisy up-down gesture with rapid small keyboard hand motion and steady focused posture.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e195a-d677-7760-8c51-d39a1ed504b5\\ig_0970883b49f2e5e6016a02655345388191aa7e76287d3a203d.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "0f4bcb4b1cd9dfb58975f276989c94eadd90a5888a8eb1d1eca7601cd235ef75",
+      "output_sha256": "0f4bcb4b1cd9dfb58975f276989c94eadd90a5888a8eb1d1eca7601cd235ef75",
+      "completed_at": "2026-05-11T23:33:23.136112+00:00",
+      "metadata": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    },
+    {
+      "id": "review",
+      "kind": "row-strip",
+      "status": "complete",
+      "prompt_file": "prompts/rows/review.md",
+      "input_images": [
+        {
+          "path": "references/layout-guides/review.png",
+          "role": "layout guide for 6 frame slots; use for spacing only, do not copy guide lines"
+        },
+        {
+          "path": "references/openai-logo-reference-on-white.png",
+          "role": "large laptop logo shape reference; use this OpenAI knot shape as a very large high-contrast light logo on the dark laptop lid"
+        },
+        {
+          "path": "decoded/running.png",
+          "role": "approved running row reference for laptop size, laptop angle, character scale, and character-to-laptop placement only"
+        },
+        {
+          "path": "references/canonical-base.png",
+          "role": "canonical identity reference"
+        },
+        {
+          "path": "decoded/base.png",
+          "role": "approved base pet"
+        }
+      ],
+      "output_path": "decoded/review.png",
+      "depends_on": [
+        "base"
+      ],
+      "generation_skill": "$imagegen",
+      "requires_grounded_generation": true,
+      "allow_prompt_only_generation": false,
+      "identity_reference_paths": [
+        "references/canonical-base.png",
+        "decoded/base.png"
+      ],
+      "parallelizable_after": [
+        "base"
+      ],
+      "mirror_policy": {},
+      "recording_owner": "parent",
+      "prompt_revision_note": "Review and waiting must use running row laptop/character placement, scale, and angle.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e1591-3333-7781-b0a2-80a6e96237b9\\ig_0eddf21f16cc88a6016a016cef8fa48191b9a35606bb0b368c.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "e81818adfbe051958415cb682ce22d0af3ea3743448634b9fb4c5baac1ed3240",
+      "output_sha256": "e81818adfbe051958415cb682ce22d0af3ea3743448634b9fb4c5baac1ed3240",
+      "completed_at": "2026-05-11T05:49:21.234480+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
+    }
+  ],
+  "canonical_identity_reference": {
+    "path": "references\\canonical-base.png",
+    "source_job": "base",
+    "sha256": "11a602bdff23a127613af99567346940325c5b90e78bb3d0dc7b2f9067af2083",
+    "metadata": {
+      "width": 1205,
+      "height": 1305,
+      "mode": "RGB",
+      "format": "PNG"
+    }
+  }
+}

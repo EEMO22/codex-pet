@@ -1,0 +1,35 @@
+{
+  "raw_image": "C:\\Projects\\codex-pet\\pet-runs\\vera-clear\\decoded\\base.png",
+  "raw_size": [
+    1205,
+    1306
+  ],
+  "raw_foreground_bbox": [
+    249,
+    122,
+    986,
+    1209,
+    737,
+    1087
+  ],
+  "prepared_cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-base-from-prior-cell-192x208.png",
+  "prepared_visible_bbox": [
+    35,
+    14,
+    157,
+    194,
+    122,
+    180
+  ],
+  "actual_preview": "C:\\Projects\\codex-pet\\previews\\vera-clear-base-from-prior-actual-113x122.png",
+  "actual_visible_bbox": [
+    21,
+    8,
+    92,
+    114,
+    71,
+    106
+  ],
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-base-from-prior-render-comparison.png",
+  "scale_into_cell": 0.1655933762649494
+}

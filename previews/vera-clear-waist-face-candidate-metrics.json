@@ -1,0 +1,37 @@
+{
+  "source": "C:\\Users\\powers\\.codex\\generated_images\\019e147d-e2c8-7643-80cd-2a270a479b58\\ig_0a630a3ea343a70b016a013fc7e2d8819185b3e56ddf6535a1.png",
+  "raw_size": [
+    1203,
+    1307
+  ],
+  "raw_foreground_bbox": [
+    243,
+    120,
+    994,
+    1211,
+    751,
+    1091
+  ],
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-waist-face-candidate-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-waist-face-candidate-actual-113x122.png",
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-waist-face-candidate-comparison.png",
+  "cell_bbox": [
+    34,
+    14,
+    158,
+    194,
+    124,
+    180
+  ],
+  "actual_bbox": [
+    20,
+    8,
+    93,
+    114,
+    73,
+    106
+  ],
+  "scale_into_cell": 0.16498625114573787,
+  "height_target": 180,
+  "max_width_allowed": 158
+}

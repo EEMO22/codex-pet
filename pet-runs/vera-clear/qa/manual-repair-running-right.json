@@ -1,0 +1,11 @@
+{
+  "rows": [
+    {
+      "state": "running-right",
+      "errors": [
+        "Previous running-right row interpreted the motion as a generic side-facing upper-body run. It drifted from Vera Clear's canonical character and did not match the vera-reviewer movement: facing/rightward gaze progression with hair swept opposite the travel direction."
+      ],
+      "warnings": []
+    }
+  ]
+}

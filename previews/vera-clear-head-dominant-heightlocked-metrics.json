@@ -1,0 +1,37 @@
+{
+  "source": "C:\\Users\\powers\\.codex\\generated_images\\019e147d-e2c8-7643-80cd-2a270a479b58\\ig_0a630a3ea343a70b016a013eaa36808191a422555ea5e8d112.png",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "raw_foreground_bbox": [
+    235,
+    122,
+    1031,
+    1070,
+    796,
+    948
+  ],
+  "cell": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-heightlocked-cell-192x208.png",
+  "actual": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-heightlocked-actual-113x122.png",
+  "comparison": "C:\\Projects\\codex-pet\\previews\\vera-clear-head-dominant-heightlocked-comparison.png",
+  "cell_bbox": [
+    20,
+    14,
+    171,
+    194,
+    151,
+    180
+  ],
+  "actual_bbox": [
+    12,
+    8,
+    101,
+    114,
+    89,
+    106
+  ],
+  "scale_into_cell": 0.189873417721519,
+  "height_locked": true,
+  "max_width_allowed": 160
+}
