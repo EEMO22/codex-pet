@@ -1,0 +1,47 @@
+export type Point = { x: number; y: number };
+export type Size = { width: number; height: number };
+export type Rect = { left: number; top: number; right: number; bottom: number };
+export type WorkArea = Electron.Rectangle;
+
+export type OverlayState = {
+  x?: number;
+  y?: number;
+  selectedPetId?: string;
+};
+
+export type PetAnimation = {
+  row: number;
+  frames: number;
+};
+
+export type PetLayout = {
+  columns: number;
+  rows: number;
+  cellWidth: number;
+  cellHeight: number;
+};
+
+export type PetManifest = {
+  id?: string;
+  displayName?: string;
+  description?: string;
+  spritesheetPath?: string;
+  layout?: Partial<PetLayout>;
+  animations?: Record<string, Partial<PetAnimation>>;
+  events?: Record<string, string>;
+};
+
+export type ResolvedPet = {
+  id: string;
+  displayName: string;
+  description: string;
+  spritesheetUrl: string;
+  layout: PetLayout;
+  animations: Record<string, PetAnimation>;
+  events: Record<string, string>;
+};
+
+export type ListedPet = {
+  id: string;
+  displayName: string;
+};
