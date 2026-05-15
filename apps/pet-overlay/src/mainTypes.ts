@@ -6,6 +6,8 @@ export type WorkArea = Electron.Rectangle;
 export type OverlayState = {
   x?: number;
   y?: number;
+  petX?: number;
+  petY?: number;
   selectedPetId?: string;
 };
 
@@ -53,6 +55,7 @@ export type PetValidationIssue = {
 export type PetPackageValidation = {
   petId: string;
   displayName: string;
+  packageDir: string;
   manifestPath: string;
   spritesheetPath?: string;
   manifest: PetManifest | null;
@@ -76,4 +79,20 @@ export type ListedPet = {
   displayName: string;
   valid: boolean;
   issues: PetValidationIssue[];
+};
+
+export type ImportedPetPackage = {
+  pet: ResolvedPet;
+  sourceDir: string;
+  targetDir: string;
+  copied: boolean;
+};
+
+export type OverlayLayout = {
+  petOffset: Point;
+};
+
+export type OverlayFrame = OverlayLayout & {
+  windowPosition: Point;
+  hitboxPosition: Point;
 };

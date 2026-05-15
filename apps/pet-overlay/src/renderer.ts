@@ -28,6 +28,13 @@ type ProximityState = {
   near: boolean;
   distance: number;
 };
+type Point = {
+  x: number;
+  y: number;
+};
+type OverlayLayout = {
+  petOffset: Point;
+};
 type DragState = {
   pointerId: number;
   startX: number;
@@ -58,6 +65,7 @@ type PetOverlayApi = {
   onTyping(callback: () => void): void;
   onMouseActivity(callback: () => void): void;
   onPetNotice(callback: (notice: { message?: string }) => void): void;
+  onOverlayLayout(callback: (layout: OverlayLayout) => void): void;
   getPetData(): Promise<PetData | null>;
   onSettingsData(callback: (settings: AppSettings) => void): void;
   getSettingsData(): Promise<AppSettings>;
@@ -110,8 +118,11 @@ let failedLocked = false;
 let suppressWatchUntilExit = false;
 let currentPetData: PetData | null = null;
 let overlaySettings = defaultSettings;
+let currentPetOffset: Point = { x: 104, y: 88 };
 
 const DRAG_THRESHOLD_PX = 5;
+const BUBBLE_GAP_PX = 12;
+const BUBBLE_MARGIN_PX = 8;
 
 function assertElement<T extends HTMLElement>(element: T | null, id: string): T {
   if (!element) {
@@ -123,6 +134,14 @@ function assertElement<T extends HTMLElement>(element: T | null, id: string): T 
 
 const petButton = assertElement(petElement, 'pet');
 const bubble = assertElement(bubbleElement, 'bubble');
+
+function clamp(value: number, min: number, max: number) {
+  if (max < min) {
+    return min;
+  }
+
+  return Math.min(Math.max(value, min), max);
+}
 
 function setFrame(row: number, frame: number) {
   const x = atlas.columns === 1 ? 0 : (frame / (atlas.columns - 1)) * 100;
@@ -154,7 +173,9 @@ function setState(nextState: string) {
 
 function showBubble(text: string, duration = 900) {
   bubble.textContent = text;
+  positionBubble();
   bubble.classList.add('is-visible');
+  window.requestAnimationFrame(positionBubble);
 
   if (bubbleTimer !== null) {
     clearTimeout(bubbleTimer);
@@ -162,6 +183,56 @@ function showBubble(text: string, duration = 900) {
   bubbleTimer = window.setTimeout(() => {
     bubble.classList.remove('is-visible');
   }, duration);
+}
+
+function applyOverlayLayout(layout: OverlayLayout | null) {
+  if (!layout || !Number.isFinite(layout.petOffset?.x) || !Number.isFinite(layout.petOffset?.y)) {
+    return;
+  }
+
+  currentPetOffset = {
+    x: Math.round(layout.petOffset.x),
+    y: Math.round(layout.petOffset.y)
+  };
+  document.documentElement.style.setProperty('--pet-offset-x', `${currentPetOffset.x}px`);
+  document.documentElement.style.setProperty('--pet-offset-y', `${currentPetOffset.y}px`);
+  positionBubble();
+}
+
+function positionBubble() {
+  if (!bubble.textContent) {
+    return;
+  }
+
+  const petWidth = petButton.offsetWidth;
+  const petHeight = petButton.offsetHeight;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const maxBubbleWidth = Math.max(42, viewportWidth - BUBBLE_MARGIN_PX * 2);
+  bubble.style.maxWidth = `${maxBubbleWidth}px`;
+
+  const bubbleWidth = bubble.offsetWidth;
+  const bubbleHeight = bubble.offsetHeight;
+  const petCenterX = currentPetOffset.x + petWidth / 2;
+  const preferredLeft = petCenterX - bubbleWidth / 2;
+  const left = clamp(preferredLeft, BUBBLE_MARGIN_PX, viewportWidth - BUBBLE_MARGIN_PX - bubbleWidth);
+  let top = currentPetOffset.y - BUBBLE_GAP_PX - bubbleHeight;
+  let isBelow = false;
+
+  if (top < BUBBLE_MARGIN_PX) {
+    top = currentPetOffset.y + petHeight + BUBBLE_GAP_PX;
+    isBelow = true;
+  }
+
+  top = clamp(top, BUBBLE_MARGIN_PX, viewportHeight - BUBBLE_MARGIN_PX - bubbleHeight);
+
+  bubble.style.left = `${Math.round(left)}px`;
+  bubble.style.top = `${Math.round(top)}px`;
+  bubble.style.setProperty(
+    '--bubble-tail-left',
+    `${Math.round(clamp(petCenterX - left, 10, bubbleWidth - 10))}px`
+  );
+  bubble.classList.toggle('is-below', isBelow);
 }
 
 function react() {
@@ -511,6 +582,14 @@ overlayApi.onMouseActivity(() => {
 
 overlayApi.onPetNotice((notice) => {
   showBubble(notice.message || 'pet notice', 1800);
+});
+
+overlayApi.onOverlayLayout((layout) => {
+  applyOverlayLayout(layout);
+});
+
+window.addEventListener('resize', () => {
+  positionBubble();
 });
 
 overlayApi.getPetData().then(applyPetData).catch((error) => {

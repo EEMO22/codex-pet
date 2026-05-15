@@ -1,6 +1,9 @@
 :root {
   --pet-width: 113px;
   --pet-height: 122px;
+  --pet-offset-x: calc((100vw - var(--pet-width)) / 2);
+  --pet-offset-y: calc(100vh - 14px - var(--pet-height));
+  --bubble-tail-left: 50%;
   --bubble-color: rgba(28, 30, 38, 0.9);
   --bubble-border: rgba(255, 255, 255, 0.2);
 }
@@ -25,16 +28,16 @@ body {
 
 .stage {
   position: relative;
-  display: grid;
-  place-items: end center;
   width: 100vw;
   height: 100vh;
-  padding: 10px 10px 14px;
   background: transparent;
   pointer-events: none;
 }
 
 .pet {
+  position: absolute;
+  left: var(--pet-offset-x);
+  top: var(--pet-offset-y);
   width: var(--pet-width);
   height: var(--pet-height);
   padding: 0;
@@ -60,10 +63,9 @@ body {
 
 .bubble {
   position: absolute;
-  bottom: calc(14px + var(--pet-height) + 12px);
-  left: 50%;
+  width: max-content;
   min-width: 42px;
-  max-width: 138px;
+  max-width: min(304px, calc(100vw - 16px));
   min-height: 25px;
   padding: 5px 8px 6px;
   border: 1px solid var(--bubble-border);
@@ -71,10 +73,13 @@ body {
   color: #fff;
   background: var(--bubble-color);
   font-size: 12px;
-  line-height: 1.15;
+  line-height: 1.2;
   text-align: center;
+  overflow-wrap: break-word;
+  white-space: normal;
   opacity: 0;
-  transform: translate(-50%, 4px) scale(0.98);
+  transform: translateY(4px) scale(0.98);
+  transform-origin: 50% 100%;
   transition: opacity 140ms ease, transform 140ms ease;
   pointer-events: none;
 }
@@ -82,7 +87,7 @@ body {
 .bubble::after {
   content: "";
   position: absolute;
-  left: 50%;
+  left: var(--bubble-tail-left);
   bottom: -5px;
   width: 8px;
   height: 8px;
@@ -92,9 +97,22 @@ body {
   transform: translateX(-50%) rotate(45deg);
 }
 
+.bubble.is-below {
+  transform-origin: 50% 0;
+}
+
+.bubble.is-below::after {
+  top: -5px;
+  bottom: auto;
+  border-top: 1px solid var(--bubble-border);
+  border-left: 1px solid var(--bubble-border);
+  border-right: 0;
+  border-bottom: 0;
+}
+
 .bubble.is-visible {
   opacity: 1;
-  transform: translate(-50%, 0) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 @keyframes breathe {

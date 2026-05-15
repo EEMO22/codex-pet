@@ -6,7 +6,7 @@ export const PETS_ROOT = path.resolve(__dirname, '..', '..', '..', 'pets');
 export const USER_DATA_DIR = path.resolve(__dirname, '..', 'tmp', 'user-data');
 export const KEYBOARD_HOOK_SCRIPT = path.resolve(__dirname, '..', 'scripts', 'keyboard-activity-hook.ps1');
 
-export const WINDOW_SIZE: Size = { width: 168, height: 188 };
+export const WINDOW_SIZE: Size = { width: 320, height: 224 };
 export const PET_HITBOX = { width: 113, height: 122, bottom: 14 };
 export const PET_EDGE_BUMPER = 5;
 export const DEFAULT_PET_ID = 'vera-clear';

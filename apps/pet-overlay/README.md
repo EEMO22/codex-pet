@@ -51,6 +51,7 @@ npm run build
 - The transparent margin is click-through; only the pet-sized hitbox is interactive.
 - Right-click the pet to open the menu.
 - Choose a bundled pet from the `Pets` submenu.
+- Use `Import Pet Folder` to copy a Codex-style pet folder into `pets/` and select it.
 - Use `Open Pets Folder` to add or edit pet packages.
 - Use `Reload Current Pet` after editing the current pet's manifest or spritesheet.
 - Use `Validate Pets` to check installed pet packages without leaving the overlay.
@@ -158,6 +159,10 @@ The validator checks that:
 Invalid pets are shown as disabled entries in the right-click `Pets` menu. If the
 saved startup pet is invalid, the app logs the validation errors and falls back
 to the default pet.
+
+`Import Pet Folder` expects a folder containing `pet.json` and the referenced
+spritesheet. The app validates the source first, copies it without overwriting
+existing pet folders, then switches to the imported pet.
 
 ## Current Scope
 

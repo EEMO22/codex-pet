@@ -9,6 +9,7 @@ import {
   PETS_ROOT
 } from './constants';
 import type {
+  ImportedPetPackage,
   ListedPet,
   PetAnimation,
   PetLayout,
@@ -172,8 +173,12 @@ function getSpritesheetUrl(spritesheetPath: string) {
   return spritesheetUrl.toString();
 }
 
-export function validatePetPackage(petId: string): PetPackageValidation {
-  const manifestPath = path.join(PETS_ROOT, petId, 'pet.json');
+function getPetPackageDir(petId: string) {
+  return path.join(PETS_ROOT, petId);
+}
+
+export function validatePetPackageDirectory(petId: string, packageDir: string): PetPackageValidation {
+  const manifestPath = path.join(packageDir, 'pet.json');
   const rawManifest = readJson<unknown>(manifestPath, null);
   const issues: PetValidationIssue[] = [];
 
@@ -182,6 +187,7 @@ export function validatePetPackage(petId: string): PetPackageValidation {
     return {
       petId,
       displayName: petId,
+      packageDir,
       manifestPath,
       manifest: null,
       issues,
@@ -225,12 +231,17 @@ export function validatePetPackage(petId: string): PetPackageValidation {
   return {
     petId,
     displayName,
+    packageDir,
     manifestPath,
     spritesheetPath,
     manifest,
     issues,
     hasErrors: issues.some((issue) => issue.severity === 'error')
   };
+}
+
+export function validatePetPackage(petId: string): PetPackageValidation {
+  return validatePetPackageDirectory(petId, getPetPackageDir(petId));
 }
 
 export function loadPetManifest(petId: string): ResolvedPet {
@@ -252,6 +263,73 @@ export function loadPetManifest(petId: string): ResolvedPet {
     animations,
     events: mergeEventMap(DEFAULT_EVENT_MAP, manifest.events, animations)
   };
+}
+
+export function importPetPackage(sourceDir: string): ImportedPetPackage {
+  const normalizedSourceDir = path.resolve(sourceDir);
+  const sourcePetId = path.basename(normalizedSourceDir);
+  const sourceValidation = validatePetPackageDirectory(sourcePetId, normalizedSourceDir);
+
+  if (sourceValidation.hasErrors || !sourceValidation.manifest) {
+    throw new PetPackageError(sourceValidation);
+  }
+
+  fs.mkdirSync(PETS_ROOT, { recursive: true });
+
+  const preferredId = getPreferredImportedPetId(sourceValidation);
+  const targetPetId = getUniquePetId(preferredId, normalizedSourceDir);
+  const targetDir = getPetPackageDir(targetPetId);
+  const copied = path.resolve(targetDir) !== normalizedSourceDir;
+
+  if (copied) {
+    fs.cpSync(normalizedSourceDir, targetDir, {
+      recursive: true,
+      errorOnExist: true,
+      force: false,
+      filter: (sourcePath) => !isIgnoredImportPath(sourcePath)
+    });
+  }
+
+  const pet = loadPetManifest(targetPetId);
+  return {
+    pet,
+    sourceDir: normalizedSourceDir,
+    targetDir,
+    copied
+  };
+}
+
+function getPreferredImportedPetId(validation: PetPackageValidation) {
+  const manifestId = validation.manifest?.id;
+  return sanitizePetId(isNonEmptyString(manifestId) ? manifestId : path.basename(validation.packageDir));
+}
+
+function sanitizePetId(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'imported-pet';
+}
+
+function getUniquePetId(preferredId: string, sourceDir: string) {
+  const normalizedSourceDir = path.resolve(sourceDir);
+
+  for (let index = 1; index < 1000; index += 1) {
+    const petId = index === 1 ? preferredId : `${preferredId}-${index}`;
+    const targetDir = getPetPackageDir(petId);
+
+    if (!fs.existsSync(targetDir) || path.resolve(targetDir) === normalizedSourceDir) {
+      return petId;
+    }
+  }
+
+  throw new Error(`Could not find an available pet folder name for "${preferredId}".`);
+}
+
+function isIgnoredImportPath(sourcePath: string) {
+  const name = path.basename(sourcePath).toLowerCase();
+  return name === 'thumbs.db' || name === '.ds_store';
 }
 
 export function listPetValidations(): PetPackageValidation[] {

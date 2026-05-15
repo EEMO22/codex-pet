@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, ipcMain, screen, shell } from 'electron';
+import { app, BrowserWindow, Menu, ipcMain, screen, shell, dialog } from 'electron';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -12,21 +12,23 @@ import {
   WINDOW_SIZE
 } from './constants';
 import { startKeyboardActivityHook, stopKeyboardActivityHook } from './keyboardActivityHook';
-import type { AppSettings, Point, ResolvedPet } from './mainTypes';
+import type { AppSettings, OverlayFrame, Point, ResolvedPet } from './mainTypes';
 import {
   formatPetIssues,
+  importPetPackage,
   listAvailablePets,
   listPetValidations,
   loadPetManifest,
   PetPackageError
 } from './petCatalog';
 import {
-  clampToVisibleWorkArea,
-  clampToWorkArea,
+  getDefaultPetHitboxOffset,
   getDragTargetDisplay,
   getPetHitboxRect,
   getRectCenter,
-  isCursorInPetHitbox
+  isCursorInPetHitbox,
+  resolveOverlayFrameForHitbox,
+  resolveOverlayFrameForWindowPosition
 } from './screenGeometry';
 import { runSmokeCheck } from './smokeTest';
 import { readSettings, resetSettings, writeSettings } from './settingsStore';
@@ -39,6 +41,7 @@ let lastMousePoint: Point | null = null;
 let currentPet: ResolvedPet | null = null;
 let isDragging = false;
 let isIgnoringMouseEvents = false;
+let currentPetOffset = getDefaultPetHitboxOffset();
 
 configureUserData(USER_DATA_DIR);
 let settings = readSettings();
@@ -112,23 +115,34 @@ function loadStartupPet() {
   }
 }
 
-function resolveInitialPosition() {
+function resolveInitialFrame() {
   const savedState = readSavedState();
+  if (Number.isFinite(savedState.petX) && Number.isFinite(savedState.petY)) {
+    const hitboxPosition = { x: savedState.petX as number, y: savedState.petY as number };
+    const { workArea } = screen.getDisplayNearestPoint(hitboxPosition);
+    return resolveOverlayFrameForHitbox(hitboxPosition, workArea);
+  }
+
   if (Number.isFinite(savedState.x) && Number.isFinite(savedState.y)) {
-    return clampToVisibleWorkArea({ x: savedState.x, y: savedState.y });
+    const windowPosition = { x: savedState.x as number, y: savedState.y as number };
+    const { workArea } = screen.getDisplayNearestPoint(windowPosition);
+    return resolveOverlayFrameForWindowPosition(windowPosition, workArea);
   }
 
   const { workArea } = screen.getPrimaryDisplay();
-  return clampToVisibleWorkArea({
+  return resolveOverlayFrameForWindowPosition({
     x: workArea.x + workArea.width - WINDOW_SIZE.width - 32,
     y: workArea.y + workArea.height - WINDOW_SIZE.height - 48
-  });
+  }, workArea);
 }
 
 function createOverlayWindow(pet: ResolvedPet) {
+  const initialFrame = resolveInitialFrame();
+  currentPetOffset = initialFrame.petOffset;
+
   const window = new BrowserWindow({
     ...WINDOW_SIZE,
-    ...resolveInitialPosition(),
+    ...initialFrame.windowPosition,
     frame: false,
     transparent: true,
     resizable: false,
@@ -163,6 +177,7 @@ function createOverlayWindow(pet: ResolvedPet) {
 
   window.webContents.once('did-finish-load', () => {
     window.webContents.send('pet:data', pet);
+    sendOverlayLayout();
     sendSettingsData();
 
     if (SMOKE_TEST) {
@@ -171,8 +186,11 @@ function createOverlayWindow(pet: ResolvedPet) {
   });
 
   window.on('moved', () => {
-    const [x, y] = window.getPosition();
-    writeSavedState({ x, y });
+    if (SMOKE_TEST) {
+      return;
+    }
+
+    saveCurrentOverlayState();
   });
 
   window.on('closed', () => {
@@ -193,7 +211,7 @@ function startProximityWatcher() {
 
     const cursor = screen.getCursorScreenPoint();
     const bounds = overlayWindow.getBounds();
-    const center = getRectCenter(getPetHitboxRect({ x: bounds.x, y: bounds.y }));
+    const center = getRectCenter(getPetHitboxRect({ x: bounds.x, y: bounds.y }, currentPetOffset));
     const distance = Math.hypot(cursor.x - center.x, cursor.y - center.y);
 
     if (hasMouseMoved(cursor)) {
@@ -232,7 +250,7 @@ function updateMousePassthrough(cursor: Point, bounds: Electron.Rectangle) {
     return;
   }
 
-  const shouldIgnore = !isDragging && !isCursorInPetHitbox(cursor, bounds);
+  const shouldIgnore = !isDragging && !isCursorInPetHitbox(cursor, bounds, currentPetOffset);
   if (shouldIgnore === isIgnoringMouseEvents) {
     return;
   }
@@ -260,6 +278,10 @@ function showContextMenu() {
       submenu: petItems.length ? petItems : [{ label: 'No pets found', enabled: false }]
     },
     { type: 'separator' },
+    {
+      label: 'Import Pet Folder',
+      click: importPetFolder
+    },
     {
       label: 'Open Pets Folder',
       click: openPetsFolder
@@ -318,12 +340,11 @@ function showContextMenu() {
       label: 'Reset Position',
       click: () => {
         const { workArea } = screen.getPrimaryDisplay();
-        const nextPosition = clampToVisibleWorkArea({
+        const nextFrame = resolveOverlayFrameForWindowPosition({
           x: workArea.x + workArea.width - WINDOW_SIZE.width - 32,
           y: workArea.y + workArea.height - WINDOW_SIZE.height - 48
-        });
-        overlayWindow.setPosition(nextPosition.x, nextPosition.y);
-        writeSavedState(nextPosition);
+        }, workArea);
+        applyOverlayFrame(nextFrame);
       }
     },
     { type: 'separator' },
@@ -340,6 +361,36 @@ async function openPetsFolder() {
   if (errorMessage) {
     console.error(`Could not open pets folder: ${errorMessage}`);
     sendPetNotice('Could not open pets folder.');
+  }
+}
+
+async function importPetFolder() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  const result = await dialog.showOpenDialog(overlayWindow, {
+    title: 'Import Pet Folder',
+    properties: ['openDirectory']
+  });
+
+  if (result.canceled || !result.filePaths[0]) {
+    return;
+  }
+
+  const sourceDir = result.filePaths[0];
+
+  try {
+    const imported = importPetPackage(sourceDir);
+    currentPet = imported.pet;
+    writeSavedState({ selectedPetId: imported.pet.packageId });
+    overlayWindow.webContents.send('pet:data', imported.pet);
+    sendPetNotice(imported.copied
+      ? `Imported ${imported.pet.displayName}.`
+      : `${imported.pet.displayName} already installed.`);
+  } catch (error) {
+    console.error(getPetLoadErrorMessage(path.basename(sourceDir), error));
+    sendPetNotice('Could not import pet folder.');
   }
 }
 
@@ -417,6 +468,53 @@ function sendPetNotice(message: string) {
   }
 
   overlayWindow.webContents.send('pet:notice', { message });
+}
+
+function applyOverlayFrame(frame: OverlayFrame) {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  currentPetOffset = frame.petOffset;
+  overlayWindow.setPosition(frame.windowPosition.x, frame.windowPosition.y);
+  sendOverlayLayout();
+  if (!SMOKE_TEST) {
+    saveCurrentOverlayState();
+  }
+}
+
+function sendOverlayLayout() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  overlayWindow.webContents.send('overlay:layout', { petOffset: currentPetOffset });
+}
+
+function saveCurrentOverlayState() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  const [x, y] = overlayWindow.getPosition();
+  writeSavedState({
+    x,
+    y,
+    petX: x + currentPetOffset.x,
+    petY: y + currentPetOffset.y
+  });
+}
+
+function getCurrentHitboxPosition() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return { x: 0, y: 0 };
+  }
+
+  const [x, y] = overlayWindow.getPosition();
+  return {
+    x: x + currentPetOffset.x,
+    y: y + currentPetOffset.y
+  };
 }
 
 function updateSettings(nextSettings: Partial<AppSettings>, notice?: string) {
@@ -524,17 +622,16 @@ ipcMain.handle('overlay:move-by', (_event, delta: Point) => {
     return;
   }
 
-  const [x, y] = overlayWindow.getPosition();
   const cursor = screen.getCursorScreenPoint();
-  const currentPosition = { x, y };
-  const rawPosition = {
-    x: Math.round(x + delta.x),
-    y: Math.round(y + delta.y)
+  const currentHitboxPosition = getCurrentHitboxPosition();
+  const rawHitboxPosition = {
+    x: Math.round(currentHitboxPosition.x + delta.x),
+    y: Math.round(currentHitboxPosition.y + delta.y)
   };
-  const targetDisplay = getDragTargetDisplay(currentPosition, rawPosition, delta, cursor);
-  const nextPosition = clampToWorkArea(rawPosition, targetDisplay.workArea);
+  const targetDisplay = getDragTargetDisplay(currentHitboxPosition, rawHitboxPosition, delta, cursor);
+  const nextFrame = resolveOverlayFrameForHitbox(rawHitboxPosition, targetDisplay.workArea);
 
-  overlayWindow.setPosition(nextPosition.x, nextPosition.y);
+  applyOverlayFrame(nextFrame);
 });
 
 ipcMain.handle('pet:get-data', () => currentPet);

@@ -30,6 +30,9 @@ contextBridge.exposeInMainWorld('petOverlay', {
   onPetNotice(callback: (notice: unknown) => void) {
     ipcRenderer.on('pet:notice', (_event, notice) => callback(notice));
   },
+  onOverlayLayout(callback: (layout: unknown) => void) {
+    ipcRenderer.on('overlay:layout', (_event, layout) => callback(layout));
+  },
   getPetData() {
     return ipcRenderer.invoke('pet:get-data');
   },

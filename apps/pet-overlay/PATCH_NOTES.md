@@ -1,5 +1,21 @@
 # Patch Notes
 
+## 2026-05-15 - Pet Folder Import
+
+- Added `Import Pet Folder` to the right-click menu.
+- Validates an external pet folder before importing.
+- Copies valid pet folders into `pets/` without overwriting existing folders.
+- Switches to the imported pet after a successful import.
+- Widened the transparent overlay canvas and bubble sizing so import and validation notices can wrap without clipping.
+- Keeps notices visible at the top, left, and right screen edges by repositioning the pet inside the transparent overlay and flipping the bubble below the pet when needed.
+- Extended smoke coverage for the already-installed import path and visible bubble bounds at screen edges.
+
+Validation:
+
+- `npm run check`
+- `npm run validate:pets`
+- `npm run smoke`
+
 ## 2026-05-15 - Settings Window
 
 - Added a dedicated settings window opened from `Settings > Open Settings Window`.
