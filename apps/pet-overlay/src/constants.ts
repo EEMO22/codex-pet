@@ -1,10 +1,18 @@
+import { app } from 'electron';
 import path from 'node:path';
 
 import type { AppSettings, PetAnimation, PetLayout, Size } from './mainTypes';
 
-export const PETS_ROOT = path.resolve(__dirname, '..', '..', '..', 'pets');
 export const USER_DATA_DIR = path.resolve(__dirname, '..', 'tmp', 'user-data');
-export const KEYBOARD_HOOK_SCRIPT = path.resolve(__dirname, '..', 'scripts', 'keyboard-activity-hook.ps1');
+export const BUILT_IN_PETS_ROOT = app.isPackaged
+  ? path.join(process.resourcesPath, 'pets')
+  : path.resolve(__dirname, '..', '..', '..', 'pets');
+export const PETS_ROOT = app.isPackaged
+  ? path.join(app.getPath('userData'), 'pets')
+  : BUILT_IN_PETS_ROOT;
+export const KEYBOARD_HOOK_SCRIPT = app.isPackaged
+  ? path.join(process.resourcesPath, 'scripts', 'keyboard-activity-hook.ps1')
+  : path.resolve(__dirname, '..', 'scripts', 'keyboard-activity-hook.ps1');
 
 export const WINDOW_SIZE: Size = { width: 320, height: 224 };
 export const PET_HITBOX = { width: 113, height: 122, bottom: 14 };
@@ -17,6 +25,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   keyboardActivityEnabled: true,
   mouseProximityEnabled: true,
   alwaysOnTopEnabled: true,
+  launchAtLoginEnabled: false,
   proximityRadius: 160,
   keyboardReviewMs: 1000,
   inactivityWaitingMs: 5000,

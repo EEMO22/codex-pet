@@ -2,6 +2,30 @@
 
 Tiny Electron MVP for running a Codex-style pet as a transparent desktop overlay.
 
+## Install
+
+Download one of the Windows release artifacts:
+
+- `Codex Pet Overlay-0.1.0-x64.exe`: installer for normal use.
+- `Codex Pet Overlay-0.1.0-x64.zip`: zip version for people who do not want to install.
+
+Installer:
+
+1. Run `Codex Pet Overlay-0.1.0-x64.exe`.
+2. Follow the installer.
+3. Launch `Codex Pet Overlay` from the Start menu or desktop shortcut.
+
+Zip:
+
+1. Extract `Codex Pet Overlay-0.1.0-x64.zip` to a folder.
+2. Open the extracted `win-unpacked` folder.
+3. Run `Codex Pet Overlay.exe`.
+
+Do not move only the `.exe` out of the extracted folder. The surrounding files
+are part of the app. The generated artifacts are currently unsigned, so Windows
+SmartScreen or local application control policy may ask for confirmation before
+launching.
+
 ## Run
 
 ```powershell
@@ -30,11 +54,46 @@ The app is authored in TypeScript and compiled to `dist/` before Electron runs:
 npm run build
 ```
 
+## Package
+
+Build an unpacked Windows app for local verification:
+
+```powershell
+npm run package:win
+```
+
+The unpacked executable is written under a timestamped folder:
+
+```text
+apps/pet-overlay/out/unpacked-YYYYMMDD-HHMMSS/win-unpacked/Codex Pet Overlay.exe
+```
+
+Build distributable Windows artifacts:
+
+```powershell
+npm run dist:win
+```
+
+This is configured to emit an NSIS installer and a zip file under a timestamped
+`apps/pet-overlay/out/dist-YYYYMMDD-HHMMSS/` folder. Timestamped output folders
+keep repeated builds from failing when Windows temporarily keeps a previous
+unpacked `app.asar` locked. Packaging uses workspace-local Electron caches under
+`apps/pet-overlay/tmp/` so it does not need to write to the default `AppData`
+Electron cache during local builds.
+
+The generated artifacts are currently unsigned. Depending on local Windows
+application control or SmartScreen policy, a freshly built unpacked executable
+may need an allow/trust action before it can be launched directly.
+
+Bundled pets are packaged from the repo-level `pets/` folder into app resources.
+In packaged builds, imported user pets are stored in Electron `userData/pets`
+instead of the installation directory.
+
 ## Code Layout
 
 - `src/main.ts`: wires the Electron app, overlay window, IPC, menu, and lifecycle.
 - `src/petCatalog.ts`: loads Codex-style pet packages and merges default event mappings.
-- `src/screenGeometry.ts`: clamps the pet hitbox to visible monitor work areas.
+- `src/screenGeometry.ts`: clamps the pet hitbox and overlay frame to visible monitor work areas.
 - `src/stateStore.ts`: reads and writes overlay position and selected pet state.
 - `src/settingsStore.ts`: reads, validates, resets, and writes runtime settings.
 - `src/keyboardActivityHook.ts`: starts and stops the Windows keyboard activity helper.
@@ -59,6 +118,8 @@ npm run build
 - Use `Settings > Open Settings Window` to edit timing and interaction values.
 - Use the pet right-click menu to close it.
 - Run again to restore it at the last saved position.
+- Launching the app again while it is already running brings the existing pet
+  overlay forward instead of creating another pet.
 
 ## Settings
 
@@ -75,6 +136,7 @@ fields. Current settings include:
 - `keyboardActivityEnabled`
 - `mouseProximityEnabled`
 - `alwaysOnTopEnabled`
+- `launchAtLoginEnabled`
 - `proximityRadius`
 - `keyboardReviewMs`
 - `inactivityWaitingMs`
@@ -86,6 +148,10 @@ The settings window edits the same file and applies changes immediately after
 save. `Save` closes the settings window, and `Reset` restores the built-in
 defaults. When always-on-top is disabled, the pet is shown in the taskbar so it
 can be brought forward again.
+
+`Launch at Login` registers the packaged app to start when you sign in to
+Windows. During local development it is saved in settings, but the OS login item
+is not changed.
 
 ## Keyboard Activity
 

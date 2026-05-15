@@ -3,6 +3,7 @@
     keyboardActivityEnabled: boolean;
     mouseProximityEnabled: boolean;
     alwaysOnTopEnabled: boolean;
+    launchAtLoginEnabled: boolean;
     proximityRadius: number;
     keyboardReviewMs: number;
     inactivityWaitingMs: number;
@@ -28,6 +29,7 @@
     keyboardActivityEnabled: document.getElementById('keyboardActivityEnabled') as HTMLInputElement,
     mouseProximityEnabled: document.getElementById('mouseProximityEnabled') as HTMLInputElement,
     alwaysOnTopEnabled: document.getElementById('alwaysOnTopEnabled') as HTMLInputElement,
+    launchAtLoginEnabled: document.getElementById('launchAtLoginEnabled') as HTMLInputElement,
     proximityRadius: document.getElementById('proximityRadius') as HTMLInputElement,
     keyboardReviewMs: document.getElementById('keyboardReviewMs') as HTMLInputElement,
     inactivityWaitingMs: document.getElementById('inactivityWaitingMs') as HTMLInputElement,
@@ -45,6 +47,7 @@
     fields.keyboardActivityEnabled.checked = settings.keyboardActivityEnabled;
     fields.mouseProximityEnabled.checked = settings.mouseProximityEnabled;
     fields.alwaysOnTopEnabled.checked = settings.alwaysOnTopEnabled;
+    fields.launchAtLoginEnabled.checked = settings.launchAtLoginEnabled;
     fields.proximityRadius.value = String(settings.proximityRadius);
     fields.keyboardReviewMs.value = String(settings.keyboardReviewMs);
     fields.inactivityWaitingMs.value = String(settings.inactivityWaitingMs);
@@ -58,6 +61,7 @@
       keyboardActivityEnabled: fields.keyboardActivityEnabled.checked,
       mouseProximityEnabled: fields.mouseProximityEnabled.checked,
       alwaysOnTopEnabled: fields.alwaysOnTopEnabled.checked,
+      launchAtLoginEnabled: fields.launchAtLoginEnabled.checked,
       proximityRadius: Number(fields.proximityRadius.value),
       keyboardReviewMs: Number(fields.keyboardReviewMs.value),
       inactivityWaitingMs: Number(fields.inactivityWaitingMs.value),

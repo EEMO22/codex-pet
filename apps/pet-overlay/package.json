@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "description": "A tiny Electron desktop overlay for Codex-style pets.",
+  "productName": "Codex Pet Overlay",
+  "author": "Codex Pet Contributors",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/copy-static.ps1",
@@ -11,12 +13,54 @@
     "start:scopey": "npm run build && electron . --pet=scopey",
     "start:vera-reviewer": "npm run build && electron . --pet=vera-reviewer",
     "check": "npm run build",
+    "package:win": "npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-win.ps1 -Target dir",
+    "dist:win": "npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-win.ps1 -Target dist",
     "smoke": "npm run build && electron . --smoke-test",
     "validate:pets": "npm run build && electron . --validate-pets"
+  },
+  "build": {
+    "appId": "dev.codex-pet.overlay",
+    "productName": "Codex Pet Overlay",
+    "directories": {
+      "output": "out/dist"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../../pets",
+        "to": "pets",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "scripts/keyboard-activity-hook.ps1",
+        "to": "scripts/keyboard-activity-hook.ps1"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   },
   "devDependencies": {
     "@types/node": "^25.7.0",
     "electron": "^42.0.1",
+    "electron-builder": "^26.8.1",
     "typescript": "^6.0.3"
   }
 }

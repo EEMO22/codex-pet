@@ -33,6 +33,7 @@ export function normalizeSettings(raw: Partial<AppSettings> | null | undefined):
     keyboardActivityEnabled: asBoolean(source.keyboardActivityEnabled, DEFAULT_SETTINGS.keyboardActivityEnabled),
     mouseProximityEnabled: asBoolean(source.mouseProximityEnabled, DEFAULT_SETTINGS.mouseProximityEnabled),
     alwaysOnTopEnabled: asBoolean(source.alwaysOnTopEnabled, DEFAULT_SETTINGS.alwaysOnTopEnabled),
+    launchAtLoginEnabled: asBoolean(source.launchAtLoginEnabled, DEFAULT_SETTINGS.launchAtLoginEnabled),
     proximityRadius: asInteger(source.proximityRadius, DEFAULT_SETTINGS.proximityRadius, 40, 600),
     keyboardReviewMs: asInteger(source.keyboardReviewMs, DEFAULT_SETTINGS.keyboardReviewMs, 250, 10000),
     inactivityWaitingMs: asInteger(source.inactivityWaitingMs, DEFAULT_SETTINGS.inactivityWaitingMs, 1000, 60000),

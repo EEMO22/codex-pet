@@ -3,6 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import {
+  BUILT_IN_PETS_ROOT,
   CODEX_DEFAULT_ANIMATIONS,
   CODEX_DEFAULT_LAYOUT,
   DEFAULT_EVENT_MAP,
@@ -174,7 +175,50 @@ function getSpritesheetUrl(spritesheetPath: string) {
 }
 
 function getPetPackageDir(petId: string) {
-  return path.join(PETS_ROOT, petId);
+  return findPetPackageDir(petId) || path.join(PETS_ROOT, petId);
+}
+
+function findPetPackageDir(petId: string) {
+  for (const root of getPetLibraryRoots()) {
+    const packageDir = path.join(root, petId);
+    if (fs.existsSync(packageDir)) {
+      return packageDir;
+    }
+  }
+
+  return null;
+}
+
+function getPetLibraryRoots() {
+  const roots = [PETS_ROOT, BUILT_IN_PETS_ROOT];
+  const seen = new Set<string>();
+  return roots.filter((root) => {
+    const normalizedRoot = path.resolve(root).toLowerCase();
+    if (seen.has(normalizedRoot)) {
+      return false;
+    }
+
+    seen.add(normalizedRoot);
+    return true;
+  });
+}
+
+function getPetPackageEntries() {
+  const entries = new Map<string, string>();
+
+  for (const root of getPetLibraryRoots()) {
+    if (!fs.existsSync(root)) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+      if (entry.isDirectory() && !entries.has(entry.name)) {
+        entries.set(entry.name, path.join(root, entry.name));
+      }
+    }
+  }
+
+  return Array.from(entries, ([petId, packageDir]) => ({ petId, packageDir }));
 }
 
 export function validatePetPackageDirectory(petId: string, packageDir: string): PetPackageValidation {
@@ -278,7 +322,7 @@ export function importPetPackage(sourceDir: string): ImportedPetPackage {
 
   const preferredId = getPreferredImportedPetId(sourceValidation);
   const targetPetId = getUniquePetId(preferredId, normalizedSourceDir);
-  const targetDir = getPetPackageDir(targetPetId);
+  const targetDir = path.join(PETS_ROOT, targetPetId);
   const copied = path.resolve(targetDir) !== normalizedSourceDir;
 
   if (copied) {
@@ -317,9 +361,9 @@ function getUniquePetId(preferredId: string, sourceDir: string) {
 
   for (let index = 1; index < 1000; index += 1) {
     const petId = index === 1 ? preferredId : `${preferredId}-${index}`;
-    const targetDir = getPetPackageDir(petId);
+    const existingDir = findPetPackageDir(petId);
 
-    if (!fs.existsSync(targetDir) || path.resolve(targetDir) === normalizedSourceDir) {
+    if (!existingDir || path.resolve(existingDir) === normalizedSourceDir) {
       return petId;
     }
   }
@@ -333,13 +377,8 @@ function isIgnoredImportPath(sourcePath: string) {
 }
 
 export function listPetValidations(): PetPackageValidation[] {
-  if (!fs.existsSync(PETS_ROOT)) {
-    return [];
-  }
-
-  return fs.readdirSync(PETS_ROOT, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => validatePetPackage(entry.name))
+  return getPetPackageEntries()
+    .map((entry) => validatePetPackageDirectory(entry.petId, entry.packageDir))
     .sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 

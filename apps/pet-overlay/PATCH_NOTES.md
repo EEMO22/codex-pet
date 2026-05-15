@@ -1,5 +1,29 @@
 # Patch Notes
 
+## 2026-05-15 - Windows Packaging Setup
+
+- Added `electron-builder` packaging for Windows.
+- Prevents duplicate normal app instances; launching the app again focuses the existing pet overlay instead of creating another pet.
+- Added a `Launch at Login` setting for packaged Windows builds.
+- Added `npm run package:win` for unpacked local verification builds.
+- Added `npm run dist:win` for NSIS installer and zip artifacts.
+- Writes package artifacts to timestamped `out/unpacked-*` and `out/dist-*` folders so repeated builds do not collide with locked Windows files.
+- Uses workspace-local Electron and builder caches under `tmp/`.
+- Bundles repo-level default pets into packaged app resources.
+- Keeps imported user pets in writable `userData/pets` for packaged builds.
+- Includes the keyboard activity PowerShell helper as an app resource.
+- Added README install instructions for the installer and zip artifacts.
+
+Validation:
+
+- `npm run check`
+- `npm run validate:pets`
+- `npm run smoke`
+- `npm run package:win`
+- `npm run dist:win`
+- Confirmed bundled pet resources and the keyboard activity helper are present in packaged output.
+- Confirmed a second normal launch exits without creating another overlay.
+
 ## 2026-05-15 - Pet Folder Import
 
 - Added `Import Pet Folder` to the right-click menu.

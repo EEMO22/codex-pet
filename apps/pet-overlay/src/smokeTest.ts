@@ -69,7 +69,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
     const settingsResult = await runSettingsWindowSmokeCheck();
     console.log('[smoke:settings]', JSON.stringify(settingsResult));
 
-    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.fieldCount) {
+    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.hasLaunchAtLogin || !settingsResult.fieldCount) {
       app.exit(1);
       return;
     }
@@ -217,6 +217,7 @@ async function runSettingsWindowSmokeCheck() {
           hasCloseApi: Boolean(window.petOverlay && typeof window.petOverlay.closeSettingsWindow === 'function'),
           hasForm: Boolean(document.getElementById('settings-form')),
           hasSettings: Boolean(settings && typeof settings.rapidClickLimit === 'number'),
+          hasLaunchAtLogin: Boolean(settings && typeof settings.launchAtLoginEnabled === 'boolean'),
           fieldCount: document.querySelectorAll('input').length
         };
       })();

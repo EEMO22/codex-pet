@@ -42,14 +42,30 @@ let currentPet: ResolvedPet | null = null;
 let isDragging = false;
 let isIgnoringMouseEvents = false;
 let currentPetOffset = getDefaultPetHitboxOffset();
+let shouldCreateApplication = true;
 
-configureUserData(USER_DATA_DIR);
+if (!app.isPackaged) {
+  configureUserData(USER_DATA_DIR);
+}
 let settings = readSettings();
 app.disableHardwareAcceleration();
 app.commandLine.appendSwitch('no-sandbox');
 app.commandLine.appendSwitch('disable-gpu');
 app.commandLine.appendSwitch('disable-gpu-sandbox');
 app.commandLine.appendSwitch('password-store', 'basic');
+
+if (!SMOKE_TEST && !VALIDATE_PETS) {
+  const hasSingleInstanceLock = app.requestSingleInstanceLock();
+
+  if (!hasSingleInstanceLock) {
+    shouldCreateApplication = false;
+    app.quit();
+  } else {
+    app.on('second-instance', () => {
+      showExistingOverlay();
+    });
+  }
+}
 
 function parsePetId() {
   const arg = process.argv.find((value) => value.startsWith('--pet='));
@@ -202,6 +218,21 @@ function createOverlayWindow(pet: ResolvedPet) {
   syncKeyboardActivityHook();
 }
 
+function showExistingOverlay() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  if (overlayWindow.isMinimized()) {
+    overlayWindow.restore();
+  }
+
+  overlayWindow.show();
+  applyAlwaysOnTopSetting();
+  overlayWindow.focus();
+  sendPetNotice('Pet already running.');
+}
+
 function startProximityWatcher() {
   stopProximityWatcher();
   proximityTimer = setInterval(() => {
@@ -327,6 +358,14 @@ function showContextMenu() {
           click: () => updateSettings({
             alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
           }, settings.alwaysOnTopEnabled ? 'Always on top off. Use the taskbar to bring the pet back.' : 'Always on top on.')
+        },
+        {
+          label: 'Launch at Login',
+          type: 'checkbox' as const,
+          checked: settings.launchAtLoginEnabled,
+          click: () => updateSettings({
+            launchAtLoginEnabled: !settings.launchAtLoginEnabled
+          }, getLaunchAtLoginNotice(!settings.launchAtLoginEnabled))
         },
         { type: 'separator' },
         {
@@ -535,6 +574,7 @@ function resetAllSettings(notice = 'Settings reset.') {
 
 function applyRuntimeSettings() {
   applyAlwaysOnTopSetting();
+  syncLaunchAtLogin();
   syncKeyboardActivityHook();
   sendSettingsData();
 }
@@ -571,6 +611,25 @@ function syncKeyboardActivityHook() {
       overlayWindow.webContents.send('pet:typing');
     }
   });
+}
+
+function syncLaunchAtLogin() {
+  if (SMOKE_TEST || VALIDATE_PETS || !app.isPackaged) {
+    return;
+  }
+
+  app.setLoginItemSettings({
+    openAtLogin: settings.launchAtLoginEnabled,
+    path: process.execPath
+  });
+}
+
+function getLaunchAtLoginNotice(enabled: boolean) {
+  if (!app.isPackaged) {
+    return 'Launch at login applies after install.';
+  }
+
+  return enabled ? 'Launch at login on.' : 'Launch at login off.';
 }
 
 function sendSettingsData() {
@@ -663,6 +722,10 @@ ipcMain.on('overlay:show-menu', showContextMenu);
 ipcMain.on('overlay:tuck-away', () => app.quit());
 
 app.whenReady().then(() => {
+  if (!shouldCreateApplication) {
+    return;
+  }
+
   if (VALIDATE_PETS) {
     app.exit(printPetValidationReport() ? 0 : 1);
     return;
@@ -670,6 +733,7 @@ app.whenReady().then(() => {
 
   try {
     createOverlayWindow(loadStartupPet());
+    syncLaunchAtLogin();
   } catch (error) {
     console.error(error);
     app.quit();

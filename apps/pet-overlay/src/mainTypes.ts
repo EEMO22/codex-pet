@@ -15,6 +15,7 @@ export type AppSettings = {
   keyboardActivityEnabled: boolean;
   mouseProximityEnabled: boolean;
   alwaysOnTopEnabled: boolean;
+  launchAtLoginEnabled: boolean;
   proximityRadius: number;
   keyboardReviewMs: number;
   inactivityWaitingMs: number;
