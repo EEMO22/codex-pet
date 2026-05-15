@@ -32,5 +32,11 @@ contextBridge.exposeInMainWorld('petOverlay', {
   },
   getPetData() {
     return ipcRenderer.invoke('pet:get-data');
+  },
+  onSettingsData(callback: (settings: unknown) => void) {
+    ipcRenderer.on('settings:data', (_event, settings) => callback(settings));
+  },
+  getSettingsData() {
+    return ipcRenderer.invoke('settings:get-data');
   }
 });

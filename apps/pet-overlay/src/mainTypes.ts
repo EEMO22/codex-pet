@@ -9,6 +9,18 @@ export type OverlayState = {
   selectedPetId?: string;
 };
 
+export type AppSettings = {
+  keyboardActivityEnabled: boolean;
+  mouseProximityEnabled: boolean;
+  alwaysOnTopEnabled: boolean;
+  proximityRadius: number;
+  keyboardReviewMs: number;
+  inactivityWaitingMs: number;
+  rapidClickWindowMs: number;
+  rapidClickLimit: number;
+  animationFrameMsMultiplier: number;
+};
+
 export type PetAnimation = {
   row: number;
   frames: number;

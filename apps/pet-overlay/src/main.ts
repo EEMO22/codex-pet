@@ -29,6 +29,7 @@ import {
   isCursorInPetHitbox
 } from './screenGeometry';
 import { runSmokeCheck } from './smokeTest';
+import { readSettings, resetSettings, writeSettings } from './settingsStore';
 import { configureUserData, readSavedState, writeSavedState } from './stateStore';
 
 let overlayWindow: BrowserWindow | null = null;
@@ -39,6 +40,7 @@ let isDragging = false;
 let isIgnoringMouseEvents = false;
 
 configureUserData(USER_DATA_DIR);
+let settings = readSettings();
 app.disableHardwareAcceleration();
 app.commandLine.appendSwitch('no-sandbox');
 app.commandLine.appendSwitch('disable-gpu');
@@ -114,7 +116,7 @@ function createOverlayWindow(pet: ResolvedPet) {
   overlayWindow = window;
   currentPet = pet;
 
-  window.setAlwaysOnTop(true, 'floating');
+  applyAlwaysOnTopSetting();
   if (SMOKE_TEST) {
     window.webContents.on('console-message', (details) => {
       console.log('[renderer]', details.message);
@@ -125,6 +127,7 @@ function createOverlayWindow(pet: ResolvedPet) {
 
   window.webContents.once('did-finish-load', () => {
     window.webContents.send('pet:data', pet);
+    sendSettingsData();
 
     if (SMOKE_TEST) {
       setTimeout(() => runSmokeCheck(overlayWindow, pet), 900);
@@ -142,17 +145,7 @@ function createOverlayWindow(pet: ResolvedPet) {
   });
 
   startProximityWatcher();
-  startKeyboardActivityHook({
-    disabled: SMOKE_TEST,
-    scriptPath: KEYBOARD_HOOK_SCRIPT,
-    onActivity: () => {
-      if (!overlayWindow || overlayWindow.isDestroyed()) {
-        return;
-      }
-
-      overlayWindow.webContents.send('pet:typing');
-    }
-  });
+  syncKeyboardActivityHook();
 }
 
 function startProximityWatcher() {
@@ -172,7 +165,7 @@ function startProximityWatcher() {
     }
 
     overlayWindow.webContents.send('pet:proximity', {
-      near: distance < 160,
+      near: settings.mouseProximityEnabled && distance < settings.proximityRadius,
       distance
     });
 
@@ -243,6 +236,41 @@ function showContextMenu() {
     {
       label: 'Validate Pets',
       click: validatePetsFromMenu
+    },
+    { type: 'separator' },
+    {
+      label: 'Settings',
+      submenu: [
+        {
+          label: 'Keyboard Activity',
+          type: 'checkbox' as const,
+          checked: settings.keyboardActivityEnabled,
+          click: () => updateSettings({
+            keyboardActivityEnabled: !settings.keyboardActivityEnabled
+          }, settings.keyboardActivityEnabled ? 'Keyboard activity off.' : 'Keyboard activity on.')
+        },
+        {
+          label: 'Mouse Proximity',
+          type: 'checkbox' as const,
+          checked: settings.mouseProximityEnabled,
+          click: () => updateSettings({
+            mouseProximityEnabled: !settings.mouseProximityEnabled
+          }, settings.mouseProximityEnabled ? 'Mouse proximity off.' : 'Mouse proximity on.')
+        },
+        {
+          label: 'Always On Top',
+          type: 'checkbox' as const,
+          checked: settings.alwaysOnTopEnabled,
+          click: () => updateSettings({
+            alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
+          }, settings.alwaysOnTopEnabled ? 'Always on top off.' : 'Always on top on.')
+        },
+        { type: 'separator' },
+        {
+          label: 'Reset Settings',
+          click: resetAllSettings
+        }
+      ]
     },
     { type: 'separator' },
     {
@@ -350,6 +378,63 @@ function sendPetNotice(message: string) {
   overlayWindow.webContents.send('pet:notice', { message });
 }
 
+function updateSettings(nextSettings: Partial<typeof settings>, notice: string) {
+  settings = writeSettings(nextSettings);
+  applyRuntimeSettings();
+  sendPetNotice(notice);
+}
+
+function resetAllSettings() {
+  settings = resetSettings();
+  applyRuntimeSettings();
+  sendPetNotice('Settings reset.');
+}
+
+function applyRuntimeSettings() {
+  applyAlwaysOnTopSetting();
+  syncKeyboardActivityHook();
+  sendSettingsData();
+}
+
+function applyAlwaysOnTopSetting() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  if (settings.alwaysOnTopEnabled) {
+    overlayWindow.setAlwaysOnTop(true, 'floating');
+  } else {
+    overlayWindow.setAlwaysOnTop(false);
+  }
+}
+
+function syncKeyboardActivityHook() {
+  if (SMOKE_TEST || !settings.keyboardActivityEnabled) {
+    stopKeyboardActivityHook();
+    return;
+  }
+
+  startKeyboardActivityHook({
+    disabled: false,
+    scriptPath: KEYBOARD_HOOK_SCRIPT,
+    onActivity: () => {
+      if (!overlayWindow || overlayWindow.isDestroyed()) {
+        return;
+      }
+
+      overlayWindow.webContents.send('pet:typing');
+    }
+  });
+}
+
+function sendSettingsData() {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  overlayWindow.webContents.send('settings:data', settings);
+}
+
 function getPetLoadErrorMessage(petId: string, error: unknown) {
   if (error instanceof PetPackageError) {
     return `Could not load pet "${petId}". ${formatPetIssues(error.validation.issues)}`;
@@ -403,6 +488,7 @@ ipcMain.handle('overlay:move-by', (_event, delta: Point) => {
 });
 
 ipcMain.handle('pet:get-data', () => currentPet);
+ipcMain.handle('settings:get-data', () => settings);
 
 ipcMain.on('overlay:set-dragging', (_event, dragging: boolean) => {
   isDragging = Boolean(dragging);

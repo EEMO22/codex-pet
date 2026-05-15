@@ -36,6 +36,17 @@ type DragState = {
   y: number;
   moved: boolean;
 };
+type AppSettings = {
+  keyboardActivityEnabled: boolean;
+  mouseProximityEnabled: boolean;
+  alwaysOnTopEnabled: boolean;
+  proximityRadius: number;
+  keyboardReviewMs: number;
+  inactivityWaitingMs: number;
+  rapidClickWindowMs: number;
+  rapidClickLimit: number;
+  animationFrameMsMultiplier: number;
+};
 
 type PetOverlayApi = {
   moveBy(delta: DragDelta): Promise<void>;
@@ -48,6 +59,8 @@ type PetOverlayApi = {
   onMouseActivity(callback: () => void): void;
   onPetNotice(callback: (notice: { message?: string }) => void): void;
   getPetData(): Promise<PetData | null>;
+  onSettingsData(callback: (settings: AppSettings) => void): void;
+  getSettingsData(): Promise<AppSettings>;
 };
 
 const overlayApi = (window as unknown as { petOverlay: PetOverlayApi }).petOverlay;
@@ -57,6 +70,18 @@ const atlas = {
   rows: 9,
   currentFrame: 0,
   currentRow: 0
+};
+
+const defaultSettings: AppSettings = {
+  keyboardActivityEnabled: true,
+  mouseProximityEnabled: true,
+  alwaysOnTopEnabled: true,
+  proximityRadius: 160,
+  keyboardReviewMs: 1000,
+  inactivityWaitingMs: 5000,
+  rapidClickWindowMs: 1000,
+  rapidClickLimit: 4,
+  animationFrameMsMultiplier: 1
 };
 
 let states: Record<string, InteractionState> = {
@@ -83,12 +108,10 @@ let dragMoveFrame: number | null = null;
 let clickTimes = [];
 let failedLocked = false;
 let suppressWatchUntilExit = false;
+let currentPetData: PetData | null = null;
+let overlaySettings = defaultSettings;
 
-const RAPID_CLICK_WINDOW_MS = 1000;
-const RAPID_CLICK_LIMIT = 4;
 const DRAG_THRESHOLD_PX = 5;
-const KEYBOARD_REVIEW_MS = 1000;
-const INACTIVITY_WAITING_MS = 5000;
 
 function assertElement<T extends HTMLElement>(element: T | null, id: string): T {
   if (!element) {
@@ -187,7 +210,7 @@ function resetInactivityTimer() {
       clearKeyboardReviewTimer();
       setState('waiting');
     }
-  }, INACTIVITY_WAITING_MS);
+  }, overlaySettings.inactivityWaitingMs);
 }
 
 function showKeyboardActivity() {
@@ -202,7 +225,7 @@ function showKeyboardActivity() {
     if (stateName === 'typing') {
       setState('review');
     }
-  }, KEYBOARD_REVIEW_MS);
+  }, overlaySettings.keyboardReviewMs);
   resetInactivityTimer();
 }
 
@@ -231,10 +254,10 @@ function handleClick() {
     return;
   }
 
-  clickTimes = clickTimes.filter((time) => now - time <= RAPID_CLICK_WINDOW_MS);
+  clickTimes = clickTimes.filter((time) => now - time <= overlaySettings.rapidClickWindowMs);
   clickTimes.push(now);
 
-  if (clickTimes.length >= RAPID_CLICK_LIMIT) {
+  if (clickTimes.length >= overlaySettings.rapidClickLimit) {
     clickTimes = [];
     failAndHold();
     return;
@@ -272,7 +295,11 @@ function resolveEventAnimation(pet: PetData, eventName: string, fallbackName: st
 }
 
 function withTiming(animation: PetAnimation, frameMs: number, flags: Partial<PetAnimation> = {}): InteractionState {
-  return { ...animation, frameMs, ...flags };
+  return { ...animation, frameMs: scaleFrameMs(frameMs), ...flags };
+}
+
+function scaleFrameMs(frameMs: number) {
+  return Math.max(16, Math.round(frameMs * overlaySettings.animationFrameMsMultiplier));
 }
 
 function tick() {
@@ -417,6 +444,7 @@ function applyPetData(pet: PetData | null) {
     return;
   }
 
+  currentPetData = pet;
   atlas.columns = pet.layout.columns;
   atlas.rows = pet.layout.rows;
   states = buildInteractionStates(pet);
@@ -426,8 +454,27 @@ function applyPetData(pet: PetData | null) {
   setFrame(0, 0);
 }
 
+function applySettings(settings: AppSettings | null) {
+  if (!settings) {
+    return;
+  }
+
+  overlaySettings = { ...defaultSettings, ...settings };
+
+  if (currentPetData) {
+    states = buildInteractionStates(currentPetData);
+    queueNextFrame(states[stateName].frameMs);
+  }
+
+  resetInactivityTimer();
+}
+
 overlayApi.onPetData((pet) => {
   applyPetData(pet);
+});
+
+overlayApi.onSettingsData((settings) => {
+  applySettings(settings);
 });
 
 overlayApi.onProximity(({ near }) => {
@@ -468,6 +515,10 @@ overlayApi.onPetNotice((notice) => {
 
 overlayApi.getPetData().then(applyPetData).catch((error) => {
   console.error('Failed to load pet data', error);
+});
+
+overlayApi.getSettingsData().then(applySettings).catch((error) => {
+  console.error('Failed to load settings data', error);
 });
 
 queueNextFrame(states[stateName].frameMs);

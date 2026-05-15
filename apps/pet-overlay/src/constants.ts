@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import type { PetAnimation, PetLayout, Size } from './mainTypes';
+import type { AppSettings, PetAnimation, PetLayout, Size } from './mainTypes';
 
 export const PETS_ROOT = path.resolve(__dirname, '..', '..', '..', 'pets');
 export const USER_DATA_DIR = path.resolve(__dirname, '..', 'tmp', 'user-data');
@@ -12,6 +12,18 @@ export const PET_EDGE_BUMPER = 5;
 export const DEFAULT_PET_ID = 'vera-clear';
 export const SMOKE_TEST = process.argv.includes('--smoke-test');
 export const VALIDATE_PETS = process.argv.includes('--validate-pets');
+
+export const DEFAULT_SETTINGS: AppSettings = {
+  keyboardActivityEnabled: true,
+  mouseProximityEnabled: true,
+  alwaysOnTopEnabled: true,
+  proximityRadius: 160,
+  keyboardReviewMs: 1000,
+  inactivityWaitingMs: 5000,
+  rapidClickWindowMs: 1000,
+  rapidClickLimit: 4,
+  animationFrameMsMultiplier: 1
+};
 
 export const CODEX_DEFAULT_LAYOUT: PetLayout = {
   columns: 8,

@@ -36,6 +36,7 @@ npm run build
 - `src/petCatalog.ts`: loads Codex-style pet packages and merges default event mappings.
 - `src/screenGeometry.ts`: clamps the pet hitbox to visible monitor work areas.
 - `src/stateStore.ts`: reads and writes overlay position and selected pet state.
+- `src/settingsStore.ts`: reads, validates, resets, and writes runtime settings.
 - `src/keyboardActivityHook.ts`: starts and stops the Windows keyboard activity helper.
 - `src/smokeTest.ts`: verifies the renderer API, pet element, and spritesheet load path.
 - `src/renderer.ts`: runs the pet animation state machine in the overlay window.
@@ -52,8 +53,31 @@ npm run build
 - Use `Open Pets Folder` to add or edit pet packages.
 - Use `Reload Current Pet` after editing the current pet's manifest or spritesheet.
 - Use `Validate Pets` to check installed pet packages without leaving the overlay.
+- Use `Settings` to toggle keyboard activity, mouse proximity, and always-on-top behavior.
 - Use the pet right-click menu to close it.
 - Run again to restore it at the last saved position.
+
+## Settings
+
+Runtime settings are stored in Electron `userData` as `settings.json`. During
+local development this is:
+
+```text
+apps/pet-overlay/tmp/user-data/settings.json
+```
+
+The app validates the file and falls back to defaults for missing or invalid
+fields. Current settings include:
+
+- `keyboardActivityEnabled`
+- `mouseProximityEnabled`
+- `alwaysOnTopEnabled`
+- `proximityRadius`
+- `keyboardReviewMs`
+- `inactivityWaitingMs`
+- `rapidClickWindowMs`
+- `rapidClickLimit`
+- `animationFrameMsMultiplier`
 
 ## Keyboard Activity
 

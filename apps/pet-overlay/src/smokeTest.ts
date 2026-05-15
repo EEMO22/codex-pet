@@ -13,6 +13,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
       (async () => {
         const pet = document.getElementById('pet');
         const styles = pet ? getComputedStyle(pet) : null;
+        const settings = window.petOverlay ? await window.petOverlay.getSettingsData() : null;
         const imageResult = await new Promise((resolve) => {
           const image = new Image();
           image.onload = () => resolve({
@@ -26,6 +27,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
 
         return {
           hasApi: Boolean(window.petOverlay),
+          hasSettings: Boolean(settings && typeof settings.proximityRadius === 'number'),
           rendererLoaded: Boolean(window.__codexPetRendererLoaded),
           hasPet: Boolean(pet),
           backgroundImage: styles ? styles.backgroundImage : '',
@@ -36,7 +38,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
 
     console.log('[smoke]', JSON.stringify(result));
 
-    if (!result.hasApi || !result.hasPet || result.backgroundImage === 'none' || !result.imageResult.loaded) {
+    if (!result.hasApi || !result.hasSettings || !result.hasPet || result.backgroundImage === 'none' || !result.imageResult.loaded) {
       app.exit(1);
       return;
     }
