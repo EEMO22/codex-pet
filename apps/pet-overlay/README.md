@@ -107,6 +107,7 @@ npm run generate:icon
 - `src/renderer.ts`: runs the pet animation state machine in the overlay window.
 - `src/settingsRenderer.ts`: runs the settings window form.
 - `scripts/generate-icon.mjs`: generates PNG/ICO app icons from the default pet frame.
+- The tray icon uses the generated `assets/icon-16.png`.
 
 ## Controls
 
@@ -116,6 +117,7 @@ npm run generate:icon
 - Click the pet to trigger a short reaction.
 - The transparent margin is click-through; only the pet-sized hitbox is interactive.
 - Right-click the pet to open the menu.
+- Use the tray icon to show the pet, open settings, open the pets folder, validate pets, or close the app.
 - Choose a bundled pet from the `Pets` submenu.
 - Use `Import Pet Folder` to copy a Codex-style pet folder into `pets/` and select it.
 - Use `Open Pets Folder` to add or edit pet packages.

@@ -1,8 +1,9 @@
-import { app, BrowserWindow, Menu, ipcMain, screen, shell, dialog } from 'electron';
+import { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen, shell, dialog } from 'electron';
 import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  APP_TRAY_ICON,
   DEFAULT_PET_ID,
   KEYBOARD_HOOK_SCRIPT,
   PETS_ROOT,
@@ -36,6 +37,7 @@ import { configureUserData, readSavedState, writeSavedState } from './stateStore
 
 let overlayWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
+let tray: Tray | null = null;
 let proximityTimer: NodeJS.Timeout | null = null;
 let lastMousePoint: Point | null = null;
 let currentPet: ResolvedPet | null = null;
@@ -216,6 +218,72 @@ function createOverlayWindow(pet: ResolvedPet) {
 
   startProximityWatcher();
   syncKeyboardActivityHook();
+}
+
+function createTray() {
+  if (tray) {
+    return;
+  }
+
+  const icon = nativeImage.createFromPath(APP_TRAY_ICON);
+  tray = new Tray(icon.isEmpty() ? nativeImage.createEmpty() : icon);
+  tray.setToolTip('Codex Pet Overlay');
+  tray.setContextMenu(buildTrayMenu());
+  tray.on('click', () => {
+    showExistingOverlay();
+  });
+}
+
+function buildTrayMenu() {
+  return Menu.buildFromTemplate([
+    {
+      label: 'Show Pet',
+      click: showExistingOverlay
+    },
+    {
+      label: 'Settings',
+      click: createSettingsWindow
+    },
+    { type: 'separator' },
+    {
+      label: 'Open Pets Folder',
+      click: openPetsFolder
+    },
+    {
+      label: 'Validate Pets',
+      click: validatePetsFromMenu
+    },
+    { type: 'separator' },
+    {
+      label: 'Always On Top',
+      type: 'checkbox' as const,
+      checked: settings.alwaysOnTopEnabled,
+      click: () => updateSettings({
+        alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
+      }, settings.alwaysOnTopEnabled ? 'Always on top off. Use the taskbar to bring the pet back.' : 'Always on top on.')
+    },
+    {
+      label: 'Launch at Login',
+      type: 'checkbox' as const,
+      checked: settings.launchAtLoginEnabled,
+      click: () => updateSettings({
+        launchAtLoginEnabled: !settings.launchAtLoginEnabled
+      }, getLaunchAtLoginNotice(!settings.launchAtLoginEnabled))
+    },
+    { type: 'separator' },
+    {
+      label: 'Close Pet',
+      click: () => app.quit()
+    }
+  ]);
+}
+
+function refreshTrayMenu() {
+  if (!tray) {
+    return;
+  }
+
+  tray.setContextMenu(buildTrayMenu());
 }
 
 function showExistingOverlay() {
@@ -576,6 +644,7 @@ function applyRuntimeSettings() {
   applyAlwaysOnTopSetting();
   syncLaunchAtLogin();
   syncKeyboardActivityHook();
+  refreshTrayMenu();
   sendSettingsData();
 }
 
@@ -733,6 +802,7 @@ app.whenReady().then(() => {
 
   try {
     createOverlayWindow(loadStartupPet());
+    createTray();
     syncLaunchAtLogin();
   } catch (error) {
     console.error(error);
@@ -754,5 +824,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
+  tray?.destroy();
+  tray = null;
   stopKeyboardActivityHook();
 });

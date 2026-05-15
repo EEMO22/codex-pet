@@ -1,5 +1,21 @@
 # Patch Notes
 
+## 2026-05-15 - Tray Controls
+
+- Added a Windows tray icon using the generated Vera app icon.
+- Tray click brings the existing pet overlay forward.
+- Tray menu includes show pet, settings, open pets folder, validate pets, always-on-top, launch-at-login, and close actions.
+- Packaged builds now include generated icon assets inside the app bundle.
+
+Validation:
+
+- `npm run check`
+- `npm run validate:pets`
+- `npm run smoke`
+- `npm run package:win`
+- `npm run dist:win`
+- Confirmed generated tray icon assets are included in packaged `app.asar`.
+
 ## 2026-05-15 - Windows Packaging Setup
 
 - Added `electron-builder` packaging for Windows.

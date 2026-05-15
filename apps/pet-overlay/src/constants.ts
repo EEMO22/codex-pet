@@ -4,6 +4,7 @@ import path from 'node:path';
 import type { AppSettings, PetAnimation, PetLayout, Size } from './mainTypes';
 
 export const USER_DATA_DIR = path.resolve(__dirname, '..', 'tmp', 'user-data');
+export const APP_TRAY_ICON = path.resolve(__dirname, '..', 'assets', 'icon-16.png');
 export const BUILT_IN_PETS_ROOT = app.isPackaged
   ? path.join(process.resourcesPath, 'pets')
   : path.resolve(__dirname, '..', '..', '..', 'pets');
