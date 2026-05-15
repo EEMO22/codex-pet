@@ -40,6 +40,7 @@ npm run build
 - `src/keyboardActivityHook.ts`: starts and stops the Windows keyboard activity helper.
 - `src/smokeTest.ts`: verifies the renderer API, pet element, and spritesheet load path.
 - `src/renderer.ts`: runs the pet animation state machine in the overlay window.
+- `src/settingsRenderer.ts`: runs the settings window form.
 
 ## Controls
 
@@ -54,6 +55,7 @@ npm run build
 - Use `Reload Current Pet` after editing the current pet's manifest or spritesheet.
 - Use `Validate Pets` to check installed pet packages without leaving the overlay.
 - Use `Settings` to toggle keyboard activity, mouse proximity, and always-on-top behavior.
+- Use `Settings > Open Settings Window` to edit timing and interaction values.
 - Use the pet right-click menu to close it.
 - Run again to restore it at the last saved position.
 
@@ -78,6 +80,11 @@ fields. Current settings include:
 - `rapidClickWindowMs`
 - `rapidClickLimit`
 - `animationFrameMsMultiplier`
+
+The settings window edits the same file and applies changes immediately after
+save. `Save` closes the settings window, and `Reset` restores the built-in
+defaults. When always-on-top is disabled, the pet is shown in the taskbar so it
+can be brought forward again.
 
 ## Keyboard Activity
 

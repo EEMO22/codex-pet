@@ -1,5 +1,20 @@
 # Patch Notes
 
+## 2026-05-15 - Settings Window
+
+- Added a dedicated settings window opened from `Settings > Open Settings Window`.
+- Added form controls for keyboard activity, mouse proximity, always-on-top, proximity radius, idle timing, rapid-click timing, and animation timing.
+- Added settings save/reset IPC methods through the existing preload bridge.
+- Settings save now closes the settings window.
+- Disabling always-on-top now exposes the pet in the taskbar so it can be brought forward again.
+- Updated smoke tests to load the settings window and verify its form and settings IPC.
+
+Validation:
+
+- `npm run check`
+- `npm run validate:pets`
+- `npm run smoke`
+
 ## 2026-05-15 - Runtime Settings
 
 - Added a validated `settings.json` store under Electron `userData`.

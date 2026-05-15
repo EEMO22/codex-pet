@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex Pet Settings</title>
+    <link rel="stylesheet" href="./settings.css">
+  </head>
+  <body>
+    <main class="settings-shell">
+      <header class="settings-header">
+        <h1>Settings</h1>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+      </header>
+
+      <form id="settings-form" class="settings-form">
+        <section class="section">
+          <h2>Input</h2>
+          <label class="toggle-row">
+            <span>
+              <strong>Keyboard Activity</strong>
+              <small>React when typing is detected.</small>
+            </span>
+            <input id="keyboardActivityEnabled" name="keyboardActivityEnabled" type="checkbox">
+          </label>
+          <label class="toggle-row">
+            <span>
+              <strong>Mouse Proximity</strong>
+              <small>React when the pointer is nearby.</small>
+            </span>
+            <input id="mouseProximityEnabled" name="mouseProximityEnabled" type="checkbox">
+          </label>
+          <label class="toggle-row">
+            <span>
+              <strong>Always On Top</strong>
+              <small>Keep the pet above normal windows.</small>
+            </span>
+            <input id="alwaysOnTopEnabled" name="alwaysOnTopEnabled" type="checkbox">
+          </label>
+        </section>
+
+        <section class="section">
+          <h2>Timing</h2>
+          <label class="field-row">
+            <span>Proximity Radius</span>
+            <input id="proximityRadius" name="proximityRadius" type="number" min="40" max="600" step="10">
+          </label>
+          <label class="field-row">
+            <span>Keyboard Review Delay</span>
+            <input id="keyboardReviewMs" name="keyboardReviewMs" type="number" min="250" max="10000" step="250">
+          </label>
+          <label class="field-row">
+            <span>Waiting Delay</span>
+            <input id="inactivityWaitingMs" name="inactivityWaitingMs" type="number" min="1000" max="60000" step="500">
+          </label>
+          <label class="field-row">
+            <span>Rapid Click Window</span>
+            <input id="rapidClickWindowMs" name="rapidClickWindowMs" type="number" min="250" max="5000" step="250">
+          </label>
+          <label class="field-row">
+            <span>Rapid Click Limit</span>
+            <input id="rapidClickLimit" name="rapidClickLimit" type="number" min="2" max="20" step="1">
+          </label>
+          <label class="field-row">
+            <span>Animation Speed Multiplier</span>
+            <input id="animationFrameMsMultiplier" name="animationFrameMsMultiplier" type="number" min="0.25" max="4" step="0.05">
+          </label>
+        </section>
+
+        <footer class="actions">
+          <button class="secondary" id="reset" type="button">Reset</button>
+          <button class="primary" type="submit">Save</button>
+        </footer>
+      </form>
+    </main>
+    <script src="./settingsRenderer.js"></script>
+  </body>
+</html>

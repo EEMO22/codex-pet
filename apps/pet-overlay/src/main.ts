@@ -12,7 +12,7 @@ import {
   WINDOW_SIZE
 } from './constants';
 import { startKeyboardActivityHook, stopKeyboardActivityHook } from './keyboardActivityHook';
-import type { Point, ResolvedPet } from './mainTypes';
+import type { AppSettings, Point, ResolvedPet } from './mainTypes';
 import {
   formatPetIssues,
   listAvailablePets,
@@ -33,6 +33,7 @@ import { readSettings, resetSettings, writeSettings } from './settingsStore';
 import { configureUserData, readSavedState, writeSavedState } from './stateStore';
 
 let overlayWindow: BrowserWindow | null = null;
+let settingsWindow: BrowserWindow | null = null;
 let proximityTimer: NodeJS.Timeout | null = null;
 let lastMousePoint: Point | null = null;
 let currentPet: ResolvedPet | null = null;
@@ -55,6 +56,41 @@ function parsePetId() {
   }
 
   return readSavedState().selectedPetId || DEFAULT_PET_ID;
+}
+
+function createSettingsWindow() {
+  if (settingsWindow && !settingsWindow.isDestroyed()) {
+    settingsWindow.show();
+    settingsWindow.focus();
+    return;
+  }
+
+  settingsWindow = new BrowserWindow({
+    width: 460,
+    height: 640,
+    minWidth: 420,
+    minHeight: 560,
+    title: 'Codex Pet Settings',
+    show: false,
+    backgroundColor: '#f7f8fb',
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  });
+
+  settingsWindow.removeMenu();
+  settingsWindow.loadFile(path.join(__dirname, 'settings.html'));
+  settingsWindow.once('ready-to-show', () => {
+    settingsWindow?.show();
+  });
+  settingsWindow.webContents.once('did-finish-load', () => {
+    sendSettingsData();
+  });
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
 }
 
 function loadStartupPet() {
@@ -242,6 +278,11 @@ function showContextMenu() {
       label: 'Settings',
       submenu: [
         {
+          label: 'Open Settings Window',
+          click: createSettingsWindow
+        },
+        { type: 'separator' },
+        {
           label: 'Keyboard Activity',
           type: 'checkbox' as const,
           checked: settings.keyboardActivityEnabled,
@@ -263,12 +304,12 @@ function showContextMenu() {
           checked: settings.alwaysOnTopEnabled,
           click: () => updateSettings({
             alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
-          }, settings.alwaysOnTopEnabled ? 'Always on top off.' : 'Always on top on.')
+          }, settings.alwaysOnTopEnabled ? 'Always on top off. Use the taskbar to bring the pet back.' : 'Always on top on.')
         },
         { type: 'separator' },
         {
           label: 'Reset Settings',
-          click: resetAllSettings
+          click: () => resetAllSettings()
         }
       ]
     },
@@ -378,16 +419,20 @@ function sendPetNotice(message: string) {
   overlayWindow.webContents.send('pet:notice', { message });
 }
 
-function updateSettings(nextSettings: Partial<typeof settings>, notice: string) {
+function updateSettings(nextSettings: Partial<AppSettings>, notice?: string) {
   settings = writeSettings(nextSettings);
   applyRuntimeSettings();
-  sendPetNotice(notice);
+  if (notice) {
+    sendPetNotice(notice);
+  }
 }
 
-function resetAllSettings() {
+function resetAllSettings(notice = 'Settings reset.') {
   settings = resetSettings();
   applyRuntimeSettings();
-  sendPetNotice('Settings reset.');
+  if (notice) {
+    sendPetNotice(notice);
+  }
 }
 
 function applyRuntimeSettings() {
@@ -403,8 +448,11 @@ function applyAlwaysOnTopSetting() {
 
   if (settings.alwaysOnTopEnabled) {
     overlayWindow.setAlwaysOnTop(true, 'floating');
+    overlayWindow.setSkipTaskbar(true);
   } else {
     overlayWindow.setAlwaysOnTop(false);
+    overlayWindow.setSkipTaskbar(false);
+    overlayWindow.show();
   }
 }
 
@@ -428,11 +476,13 @@ function syncKeyboardActivityHook() {
 }
 
 function sendSettingsData() {
-  if (!overlayWindow || overlayWindow.isDestroyed()) {
-    return;
+  if (overlayWindow && !overlayWindow.isDestroyed()) {
+    overlayWindow.webContents.send('settings:data', settings);
   }
 
-  overlayWindow.webContents.send('settings:data', settings);
+  if (settingsWindow && !settingsWindow.isDestroyed()) {
+    settingsWindow.webContents.send('settings:data', settings);
+  }
 }
 
 function getPetLoadErrorMessage(petId: string, error: unknown) {
@@ -489,6 +539,20 @@ ipcMain.handle('overlay:move-by', (_event, delta: Point) => {
 
 ipcMain.handle('pet:get-data', () => currentPet);
 ipcMain.handle('settings:get-data', () => settings);
+ipcMain.handle('settings:save-data', (_event, nextSettings: Partial<AppSettings>) => {
+  updateSettings(nextSettings, 'Settings saved.');
+  return settings;
+});
+ipcMain.handle('settings:reset-data', () => {
+  resetAllSettings('Settings reset.');
+  return settings;
+});
+ipcMain.on('settings:close-window', (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  if (window && window === settingsWindow) {
+    window.close();
+  }
+});
 
 ipcMain.on('overlay:set-dragging', (_event, dragging: boolean) => {
   isDragging = Boolean(dragging);

@@ -38,5 +38,14 @@ contextBridge.exposeInMainWorld('petOverlay', {
   },
   getSettingsData() {
     return ipcRenderer.invoke('settings:get-data');
+  },
+  saveSettingsData(settings: unknown) {
+    return ipcRenderer.invoke('settings:save-data', settings);
+  },
+  resetSettingsData() {
+    return ipcRenderer.invoke('settings:reset-data');
+  },
+  closeSettingsWindow() {
+    ipcRenderer.send('settings:close-window');
   }
 });
