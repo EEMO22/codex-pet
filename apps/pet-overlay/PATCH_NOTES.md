@@ -13,6 +13,7 @@
 - Keeps imported user pets in writable `userData/pets` for packaged builds.
 - Includes the keyboard activity PowerShell helper as an app resource.
 - Added README install instructions for the installer and zip artifacts.
+- Added a generated Vera-based Windows app icon for packaged builds.
 
 Validation:
 
@@ -23,6 +24,7 @@ Validation:
 - `npm run dist:win`
 - Confirmed bundled pet resources and the keyboard activity helper are present in packaged output.
 - Confirmed a second normal launch exits without creating another overlay.
+- Confirmed extracted app and installer icons use the Vera-based icon.
 
 ## 2026-05-15 - Pet Folder Import
 

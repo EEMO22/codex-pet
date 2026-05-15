@@ -89,6 +89,12 @@ Bundled pets are packaged from the repo-level `pets/` folder into app resources.
 In packaged builds, imported user pets are stored in Electron `userData/pets`
 instead of the installation directory.
 
+The Windows app icon is generated from the default Vera pet frame:
+
+```powershell
+npm run generate:icon
+```
+
 ## Code Layout
 
 - `src/main.ts`: wires the Electron app, overlay window, IPC, menu, and lifecycle.
@@ -100,6 +106,7 @@ instead of the installation directory.
 - `src/smokeTest.ts`: verifies the renderer API, pet element, and spritesheet load path.
 - `src/renderer.ts`: runs the pet animation state machine in the overlay window.
 - `src/settingsRenderer.ts`: runs the settings window form.
+- `scripts/generate-icon.mjs`: generates PNG/ICO app icons from the default pet frame.
 
 ## Controls
 
