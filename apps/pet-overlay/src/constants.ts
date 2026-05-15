@@ -11,6 +11,7 @@ export const PET_HITBOX = { width: 113, height: 122, bottom: 14 };
 export const PET_EDGE_BUMPER = 5;
 export const DEFAULT_PET_ID = 'vera-clear';
 export const SMOKE_TEST = process.argv.includes('--smoke-test');
+export const VALIDATE_PETS = process.argv.includes('--validate-pets');
 
 export const CODEX_DEFAULT_LAYOUT: PetLayout = {
   columns: 8,

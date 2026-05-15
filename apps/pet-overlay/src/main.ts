@@ -1,16 +1,25 @@
-import { app, BrowserWindow, Menu, ipcMain, screen } from 'electron';
+import { app, BrowserWindow, Menu, ipcMain, screen, shell } from 'electron';
+import fs from 'node:fs';
 import path from 'node:path';
 
 import {
   DEFAULT_PET_ID,
   KEYBOARD_HOOK_SCRIPT,
+  PETS_ROOT,
   SMOKE_TEST,
   USER_DATA_DIR,
+  VALIDATE_PETS,
   WINDOW_SIZE
 } from './constants';
 import { startKeyboardActivityHook, stopKeyboardActivityHook } from './keyboardActivityHook';
 import type { Point, ResolvedPet } from './mainTypes';
-import { listAvailablePets, loadPetManifest } from './petCatalog';
+import {
+  formatPetIssues,
+  listAvailablePets,
+  listPetValidations,
+  loadPetManifest,
+  PetPackageError
+} from './petCatalog';
 import {
   clampToVisibleWorkArea,
   clampToWorkArea,
@@ -44,6 +53,25 @@ function parsePetId() {
   }
 
   return readSavedState().selectedPetId || DEFAULT_PET_ID;
+}
+
+function loadStartupPet() {
+  const requestedPetId = parsePetId();
+
+  try {
+    return loadPetManifest(requestedPetId);
+  } catch (error) {
+    console.error(getPetLoadErrorMessage(requestedPetId, error));
+
+    if (requestedPetId === DEFAULT_PET_ID) {
+      throw error;
+    }
+
+    const fallbackPet = loadPetManifest(DEFAULT_PET_ID);
+    writeSavedState({ selectedPetId: fallbackPet.packageId });
+    console.warn(`Falling back to default pet "${DEFAULT_PET_ID}".`);
+    return fallbackPet;
+  }
 }
 
 function resolveInitialPosition() {
@@ -190,9 +218,10 @@ function showContextMenu() {
   }
 
   const petItems = listAvailablePets().map((pet) => ({
-    label: pet.displayName,
+    label: pet.valid ? pet.displayName : `${pet.displayName} (invalid)`,
     type: 'radio' as const,
-    checked: pet.id === currentPet?.id,
+    enabled: pet.valid,
+    checked: pet.valid && pet.id === currentPet?.packageId,
     click: () => selectPet(pet.id)
   }));
 
@@ -200,6 +229,20 @@ function showContextMenu() {
     {
       label: 'Pets',
       submenu: petItems.length ? petItems : [{ label: 'No pets found', enabled: false }]
+    },
+    { type: 'separator' },
+    {
+      label: 'Open Pets Folder',
+      click: openPetsFolder
+    },
+    {
+      label: 'Reload Current Pet',
+      enabled: Boolean(currentPet),
+      click: reloadCurrentPet
+    },
+    {
+      label: 'Validate Pets',
+      click: validatePetsFromMenu
     },
     { type: 'separator' },
     {
@@ -222,6 +265,67 @@ function showContextMenu() {
   ]).popup({ window: overlayWindow });
 }
 
+async function openPetsFolder() {
+  fs.mkdirSync(PETS_ROOT, { recursive: true });
+  const errorMessage = await shell.openPath(PETS_ROOT);
+  if (errorMessage) {
+    console.error(`Could not open pets folder: ${errorMessage}`);
+    sendPetNotice('Could not open pets folder.');
+  }
+}
+
+function reloadCurrentPet() {
+  if (!currentPet) {
+    sendPetNotice('No current pet to reload.');
+    return;
+  }
+
+  try {
+    const pet = loadPetManifest(currentPet.packageId);
+    currentPet = pet;
+    writeSavedState({ selectedPetId: pet.packageId });
+    overlayWindow?.webContents.send('pet:data', pet);
+    sendPetNotice(`Reloaded ${pet.displayName}.`);
+  } catch (error) {
+    console.error(getPetLoadErrorMessage(currentPet.packageId, error));
+    sendPetNotice(`Could not reload ${currentPet.displayName}.`);
+  }
+}
+
+function validatePetsFromMenu() {
+  const validations = listPetValidations();
+  if (!validations.length) {
+    console.log('No pet packages found.');
+    sendPetNotice('No pet packages found.');
+    return;
+  }
+
+  let invalidCount = 0;
+  let warningCount = 0;
+
+  for (const validation of validations) {
+    if (validation.hasErrors) {
+      invalidCount += 1;
+    }
+
+    warningCount += validation.issues.filter((issue) => issue.severity === 'warning').length;
+    const status = validation.hasErrors ? 'invalid' : 'ok';
+    console.log(`${validation.displayName} (${validation.petId}): ${status}`);
+
+    for (const issue of validation.issues) {
+      console.log(`  [${issue.severity}] ${issue.message}`);
+    }
+  }
+
+  if (invalidCount > 0) {
+    sendPetNotice(`${invalidCount} invalid pet package(s).`);
+  } else if (warningCount > 0) {
+    sendPetNotice(`${warningCount} pet warning(s).`);
+  } else {
+    sendPetNotice('All pets valid.');
+  }
+}
+
 function selectPet(petId: string) {
   if (!overlayWindow || overlayWindow.isDestroyed()) {
     return;
@@ -230,11 +334,54 @@ function selectPet(petId: string) {
   try {
     const pet = loadPetManifest(petId);
     currentPet = pet;
-    writeSavedState({ selectedPetId: pet.id });
+    writeSavedState({ selectedPetId: pet.packageId });
     overlayWindow.webContents.send('pet:data', pet);
   } catch (error) {
-    console.error(error);
+    console.error(getPetLoadErrorMessage(petId, error));
+    sendPetNotice(`Could not load pet "${petId}".`);
   }
+}
+
+function sendPetNotice(message: string) {
+  if (!overlayWindow || overlayWindow.isDestroyed()) {
+    return;
+  }
+
+  overlayWindow.webContents.send('pet:notice', { message });
+}
+
+function getPetLoadErrorMessage(petId: string, error: unknown) {
+  if (error instanceof PetPackageError) {
+    return `Could not load pet "${petId}". ${formatPetIssues(error.validation.issues)}`;
+  }
+
+  return error instanceof Error
+    ? `Could not load pet "${petId}". ${error.message}`
+    : `Could not load pet "${petId}". ${String(error)}`;
+}
+
+function printPetValidationReport() {
+  const validations = listPetValidations();
+  if (!validations.length) {
+    console.log('No pet packages found.');
+    return true;
+  }
+
+  let ok = true;
+  for (const validation of validations) {
+    if (validation.hasErrors) {
+      ok = false;
+    }
+
+    const status = validation.hasErrors ? 'invalid' : 'ok';
+    console.log(`${validation.displayName} (${validation.petId}): ${status}`);
+
+    for (const issue of validation.issues) {
+      console.log(`  [${issue.severity}] ${issue.message}`);
+    }
+  }
+
+  return ok;
 }
 
 ipcMain.handle('overlay:move-by', (_event, delta: Point) => {
@@ -269,8 +416,13 @@ ipcMain.on('overlay:show-menu', showContextMenu);
 ipcMain.on('overlay:tuck-away', () => app.quit());
 
 app.whenReady().then(() => {
+  if (VALIDATE_PETS) {
+    app.exit(printPetValidationReport() ? 0 : 1);
+    return;
+  }
+
   try {
-    createOverlayWindow(loadPetManifest(parsePetId()));
+    createOverlayWindow(loadStartupPet());
   } catch (error) {
     console.error(error);
     app.quit();
@@ -278,7 +430,7 @@ app.whenReady().then(() => {
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createOverlayWindow(loadPetManifest(parsePetId()));
+      createOverlayWindow(loadStartupPet());
     }
   });
 });

@@ -46,6 +46,7 @@ type PetOverlayApi = {
   onProximity(callback: (state: ProximityState) => void): void;
   onTyping(callback: () => void): void;
   onMouseActivity(callback: () => void): void;
+  onPetNotice(callback: (notice: { message?: string }) => void): void;
   getPetData(): Promise<PetData | null>;
 };
 
@@ -459,6 +460,10 @@ overlayApi.onTyping(() => {
 
 overlayApi.onMouseActivity(() => {
   showMouseActivity();
+});
+
+overlayApi.onPetNotice((notice) => {
+  showBubble(notice.message || 'pet notice', 1800);
 });
 
 overlayApi.getPetData().then(applyPetData).catch((error) => {

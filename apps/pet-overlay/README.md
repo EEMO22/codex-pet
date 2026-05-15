@@ -49,6 +49,9 @@ npm run build
 - The transparent margin is click-through; only the pet-sized hitbox is interactive.
 - Right-click the pet to open the menu.
 - Choose a bundled pet from the `Pets` submenu.
+- Use `Open Pets Folder` to add or edit pet packages.
+- Use `Reload Current Pet` after editing the current pet's manifest or spritesheet.
+- Use `Validate Pets` to check installed pet packages without leaving the overlay.
 - Use the pet right-click menu to close it.
 - Run again to restore it at the last saved position.
 
@@ -107,9 +110,25 @@ can override event mapping without changing the atlas layout:
 }
 ```
 
+Validate all installed pet folders before launching:
+
+```powershell
+npm run validate:pets
+```
+
+The validator checks that:
+
+- `pet.json` exists and is valid JSON.
+- `spritesheetPath` is present and points to an existing image.
+- `layout` values are positive integers.
+- `animations` rows and frame counts fit inside the atlas.
+- `events` point to known animation names, falling back to defaults with a warning when possible.
+
+Invalid pets are shown as disabled entries in the right-click `Pets` menu. If the
+saved startup pet is invalid, the app logs the validation errors and falls back
+to the default pet.
+
 ## Current Scope
 
-This first pass intentionally avoids global key logging. It only renders the overlay,
-tracks mouse proximity, and reacts to direct pointer interaction inside the pet window.
-Keyboard activity can be added later as an explicit opt-in native hook that reports
-activity only, not actual key values.
+The keyboard activity helper reports activity only. It does not emit, store, or
+inspect actual key values.

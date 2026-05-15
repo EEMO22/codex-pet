@@ -11,7 +11,8 @@
     "start:scopey": "npm run build && electron . --pet=scopey",
     "start:vera-reviewer": "npm run build && electron . --pet=vera-reviewer",
     "check": "npm run build",
-    "smoke": "npm run build && electron . --smoke-test"
+    "smoke": "npm run build && electron . --smoke-test",
+    "validate:pets": "npm run build && electron . --validate-pets"
   },
   "devDependencies": {
     "@types/node": "^25.7.0",

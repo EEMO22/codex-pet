@@ -8,8 +8,38 @@ import {
   DEFAULT_EVENT_MAP,
   PETS_ROOT
 } from './constants';
-import type { ListedPet, PetAnimation, PetManifest, ResolvedPet } from './mainTypes';
+import type {
+  ListedPet,
+  PetAnimation,
+  PetLayout,
+  PetManifest,
+  PetPackageValidation,
+  PetValidationIssue,
+  ResolvedPet
+} from './mainTypes';
 import { readJson } from './stateStore';
+
+export class PetPackageError extends Error {
+  validation: PetPackageValidation;
+
+  constructor(validation: PetPackageValidation) {
+    super(`Invalid pet package "${validation.petId}": ${formatPetIssues(validation.issues)}`);
+    this.name = 'PetPackageError';
+    this.validation = validation;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function addIssue(issues: PetValidationIssue[], severity: PetValidationIssue['severity'], message: string) {
+  issues.push({ severity, message });
+}
 
 function mergeRecord<T extends Record<string, object>>(defaults: T, overrides: Record<string, object> | undefined): T {
   if (!overrides || typeof overrides !== 'object') {
@@ -49,46 +79,207 @@ function mergeEventMap(
   );
 }
 
-export function loadPetManifest(petId: string): ResolvedPet {
+function buildLayout(manifest: PetManifest, issues: PetValidationIssue[]) {
+  const layout = { ...CODEX_DEFAULT_LAYOUT };
+
+  if (manifest.layout !== undefined) {
+    if (!isRecord(manifest.layout)) {
+      addIssue(issues, 'error', '`layout` must be an object when provided.');
+    } else {
+      Object.assign(layout, manifest.layout);
+    }
+  }
+
+  const layoutFields: Array<keyof PetLayout> = ['columns', 'rows', 'cellWidth', 'cellHeight'];
+  for (const field of layoutFields) {
+    const value = layout[field];
+    if (!Number.isInteger(value) || value <= 0) {
+      addIssue(issues, 'error', `layout.${field} must be a positive integer.`);
+    }
+  }
+
+  return layout;
+}
+
+function buildAnimations(manifest: PetManifest, layout: PetLayout, issues: PetValidationIssue[]) {
+  let animationOverrides: Record<string, object> | undefined;
+
+  if (manifest.animations !== undefined) {
+    if (!isRecord(manifest.animations)) {
+      addIssue(issues, 'error', '`animations` must be an object when provided.');
+    } else {
+      animationOverrides = manifest.animations as Record<string, object>;
+    }
+  }
+
+  const animations = mergeRecord(CODEX_DEFAULT_ANIMATIONS, animationOverrides);
+  const maxRows = Number.isInteger(layout.rows) && layout.rows > 0 ? layout.rows : CODEX_DEFAULT_LAYOUT.rows;
+  const maxColumns = Number.isInteger(layout.columns) && layout.columns > 0 ? layout.columns : CODEX_DEFAULT_LAYOUT.columns;
+
+  for (const [animationName, animation] of Object.entries(animations)) {
+    if (!Number.isInteger(animation.row)) {
+      addIssue(issues, 'error', `animations.${animationName}.row must be an integer.`);
+    } else if (animation.row < 0 || animation.row >= maxRows) {
+      addIssue(issues, 'error', `animations.${animationName}.row must be between 0 and ${maxRows - 1}.`);
+    }
+
+    if (!Number.isInteger(animation.frames)) {
+      addIssue(issues, 'error', `animations.${animationName}.frames must be an integer.`);
+    } else if (animation.frames <= 0 || animation.frames > maxColumns) {
+      addIssue(issues, 'error', `animations.${animationName}.frames must be between 1 and ${maxColumns}.`);
+    }
+  }
+
+  return animations;
+}
+
+function validateEventMap(
+  manifest: PetManifest,
+  animations: Record<string, PetAnimation>,
+  issues: PetValidationIssue[]
+) {
+  if (manifest.events === undefined) {
+    return undefined;
+  }
+
+  if (!isRecord(manifest.events)) {
+    addIssue(issues, 'error', '`events` must be an object when provided.');
+    return undefined;
+  }
+
+  const knownEvents = new Set(Object.keys(DEFAULT_EVENT_MAP));
+  const eventMap = manifest.events as Record<string, string>;
+
+  for (const [eventName, animationName] of Object.entries(eventMap)) {
+    if (!knownEvents.has(eventName)) {
+      addIssue(issues, 'warning', `events.${eventName} is not used by the overlay.`);
+    }
+
+    if (!isNonEmptyString(animationName)) {
+      addIssue(issues, 'error', `events.${eventName} must name an animation.`);
+    } else if (!animations[animationName]) {
+      addIssue(issues, 'warning', `events.${eventName} points to missing animation "${animationName}" and will use the default.`);
+    }
+  }
+
+  return eventMap;
+}
+
+function getSpritesheetUrl(spritesheetPath: string) {
+  const spritesheetUrl = pathToFileURL(spritesheetPath);
+  const { mtimeMs } = fs.statSync(spritesheetPath);
+  spritesheetUrl.searchParams.set('v', String(Math.round(mtimeMs)));
+  return spritesheetUrl.toString();
+}
+
+export function validatePetPackage(petId: string): PetPackageValidation {
   const manifestPath = path.join(PETS_ROOT, petId, 'pet.json');
-  const manifest = readJson<PetManifest | null>(manifestPath, null);
+  const rawManifest = readJson<unknown>(manifestPath, null);
+  const issues: PetValidationIssue[] = [];
 
-  if (!manifest || !manifest.spritesheetPath) {
-    throw new Error(`Could not load pet manifest for "${petId}" at ${manifestPath}`);
+  if (!isRecord(rawManifest)) {
+    addIssue(issues, 'error', `Missing or invalid pet.json at ${manifestPath}.`);
+    return {
+      petId,
+      displayName: petId,
+      manifestPath,
+      manifest: null,
+      issues,
+      hasErrors: true
+    };
   }
 
-  const spritesheetPath = path.resolve(path.dirname(manifestPath), manifest.spritesheetPath);
-  if (!fs.existsSync(spritesheetPath)) {
-    throw new Error(`Could not find spritesheet for "${petId}" at ${spritesheetPath}`);
+  const manifest = rawManifest as PetManifest;
+  const displayName = isNonEmptyString(manifest.displayName) ? manifest.displayName : petId;
+
+  if (manifest.id !== undefined && !isNonEmptyString(manifest.id)) {
+    addIssue(issues, 'warning', '`id` should be a non-empty string when provided.');
   }
 
-  const animations = mergeRecord(CODEX_DEFAULT_ANIMATIONS, manifest.animations);
+  if (manifest.displayName !== undefined && !isNonEmptyString(manifest.displayName)) {
+    addIssue(issues, 'warning', '`displayName` should be a non-empty string when provided.');
+  }
+
+  if (manifest.description !== undefined && typeof manifest.description !== 'string') {
+    addIssue(issues, 'warning', '`description` should be a string when provided.');
+  }
+
+  let spritesheetPath: string | undefined;
+  if (!isNonEmptyString(manifest.spritesheetPath)) {
+    addIssue(issues, 'error', '`spritesheetPath` is required and must be a non-empty string.');
+  } else {
+    if (path.isAbsolute(manifest.spritesheetPath)) {
+      addIssue(issues, 'warning', '`spritesheetPath` should be relative so the pet package stays portable.');
+    }
+
+    spritesheetPath = path.resolve(path.dirname(manifestPath), manifest.spritesheetPath);
+    if (!fs.existsSync(spritesheetPath)) {
+      addIssue(issues, 'error', `Could not find spritesheet at ${spritesheetPath}.`);
+    }
+  }
+
+  const layout = buildLayout(manifest, issues);
+  const animations = buildAnimations(manifest, layout, issues);
+  validateEventMap(manifest, animations, issues);
 
   return {
-    id: manifest.id || petId,
-    displayName: manifest.displayName || petId,
-    description: manifest.description || '',
-    spritesheetUrl: pathToFileURL(spritesheetPath).toString(),
+    petId,
+    displayName,
+    manifestPath,
+    spritesheetPath,
+    manifest,
+    issues,
+    hasErrors: issues.some((issue) => issue.severity === 'error')
+  };
+}
+
+export function loadPetManifest(petId: string): ResolvedPet {
+  const validation = validatePetPackage(petId);
+  if (validation.hasErrors || !validation.manifest || !validation.spritesheetPath) {
+    throw new PetPackageError(validation);
+  }
+
+  const manifest = validation.manifest;
+  const animations = mergeRecord(CODEX_DEFAULT_ANIMATIONS, manifest.animations as Record<string, object> | undefined);
+
+  return {
+    id: isNonEmptyString(manifest.id) ? manifest.id : petId,
+    packageId: petId,
+    displayName: isNonEmptyString(manifest.displayName) ? manifest.displayName : petId,
+    description: typeof manifest.description === 'string' ? manifest.description : '',
+    spritesheetUrl: getSpritesheetUrl(validation.spritesheetPath),
     layout: { ...CODEX_DEFAULT_LAYOUT, ...manifest.layout },
     animations,
     events: mergeEventMap(DEFAULT_EVENT_MAP, manifest.events, animations)
   };
 }
 
-export function listAvailablePets(): ListedPet[] {
+export function listPetValidations(): PetPackageValidation[] {
   if (!fs.existsSync(PETS_ROOT)) {
     return [];
   }
 
   return fs.readdirSync(PETS_ROOT, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => {
-      const petId = entry.name;
-      const manifest = readJson<PetManifest | null>(path.join(PETS_ROOT, petId, 'pet.json'), null);
-      return {
-        id: manifest?.id || petId,
-        displayName: manifest?.displayName || petId
-      };
-    })
+    .map((entry) => validatePetPackage(entry.name))
     .sort((a, b) => a.displayName.localeCompare(b.displayName));
+}
+
+export function listAvailablePets(): ListedPet[] {
+  return listPetValidations().map((validation) => ({
+    id: validation.petId,
+    displayName: validation.displayName,
+    valid: !validation.hasErrors,
+    issues: validation.issues
+  }));
+}
+
+export function formatPetIssues(issues: PetValidationIssue[]) {
+  if (!issues.length) {
+    return 'No issues found.';
+  }
+
+  return issues
+    .map((issue) => `[${issue.severity}] ${issue.message}`)
+    .join(' ');
 }

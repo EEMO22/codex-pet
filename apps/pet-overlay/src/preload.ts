@@ -27,6 +27,9 @@ contextBridge.exposeInMainWorld('petOverlay', {
   onMouseActivity(callback: () => void) {
     ipcRenderer.on('pet:mouse-activity', () => callback());
   },
+  onPetNotice(callback: (notice: unknown) => void) {
+    ipcRenderer.on('pet:notice', (_event, notice) => callback(notice));
+  },
   getPetData() {
     return ipcRenderer.invoke('pet:get-data');
   }

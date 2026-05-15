@@ -31,8 +31,26 @@ export type PetManifest = {
   events?: Record<string, string>;
 };
 
+export type PetValidationSeverity = 'error' | 'warning';
+
+export type PetValidationIssue = {
+  severity: PetValidationSeverity;
+  message: string;
+};
+
+export type PetPackageValidation = {
+  petId: string;
+  displayName: string;
+  manifestPath: string;
+  spritesheetPath?: string;
+  manifest: PetManifest | null;
+  issues: PetValidationIssue[];
+  hasErrors: boolean;
+};
+
 export type ResolvedPet = {
   id: string;
+  packageId: string;
   displayName: string;
   description: string;
   spritesheetUrl: string;
@@ -44,4 +62,6 @@ export type ResolvedPet = {
 export type ListedPet = {
   id: string;
   displayName: string;
+  valid: boolean;
+  issues: PetValidationIssue[];
 };
