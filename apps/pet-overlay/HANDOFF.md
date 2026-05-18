@@ -133,7 +133,7 @@ Do not commit cache folders from `tmp/user-data`.
 - [x] Add version/release workflow.
   - Scope: bump app version intentionally, generate release artifacts, document
     GitHub Release upload steps.
-  - Completion: 2026-05-18, this stage commit. Added `release:version`,
+  - Completion: 2026-05-18, commit `250eb11`. Added `release:version`,
     `release:win`, `RELEASE.md`, and README release instructions.
   - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
     `validate:pets` currently fails because local work-in-progress pet folders
