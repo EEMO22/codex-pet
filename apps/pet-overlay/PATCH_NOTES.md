@@ -5,10 +5,31 @@
 - Bumped Codex Pet Overlay from `0.1.0` to `0.2.0`.
 - Prepared the release from a clean worktree so local in-progress pet folders
   under `pets/` are not bundled into distributables.
+- Generated Windows release artifacts at
+  `C:\Projects\codex-pet-release\apps\pet-overlay\out\dist-20260518-164348`.
+- Primary artifacts:
+  - `Codex Pet Overlay-0.2.0-x64.exe`
+    - Size: `107602954` bytes
+    - SHA-256:
+      `7b16ffacb44bce4adfebd467fe1812e448dbcf6d6699592302211b843d0e0cab`
+  - `Codex Pet Overlay-0.2.0-x64.zip`
+    - Size: `145673735` bytes
+    - SHA-256:
+      `84bb1757f51bcbc4ac6b5866ca130216ff096de49c1093c72e895d1e814bf699`
+  - `release-manifest.json`
 
 Validation:
 
-- Pending clean worktree release build.
+- `npm ci` in `C:\Projects\codex-pet-release\apps\pet-overlay`
+- `npm run release:win` in the clean worktree
+  - Ran `npm run check`
+  - Ran `npm run validate:pets`
+  - Ran `npm run smoke`
+  - Ran `npm run dist:win`
+  - Wrote `release-manifest.json`
+- `npm run package:verify` in the clean worktree
+- The clean worktree contained only valid built-in pets: `scopey`,
+  `vera-clear`, and `vera-reviewer`.
 
 ## 2026-05-18 - Startup and Testing Polish
 

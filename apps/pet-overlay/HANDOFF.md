@@ -174,11 +174,23 @@ Do not commit cache folders from `tmp/user-data`.
 
 ## Release Status
 
-- [ ] Prepare `0.2.0` Windows release.
+- [x] Prepare `0.2.0` Windows release.
   - Started: 2026-05-18.
+  - Completion: 2026-05-18, source commit `37501a9`. Built from clean detached
+    worktree `C:\Projects\codex-pet-release`.
   - Scope: version bump, clean worktree release validation, Windows artifacts,
     and release manifest.
-  - Status: version bump prepared; clean worktree release build pending.
+  - Output:
+    `C:\Projects\codex-pet-release\apps\pet-overlay\out\dist-20260518-164348`.
+  - Artifacts: `Codex Pet Overlay-0.2.0-x64.exe`,
+    `Codex Pet Overlay-0.2.0-x64.zip`, and `release-manifest.json`.
+  - Validation: `npm ci`, `npm run release:win`, and
+    `npm run package:verify` in the clean worktree. The release script ran
+    `npm run check`, `npm run validate:pets`, `npm run smoke`, and
+    `npm run dist:win`. The clean worktree contained only valid built-in pets.
+- [ ] Publish `0.2.0` release.
+  - Scope: create/push the desired release tag, upload the 0.2.0 installer,
+    zip, and manifest to GitHub Releases, and record the published URL.
 
 ## Resume Prompt
 
