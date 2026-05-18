@@ -15,6 +15,8 @@ type InteractionState = Required<Pick<PetAnimation, 'row' | 'frames' | 'frameMs'
   holdLast?: boolean;
 };
 type PetData = {
+  id: string;
+  packageId: string;
   displayName: string;
   spritesheetUrl: string;
   layout: {
@@ -53,6 +55,7 @@ type AppSettings = {
   rapidClickWindowMs: number;
   rapidClickLimit: number;
   animationFrameMsMultiplier: number;
+  eventAnimationOverridesByPet: Record<string, Record<string, string>>;
 };
 
 type PetOverlayApi = {
@@ -89,7 +92,8 @@ const defaultSettings: AppSettings = {
   inactivityWaitingMs: 5000,
   rapidClickWindowMs: 1000,
   rapidClickLimit: 4,
-  animationFrameMsMultiplier: 1
+  animationFrameMsMultiplier: 1,
+  eventAnimationOverridesByPet: {}
 };
 
 let states: Record<string, InteractionState> = {
@@ -361,8 +365,15 @@ function buildInteractionStates(pet: PetData): Record<string, InteractionState> 
 }
 
 function resolveEventAnimation(pet: PetData, eventName: string, fallbackName: string) {
-  const animationName = pet.events?.[eventName] || fallbackName;
-  return pet.animations[animationName] || pet.animations[fallbackName];
+  const petKey = pet.packageId || pet.id;
+  const eventOverrides = overlaySettings.eventAnimationOverridesByPet?.[petKey] || {};
+  const baseAnimationName = pet.events?.[eventName] || fallbackName;
+  const overrideAnimationName = eventOverrides[eventName];
+  const animationName = overrideAnimationName && pet.animations[overrideAnimationName]
+    ? overrideAnimationName
+    : baseAnimationName;
+
+  return pet.animations[animationName] || pet.animations[baseAnimationName] || pet.animations[fallbackName];
 }
 
 function withTiming(animation: PetAnimation, frameMs: number, flags: Partial<PetAnimation> = {}): InteractionState {

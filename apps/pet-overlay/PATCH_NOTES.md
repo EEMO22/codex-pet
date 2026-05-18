@@ -1,5 +1,26 @@
 # Patch Notes
 
+## 2026-05-18 - Event Animation Mapping Settings
+
+- Added per-pet event animation overrides to `settings.json`.
+- Added an `Event Animations` section to the settings window with one selector
+  per overlay event.
+- The settings window now loads the current pet's available animations and keeps
+  override choices scoped to that pet.
+- The renderer now applies saved overrides above the pet's manifest event map
+  and falls back to the pet/default animation when an override is unavailable.
+- Settings smoke coverage now verifies the current pet data, event override
+  settings shape, and all nine event mapping selectors.
+- Updated README settings documentation.
+
+Validation:
+
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets` currently fails because local work-in-progress folders
+  `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+  `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
+
 ## 2026-05-18 - Release Workflow
 
 - Added `npm run release:version -- <semver>` to update `package.json` and

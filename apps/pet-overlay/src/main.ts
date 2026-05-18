@@ -87,10 +87,10 @@ function createSettingsWindow() {
   }
 
   settingsWindow = new BrowserWindow({
-    width: 460,
-    height: 640,
+    width: 500,
+    height: 760,
     minWidth: 420,
-    minHeight: 560,
+    minHeight: 620,
     title: 'Codex Pet Settings',
     show: false,
     backgroundColor: '#f7f8fb',
@@ -108,6 +108,7 @@ function createSettingsWindow() {
   });
   settingsWindow.webContents.once('did-finish-load', () => {
     sendSettingsData();
+    sendPetData();
   });
   settingsWindow.on('closed', () => {
     settingsWindow = null;
@@ -491,7 +492,7 @@ async function importPetFolder() {
     const imported = importPetPackage(sourceDir);
     currentPet = imported.pet;
     writeSavedState({ selectedPetId: imported.pet.packageId });
-    overlayWindow.webContents.send('pet:data', imported.pet);
+    sendPetData();
     sendPetNotice(imported.copied
       ? `Imported ${imported.pet.displayName}.`
       : `${imported.pet.displayName} already installed.`);
@@ -511,7 +512,7 @@ function reloadCurrentPet() {
     const pet = loadPetManifest(currentPet.packageId);
     currentPet = pet;
     writeSavedState({ selectedPetId: pet.packageId });
-    overlayWindow?.webContents.send('pet:data', pet);
+    sendPetData();
     sendPetNotice(`Reloaded ${pet.displayName}.`);
   } catch (error) {
     console.error(getPetLoadErrorMessage(currentPet.packageId, error));
@@ -562,10 +563,24 @@ function selectPet(petId: string) {
     const pet = loadPetManifest(petId);
     currentPet = pet;
     writeSavedState({ selectedPetId: pet.packageId });
-    overlayWindow.webContents.send('pet:data', pet);
+    sendPetData();
   } catch (error) {
     console.error(getPetLoadErrorMessage(petId, error));
     sendPetNotice(`Could not load pet "${petId}".`);
+  }
+}
+
+function sendPetData() {
+  if (!currentPet) {
+    return;
+  }
+
+  if (overlayWindow && !overlayWindow.isDestroyed()) {
+    overlayWindow.webContents.send('pet:data', currentPet);
+  }
+
+  if (settingsWindow && !settingsWindow.isDestroyed()) {
+    settingsWindow.webContents.send('pet:data', currentPet);
   }
 }
 

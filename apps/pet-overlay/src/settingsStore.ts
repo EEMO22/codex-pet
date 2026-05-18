@@ -2,7 +2,7 @@ import { app } from 'electron';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { DEFAULT_SETTINGS } from './constants';
+import { DEFAULT_EVENT_MAP, DEFAULT_SETTINGS } from './constants';
 import type { AppSettings } from './mainTypes';
 import { readJson } from './stateStore';
 
@@ -26,6 +26,42 @@ function asInteger(value: unknown, fallback: number, min: number, max: number) {
   return Math.round(asNumber(value, fallback, min, max));
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function asEventAnimationOverridesByPet(value: unknown) {
+  if (!isRecord(value)) {
+    return {};
+  }
+
+  const knownEvents = new Set(Object.keys(DEFAULT_EVENT_MAP));
+  const normalized: Record<string, Record<string, string>> = {};
+
+  for (const [petId, eventMap] of Object.entries(value)) {
+    if (!isNonEmptyString(petId) || !isRecord(eventMap)) {
+      continue;
+    }
+
+    const petOverrides: Record<string, string> = {};
+    for (const [eventName, animationName] of Object.entries(eventMap)) {
+      if (knownEvents.has(eventName) && isNonEmptyString(animationName)) {
+        petOverrides[eventName] = animationName.trim();
+      }
+    }
+
+    if (Object.keys(petOverrides).length > 0) {
+      normalized[petId.trim()] = petOverrides;
+    }
+  }
+
+  return normalized;
+}
+
 export function normalizeSettings(raw: Partial<AppSettings> | null | undefined): AppSettings {
   const source = raw && typeof raw === 'object' ? raw : {};
 
@@ -44,7 +80,8 @@ export function normalizeSettings(raw: Partial<AppSettings> | null | undefined):
       DEFAULT_SETTINGS.animationFrameMsMultiplier,
       0.25,
       4
-    )
+    ),
+    eventAnimationOverridesByPet: asEventAnimationOverridesByPet(source.eventAnimationOverridesByPet)
   };
 }
 

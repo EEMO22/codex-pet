@@ -22,6 +22,7 @@ export type AppSettings = {
   rapidClickWindowMs: number;
   rapidClickLimit: number;
   animationFrameMsMultiplier: number;
+  eventAnimationOverridesByPet: Record<string, Record<string, string>>;
 };
 
 export type PetAnimation = {

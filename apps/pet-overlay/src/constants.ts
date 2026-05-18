@@ -32,7 +32,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   inactivityWaitingMs: 5000,
   rapidClickWindowMs: 1000,
   rapidClickLimit: 4,
-  animationFrameMsMultiplier: 1
+  animationFrameMsMultiplier: 1,
+  eventAnimationOverridesByPet: {}
 };
 
 export const CODEX_DEFAULT_LAYOUT: PetLayout = {

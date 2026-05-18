@@ -140,10 +140,16 @@ Do not commit cache folders from `tmp/user-data`.
     `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
     `pet.json`; release builds intentionally require a clean working tree before
     bundling `pets/`.
-- [ ] Add event-to-animation mapping settings.
+- [x] Add event-to-animation mapping settings.
   - Scope: keep Codex pet defaults, let each event choose an available animation
     from the selected pet.
-  - Completion: pending.
+  - Completion: 2026-05-18, this stage commit. Added per-pet event animation
+    overrides in settings, settings-window selectors for all overlay events, and
+    renderer support for applying overrides above pet manifest defaults.
+  - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
+    `validate:pets` currently fails because local work-in-progress pet folders
+    `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+    `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
 - [ ] Add pet manager polish.
   - Scope: imported pet list, remove imported pet, open selected pet folder.
   - Completion: pending.

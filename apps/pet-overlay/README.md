@@ -166,11 +166,17 @@ fields. Current settings include:
 - `rapidClickWindowMs`
 - `rapidClickLimit`
 - `animationFrameMsMultiplier`
+- `eventAnimationOverridesByPet`
 
 The settings window edits the same file and applies changes immediately after
 save. `Save` closes the settings window, and `Reset` restores the built-in
 defaults. When always-on-top is disabled, the pet is shown in the taskbar so it
 can be brought forward again.
+
+`Event Animations` in the settings window lets each installed pet override which
+animation is used for overlay events such as click, mouse proximity, dragging,
+keyboard activity, and inactivity. Choosing `Default` uses the selected pet's
+own `pet.json` event mapping, falling back to the Codex defaults when omitted.
 
 `Launch at Login` registers the packaged app to start when you sign in to
 Windows. During local development it is saved in settings, but the OS login item

@@ -126,10 +126,44 @@ input[type="number"] {
   text-align: right;
 }
 
+select {
+  width: 160px;
+  height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  background: #fff;
+  font: inherit;
+}
+
 input[type="number"]:focus-visible,
+select:focus-visible,
 button:focus-visible {
   outline: 2px solid rgba(38, 99, 217, 0.32);
   outline-offset: 2px;
+}
+
+.mapping-grid {
+  display: grid;
+}
+
+.mapping-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 42px;
+  padding: 8px 0;
+}
+
+.mapping-row + .mapping-row {
+  border-top: 1px solid #eef1f6;
+}
+
+.mapping-note {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .actions {
