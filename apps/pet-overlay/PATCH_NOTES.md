@@ -1,5 +1,31 @@
 # Patch Notes
 
+## 2026-05-18 - Release Workflow
+
+- Added `npm run release:version -- <semver>` to update `package.json` and
+  `package-lock.json` together.
+- Added `npm run release:win` to require a clean working tree, run validation,
+  build Windows distributables, and write `release-manifest.json` with artifact
+  sizes and SHA-256 hashes.
+- Added `RELEASE.md` with the version bump, artifact inspection, and GitHub
+  Release upload flow.
+- Added a README release section that points to the scripted workflow.
+- Updated `HANDOFF.md` so the release workflow stage is marked complete and the
+  current unfinished pet-folder validation blocker is visible across machines.
+
+Validation:
+
+- `node --check scripts/set-version.mjs`
+- PowerShell syntax parse for `scripts/release-win.ps1`
+- `npm pkg get scripts.release:version scripts.release:win`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release-win.ps1`
+  stops on the current dirty working tree before packaging
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets` currently fails because local work-in-progress folders
+  `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+  `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
+
 ## 2026-05-15 - Tray Controls
 
 - Added a Windows tray icon using the generated Vera app icon.

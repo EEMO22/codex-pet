@@ -49,6 +49,24 @@ Implemented:
 - `npm start` runs the latest local source after build. Installed builds only
   update after rebuilding and reinstalling.
 
+## Progress Tracking
+
+Use this file as the cross-machine source of truth for project progress. Before
+starting a new stage, read this section and `PATCH_NOTES.md`.
+
+When completing a stage:
+
+- Mark the stage checkbox below as done.
+- Add the completion date, commit reference, and a short note.
+- Move any remaining follow-up work into a new unchecked item.
+- Update `PATCH_NOTES.md` with the user-facing change summary and validation
+  commands that were run.
+- Commit the code and documentation together so another machine can resume from
+  the same state.
+
+If a stage is partially complete, leave it unchecked and add a short `Progress:`
+note under the item.
+
 ## Commands
 
 Install and run:
@@ -112,21 +130,27 @@ Do not commit cache folders from `tmp/user-data`.
 
 ## Suggested Next Stages
 
-1. Add version/release workflow:
-   - bump app version intentionally
-   - generate release artifacts
-   - document GitHub Release upload steps
-2. Add event-to-animation mapping settings:
-   - keep Codex pet defaults
-   - let each event choose an available animation from the selected pet
-3. Add pet manager polish:
-   - imported pet list
-   - remove imported pet
-   - open selected pet folder
-4. Add optional startup/testing polish:
-   - first-run notice
-   - diagnostics window or copied environment summary
-   - better packaging smoke checks if practical
+- [x] Add version/release workflow.
+  - Scope: bump app version intentionally, generate release artifacts, document
+    GitHub Release upload steps.
+  - Completion: 2026-05-18, this stage commit. Added `release:version`,
+    `release:win`, `RELEASE.md`, and README release instructions.
+  - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
+    `validate:pets` currently fails because local work-in-progress pet folders
+    `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+    `pet.json`; release builds intentionally require a clean working tree before
+    bundling `pets/`.
+- [ ] Add event-to-animation mapping settings.
+  - Scope: keep Codex pet defaults, let each event choose an available animation
+    from the selected pet.
+  - Completion: pending.
+- [ ] Add pet manager polish.
+  - Scope: imported pet list, remove imported pet, open selected pet folder.
+  - Completion: pending.
+- [ ] Add optional startup/testing polish.
+  - Scope: first-run notice, diagnostics window or copied environment summary,
+    better packaging smoke checks if practical.
+  - Completion: pending.
 
 ## Resume Prompt
 

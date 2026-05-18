@@ -95,6 +95,20 @@ The Windows app icon is generated from the default Vera pet frame:
 npm run generate:icon
 ```
 
+## Release
+
+Release workflow details live in `RELEASE.md`. The short path is:
+
+```powershell
+npm run release:version -- 0.2.0
+npm run release:win
+```
+
+`release:win` requires a clean working tree because all local folders under
+`pets/` are bundled into the Windows app. It runs the normal validation commands,
+creates the Windows distributables, and writes `release-manifest.json` with
+artifact sizes and SHA-256 hashes.
+
 ## Code Layout
 
 - `src/main.ts`: wires the Electron app, overlay window, IPC, menu, and lifecycle.
