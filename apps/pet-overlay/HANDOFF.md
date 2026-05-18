@@ -162,7 +162,7 @@ Do not commit cache folders from `tmp/user-data`.
 - [x] Add optional startup/testing polish.
   - Scope: first-run notice, diagnostics window or copied environment summary,
     better packaging smoke checks if practical.
-  - Completion: 2026-05-18, this stage commit. Added a one-time first-run
+  - Completion: 2026-05-18, commit `58752c3`. Added a one-time first-run
     notice, Copy Diagnostics menu actions, diagnostics environment summaries,
     and package output verification.
   - Validation: PowerShell syntax parse for `scripts/package-win.ps1` and
