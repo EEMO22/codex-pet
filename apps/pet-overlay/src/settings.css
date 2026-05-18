@@ -166,6 +166,67 @@ button:focus-visible {
   font-size: 12px;
 }
 
+.pet-list {
+  display: grid;
+}
+
+.pet-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 9px 0;
+}
+
+.pet-row + .pet-row {
+  border-top: 1px solid #eef1f6;
+}
+
+.pet-meta {
+  min-width: 0;
+}
+
+.pet-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pet-title strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pet-badge {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: #25523d;
+  background: #e2f3eb;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pet-badge.is-invalid {
+  color: #842b2b;
+  background: #f6dddd;
+}
+
+.pet-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.pet-actions button {
+  min-width: 58px;
+  height: 30px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -181,6 +242,11 @@ button {
   font: inherit;
   font-weight: 650;
   cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 
 .primary {

@@ -139,6 +139,8 @@ artifact sizes and SHA-256 hashes.
 - Use `Validate Pets` to check installed pet packages without leaving the overlay.
 - Use `Settings` to toggle keyboard activity, mouse proximity, and always-on-top behavior.
 - Use `Settings > Open Settings Window` to edit timing and interaction values.
+- Use the settings window `Pet Manager` section to select pets, open a specific
+  pet folder, or remove imported pets. Built-in pets cannot be removed there.
 - Use the pet right-click menu to close it.
 - Run again to restore it at the last saved position.
 - Launching the app again while it is already running brings the existing pet

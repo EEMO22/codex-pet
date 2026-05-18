@@ -18,6 +18,9 @@ contextBridge.exposeInMainWorld('petOverlay', {
   onPetData(callback: (pet: unknown) => void) {
     ipcRenderer.on('pet:data', (_event, pet) => callback(pet));
   },
+  onPetListData(callback: (pets: unknown) => void) {
+    ipcRenderer.on('pets:list', (_event, pets) => callback(pets));
+  },
   onProximity(callback: (state: unknown) => void) {
     ipcRenderer.on('pet:proximity', (_event, state) => callback(state));
   },
@@ -35,6 +38,18 @@ contextBridge.exposeInMainWorld('petOverlay', {
   },
   getPetData() {
     return ipcRenderer.invoke('pet:get-data');
+  },
+  getPetListData() {
+    return ipcRenderer.invoke('pets:get-list');
+  },
+  selectPet(petId: string) {
+    return ipcRenderer.invoke('pets:select', petId);
+  },
+  openPetFolder(petId: string) {
+    return ipcRenderer.invoke('pets:open-folder', petId);
+  },
+  removePet(petId: string) {
+    return ipcRenderer.invoke('pets:remove', petId);
   },
   onSettingsData(callback: (settings: unknown) => void) {
     ipcRenderer.on('settings:data', (_event, settings) => callback(settings));

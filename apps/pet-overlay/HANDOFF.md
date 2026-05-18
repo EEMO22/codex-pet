@@ -150,9 +150,15 @@ Do not commit cache folders from `tmp/user-data`.
     `validate:pets` currently fails because local work-in-progress pet folders
     `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
     `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
-- [ ] Add pet manager polish.
+- [x] Add pet manager polish.
   - Scope: imported pet list, remove imported pet, open selected pet folder.
-  - Completion: pending.
+  - Completion: 2026-05-18, this stage commit. Added settings-window pet
+    manager rows, current/invalid status, select/open/remove actions, and
+    packaged imported-pet removal safeguards.
+  - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
+    `validate:pets` currently fails because local work-in-progress pet folders
+    `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+    `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
 - [ ] Add optional startup/testing polish.
   - Scope: first-run notice, diagnostics window or copied environment summary,
     better packaging smoke checks if practical.

@@ -203,6 +203,27 @@ function getPetLibraryRoots() {
   });
 }
 
+function isSamePath(left: string, right: string) {
+  return path.resolve(left).toLowerCase() === path.resolve(right).toLowerCase();
+}
+
+function isPathInside(parentDir: string, targetPath: string) {
+  const relativePath = path.relative(path.resolve(parentDir), path.resolve(targetPath));
+  return Boolean(relativePath) && !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
+}
+
+function getPetPackageSource(packageDir: string) {
+  if (!isSamePath(PETS_ROOT, BUILT_IN_PETS_ROOT) && isPathInside(PETS_ROOT, packageDir)) {
+    return 'imported' as const;
+  }
+
+  return 'builtIn' as const;
+}
+
+function canRemovePetPackage(packageDir: string) {
+  return getPetPackageSource(packageDir) === 'imported' && isPathInside(PETS_ROOT, packageDir);
+}
+
 function getPetPackageEntries() {
   const entries = new Map<string, string>();
 
@@ -387,8 +408,25 @@ export function listAvailablePets(): ListedPet[] {
     id: validation.petId,
     displayName: validation.displayName,
     valid: !validation.hasErrors,
+    source: getPetPackageSource(validation.packageDir),
+    packageDir: validation.packageDir,
+    canRemove: canRemovePetPackage(validation.packageDir),
     issues: validation.issues
   }));
+}
+
+export function removeImportedPetPackage(petId: string): ListedPet {
+  const pet = listAvailablePets().find((candidate) => candidate.id === petId);
+  if (!pet) {
+    throw new Error(`Pet "${petId}" was not found.`);
+  }
+
+  if (!pet.canRemove) {
+    throw new Error(`Pet "${pet.displayName}" cannot be removed from the app.`);
+  }
+
+  fs.rmSync(pet.packageDir, { recursive: true, force: false });
+  return pet;
 }
 
 export function formatPetIssues(issues: PetValidationIssue[]) {

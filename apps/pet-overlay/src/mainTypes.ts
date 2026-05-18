@@ -54,6 +54,8 @@ export type PetValidationIssue = {
   message: string;
 };
 
+export type PetPackageSource = 'builtIn' | 'imported';
+
 export type PetPackageValidation = {
   petId: string;
   displayName: string;
@@ -80,6 +82,10 @@ export type ListedPet = {
   id: string;
   displayName: string;
   valid: boolean;
+  selected?: boolean;
+  source: PetPackageSource;
+  packageDir: string;
+  canRemove: boolean;
   issues: PetValidationIssue[];
 };
 

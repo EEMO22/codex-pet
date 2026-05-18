@@ -20,7 +20,8 @@ import {
   listAvailablePets,
   listPetValidations,
   loadPetManifest,
-  PetPackageError
+  PetPackageError,
+  removeImportedPetPackage
 } from './petCatalog';
 import {
   getDefaultPetHitboxOffset,
@@ -109,6 +110,7 @@ function createSettingsWindow() {
   settingsWindow.webContents.once('did-finish-load', () => {
     sendSettingsData();
     sendPetData();
+    sendPetListData();
   });
   settingsWindow.on('closed', () => {
     settingsWindow = null;
@@ -285,6 +287,13 @@ function refreshTrayMenu() {
   }
 
   tray.setContextMenu(buildTrayMenu());
+}
+
+function getPetListData() {
+  return listAvailablePets().map((pet) => ({
+    ...pet,
+    selected: pet.valid && pet.id === currentPet?.packageId
+  }));
 }
 
 function showExistingOverlay() {
@@ -493,6 +502,7 @@ async function importPetFolder() {
     currentPet = imported.pet;
     writeSavedState({ selectedPetId: imported.pet.packageId });
     sendPetData();
+    sendPetListData();
     sendPetNotice(imported.copied
       ? `Imported ${imported.pet.displayName}.`
       : `${imported.pet.displayName} already installed.`);
@@ -513,6 +523,7 @@ function reloadCurrentPet() {
     currentPet = pet;
     writeSavedState({ selectedPetId: pet.packageId });
     sendPetData();
+    sendPetListData();
     sendPetNotice(`Reloaded ${pet.displayName}.`);
   } catch (error) {
     console.error(getPetLoadErrorMessage(currentPet.packageId, error));
@@ -560,14 +571,21 @@ function selectPet(petId: string) {
   }
 
   try {
-    const pet = loadPetManifest(petId);
-    currentPet = pet;
-    writeSavedState({ selectedPetId: pet.packageId });
-    sendPetData();
+    const pet = selectPetOrThrow(petId);
+    sendPetNotice(`Selected ${pet.displayName}.`);
   } catch (error) {
     console.error(getPetLoadErrorMessage(petId, error));
     sendPetNotice(`Could not load pet "${petId}".`);
   }
+}
+
+function selectPetOrThrow(petId: string) {
+  const pet = loadPetManifest(petId);
+  currentPet = pet;
+  writeSavedState({ selectedPetId: pet.packageId });
+  sendPetData();
+  sendPetListData();
+  return pet;
 }
 
 function sendPetData() {
@@ -582,6 +600,54 @@ function sendPetData() {
   if (settingsWindow && !settingsWindow.isDestroyed()) {
     settingsWindow.webContents.send('pet:data', currentPet);
   }
+}
+
+function sendPetListData() {
+  if (settingsWindow && !settingsWindow.isDestroyed()) {
+    settingsWindow.webContents.send('pets:list', getPetListData());
+  }
+}
+
+async function openPetPackageFolder(petId: string) {
+  const pet = getPetListData().find((candidate) => candidate.id === petId);
+  if (!pet) {
+    throw new Error(`Pet "${petId}" was not found.`);
+  }
+
+  const errorMessage = await shell.openPath(pet.packageDir);
+  if (errorMessage) {
+    throw new Error(errorMessage);
+  }
+
+  return true;
+}
+
+function removePetPackageFromSettings(petId: string) {
+  const removedPet = removeImportedPetPackage(petId);
+
+  if (settings.eventAnimationOverridesByPet?.[removedPet.id]) {
+    const nextOverrides = { ...settings.eventAnimationOverridesByPet };
+    delete nextOverrides[removedPet.id];
+    settings = writeSettings({ eventAnimationOverridesByPet: nextOverrides });
+    applyRuntimeSettings();
+  }
+
+  if (currentPet?.packageId === removedPet.id) {
+    const fallbackPet = loadPetManifest(DEFAULT_PET_ID);
+    currentPet = fallbackPet;
+    writeSavedState({ selectedPetId: fallbackPet.packageId });
+    sendPetData();
+  }
+
+  refreshTrayMenu();
+  sendPetListData();
+  sendPetNotice(`Removed ${removedPet.displayName}.`);
+
+  return {
+    removedPet,
+    currentPet,
+    pets: getPetListData()
+  };
 }
 
 function sendPetNotice(message: string) {
@@ -778,6 +844,17 @@ ipcMain.handle('overlay:move-by', (_event, delta: Point) => {
 });
 
 ipcMain.handle('pet:get-data', () => currentPet);
+ipcMain.handle('pets:get-list', () => getPetListData());
+ipcMain.handle('pets:select', (_event, petId: string) => {
+  const pet = selectPetOrThrow(petId);
+  sendPetNotice(`Selected ${pet.displayName}.`);
+  return {
+    pet,
+    pets: getPetListData()
+  };
+});
+ipcMain.handle('pets:open-folder', (_event, petId: string) => openPetPackageFolder(petId));
+ipcMain.handle('pets:remove', (_event, petId: string) => removePetPackageFromSettings(petId));
 ipcMain.handle('settings:get-data', () => settings);
 ipcMain.handle('settings:save-data', (_event, nextSettings: Partial<AppSettings>) => {
   updateSettings(nextSettings, 'Settings saved.');

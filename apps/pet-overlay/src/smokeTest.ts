@@ -69,7 +69,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
     const settingsResult = await runSettingsWindowSmokeCheck();
     console.log('[smoke:settings]', JSON.stringify(settingsResult));
 
-    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.hasLaunchAtLogin || !settingsResult.hasEventOverrides || !settingsResult.hasPetData || settingsResult.eventSelectCount < 9 || !settingsResult.fieldCount) {
+    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasPetListApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.hasLaunchAtLogin || !settingsResult.hasEventOverrides || !settingsResult.hasPetData || !settingsResult.hasPetList || !settingsResult.hasPetManager || settingsResult.petRowCount < 3 || settingsResult.eventSelectCount < 9 || !settingsResult.fieldCount) {
       app.exit(1);
       return;
     }
@@ -213,15 +213,20 @@ async function runSettingsWindowSmokeCheck() {
       (async () => {
         const settings = window.petOverlay ? await window.petOverlay.getSettingsData() : null;
         const pet = window.petOverlay ? await window.petOverlay.getPetData() : null;
+        const pets = window.petOverlay ? await window.petOverlay.getPetListData() : null;
         await new Promise((resolve) => setTimeout(resolve, 120));
         return {
           hasApi: Boolean(window.petOverlay),
           hasCloseApi: Boolean(window.petOverlay && typeof window.petOverlay.closeSettingsWindow === 'function'),
+          hasPetListApi: Boolean(window.petOverlay && typeof window.petOverlay.getPetListData === 'function'),
           hasForm: Boolean(document.getElementById('settings-form')),
           hasSettings: Boolean(settings && typeof settings.rapidClickLimit === 'number'),
           hasLaunchAtLogin: Boolean(settings && typeof settings.launchAtLoginEnabled === 'boolean'),
           hasEventOverrides: Boolean(settings && settings.eventAnimationOverridesByPet && typeof settings.eventAnimationOverridesByPet === 'object'),
           hasPetData: Boolean(pet && pet.animations && pet.events),
+          hasPetList: Array.isArray(pets) && pets.some((item) => item.selected),
+          hasPetManager: Boolean(document.getElementById('petManager')),
+          petRowCount: document.querySelectorAll('.pet-row').length,
           eventSelectCount: document.querySelectorAll('select[data-event-mapping]').length,
           fieldCount: document.querySelectorAll('input').length
         };

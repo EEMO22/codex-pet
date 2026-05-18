@@ -23,12 +23,34 @@
     events: Record<string, string>;
   };
 
+  type PetListItem = {
+    id: string;
+    displayName: string;
+    valid: boolean;
+    selected: boolean;
+    source: 'builtIn' | 'imported';
+    canRemove: boolean;
+    issues: Array<{ severity: string; message: string }>;
+  };
+
+  type PetActionResult = {
+    pet?: PetData | null;
+    currentPet?: PetData | null;
+    pets?: PetListItem[];
+    removedPet?: PetListItem;
+  };
+
   type SettingsWindowApi = {
     getPetData(): Promise<PetData | null>;
+    getPetListData(): Promise<PetListItem[]>;
+    selectPet(petId: string): Promise<PetActionResult>;
+    openPetFolder(petId: string): Promise<boolean>;
+    removePet(petId: string): Promise<PetActionResult>;
     getSettingsData(): Promise<SettingsWindowSettings>;
     saveSettingsData(settings: Partial<SettingsWindowSettings>): Promise<SettingsWindowSettings>;
     resetSettingsData(): Promise<SettingsWindowSettings>;
     onPetData(callback: (pet: PetData) => void): void;
+    onPetListData(callback: (pets: PetListItem[]) => void): void;
     onSettingsData(callback: (settings: SettingsWindowSettings) => void): void;
     closeSettingsWindow(): void;
   };
@@ -49,6 +71,7 @@
   const form = document.getElementById('settings-form') as HTMLFormElement;
   const status = document.getElementById('status') as HTMLDivElement;
   const resetButton = document.getElementById('reset') as HTMLButtonElement;
+  const petManager = document.getElementById('petManager') as HTMLDivElement;
   const eventMappings = document.getElementById('eventMappings') as HTMLDivElement;
 
   const fields = {
@@ -66,6 +89,7 @@
 
   let currentSettings: SettingsWindowSettings | null = null;
   let currentPet: PetData | null = null;
+  let currentPetList: PetListItem[] = [];
 
   function setStatus(message: string, isError = false) {
     status.textContent = message;
@@ -96,7 +120,139 @@
 
   function applyPetData(pet: PetData | null) {
     currentPet = pet;
+    renderPetManager();
     renderEventMappings();
+  }
+
+  function applyPetListData(pets: PetListItem[] | null) {
+    currentPetList = Array.isArray(pets) ? pets : [];
+    renderPetManager();
+  }
+
+  function getIssueSummary(pet: PetListItem) {
+    if (pet.valid) {
+      return pet.source === 'imported' ? 'Imported' : 'Built-in';
+    }
+
+    return pet.issues?.[0]?.message || 'Invalid pet package';
+  }
+
+  function renderPetManager() {
+    if (!petManager) {
+      return;
+    }
+
+    petManager.textContent = '';
+
+    if (!currentPetList.length) {
+      const note = document.createElement('p');
+      note.className = 'mapping-note';
+      note.textContent = 'No pet packages found.';
+      petManager.appendChild(note);
+      return;
+    }
+
+    for (const pet of currentPetList) {
+      const row = document.createElement('div');
+      row.className = 'pet-row';
+
+      const meta = document.createElement('div');
+      meta.className = 'pet-meta';
+
+      const title = document.createElement('div');
+      title.className = 'pet-title';
+
+      const name = document.createElement('strong');
+      name.textContent = pet.displayName;
+      title.appendChild(name);
+
+      if (pet.selected || !pet.valid) {
+        const badge = document.createElement('span');
+        badge.className = pet.valid ? 'pet-badge' : 'pet-badge is-invalid';
+        badge.textContent = pet.valid ? 'Current' : 'Invalid';
+        title.appendChild(badge);
+      }
+
+      const summary = document.createElement('small');
+      summary.textContent = getIssueSummary(pet);
+      meta.append(title, summary);
+
+      const actions = document.createElement('div');
+      actions.className = 'pet-actions';
+
+      const useButton = document.createElement('button');
+      useButton.type = 'button';
+      useButton.className = 'secondary';
+      useButton.textContent = 'Use';
+      useButton.disabled = !pet.valid || pet.selected;
+      useButton.addEventListener('click', () => selectPetFromManager(pet));
+
+      const openButton = document.createElement('button');
+      openButton.type = 'button';
+      openButton.className = 'secondary';
+      openButton.textContent = 'Open';
+      openButton.addEventListener('click', () => openPetFromManager(pet));
+
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.className = 'secondary';
+      removeButton.textContent = 'Remove';
+      removeButton.disabled = !pet.canRemove;
+      removeButton.title = pet.canRemove ? 'Remove imported pet' : 'Built-in pets cannot be removed here';
+      removeButton.addEventListener('click', () => removePetFromManager(pet));
+
+      actions.append(useButton, openButton, removeButton);
+      row.append(meta, actions);
+      petManager.appendChild(row);
+    }
+  }
+
+  function applyPetActionResult(result: PetActionResult | null) {
+    if (!result) {
+      return;
+    }
+
+    if (result.pets) {
+      applyPetListData(result.pets);
+    }
+
+    if (result.pet || result.currentPet) {
+      applyPetData((result.pet || result.currentPet) ?? null);
+    }
+  }
+
+  async function selectPetFromManager(pet: PetListItem) {
+    try {
+      applyPetActionResult(await settingsApi.selectPet(pet.id));
+      setStatus(`Selected ${pet.displayName}`);
+    } catch (error) {
+      console.error(error);
+      setStatus('Select failed', true);
+    }
+  }
+
+  async function openPetFromManager(pet: PetListItem) {
+    try {
+      await settingsApi.openPetFolder(pet.id);
+      setStatus('Opened folder');
+    } catch (error) {
+      console.error(error);
+      setStatus('Open failed', true);
+    }
+  }
+
+  async function removePetFromManager(pet: PetListItem) {
+    if (!window.confirm(`Remove "${pet.displayName}" from imported pets?`)) {
+      return;
+    }
+
+    try {
+      applyPetActionResult(await settingsApi.removePet(pet.id));
+      setStatus(`Removed ${pet.displayName}`);
+    } catch (error) {
+      console.error(error);
+      setStatus('Remove failed', true);
+    }
   }
 
   function renderEventMappings() {
@@ -222,15 +378,18 @@
   });
 
   settingsApi.onPetData(applyPetData);
+  settingsApi.onPetListData(applyPetListData);
   settingsApi.onSettingsData(applySettings);
 
   Promise.all([
     settingsApi.getSettingsData(),
-    settingsApi.getPetData()
+    settingsApi.getPetData(),
+    settingsApi.getPetListData()
   ])
-    .then(([settings, pet]) => {
+    .then(([settings, pet, pets]) => {
       applySettings(settings);
       applyPetData(pet);
+      applyPetListData(pets);
       setStatus('Ready');
     })
     .catch((error) => {

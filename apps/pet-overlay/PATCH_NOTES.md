@@ -1,5 +1,31 @@
 # Patch Notes
 
+## 2026-05-18 - Pet Manager Polish
+
+- Added a `Pet Manager` section to the settings window.
+- The manager lists installed pet packages, marks the current pet, and shows
+  invalid package status inline.
+- Added settings-window actions to select a pet, open a specific pet folder, and
+  remove imported pets.
+- Built-in pet packages are protected from removal. In local development, repo
+  `pets/` packages are treated as built-in so local pet work is not deleted from
+  the app UI.
+- Removing an imported current pet falls back to the default pet and clears that
+  pet's saved event animation overrides.
+- Added IPC and preload methods for pet list, select, open-folder, and remove
+  actions.
+- Settings smoke coverage now verifies the pet manager API and rendered pet
+  rows.
+- Updated README controls documentation.
+
+Validation:
+
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets` currently fails because local work-in-progress folders
+  `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+  `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
+
 ## 2026-05-18 - Event Animation Mapping Settings
 
 - Added per-pet event animation overrides to `settings.json`.
