@@ -172,6 +172,14 @@ Do not commit cache folders from `tmp/user-data`.
     `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
     `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
 
+## Release Status
+
+- [ ] Prepare `0.2.0` Windows release.
+  - Started: 2026-05-18.
+  - Scope: version bump, clean worktree release validation, Windows artifacts,
+    and release manifest.
+  - Status: version bump prepared; clean worktree release build pending.
+
 ## Resume Prompt
 
 When opening this repo on another PC, a good first message to Codex is:

@@ -1,5 +1,15 @@
 # Patch Notes
 
+## 2026-05-18 - 0.2.0 Release Prep
+
+- Bumped Codex Pet Overlay from `0.1.0` to `0.2.0`.
+- Prepared the release from a clean worktree so local in-progress pet folders
+  under `pets/` are not bundled into distributables.
+
+Validation:
+
+- Pending clean worktree release build.
+
 ## 2026-05-18 - Startup and Testing Polish
 
 - Added a one-time first-run pet notice that points to the right-click menu and
