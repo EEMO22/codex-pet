@@ -152,7 +152,7 @@ Do not commit cache folders from `tmp/user-data`.
     `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
 - [x] Add pet manager polish.
   - Scope: imported pet list, remove imported pet, open selected pet folder.
-  - Completion: 2026-05-18, this stage commit. Added settings-window pet
+  - Completion: 2026-05-18, commit `ca617af`. Added settings-window pet
     manager rows, current/invalid status, select/open/remove actions, and
     packaged imported-pet removal safeguards.
   - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
