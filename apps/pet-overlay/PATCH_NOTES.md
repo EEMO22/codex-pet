@@ -5,17 +5,22 @@
 - Bumped Codex Pet Overlay from `0.1.0` to `0.2.0`.
 - Prepared the release from a clean worktree so local in-progress pet folders
   under `pets/` are not bundled into distributables.
+- Pushed tag `v0.2.0` to GitHub at source commit `5bf857c`.
+- Created a GitHub draft release for `v0.2.0` and uploaded the installer, zip,
+  and manifest.
+- Draft release URL:
+  `https://github.com/EEMO22/codex-pet/releases/tag/untagged-1f1075b91536b62467a3`.
 - Generated Windows release artifacts at
-  `C:\Projects\codex-pet-release\apps\pet-overlay\out\dist-20260518-164348`.
+  `C:\Projects\codex-pet-release\apps\pet-overlay\out\dist-20260518-165843`.
 - Primary artifacts:
   - `Codex Pet Overlay-0.2.0-x64.exe`
-    - Size: `107602954` bytes
+    - Size: `107602881` bytes
     - SHA-256:
-      `7b16ffacb44bce4adfebd467fe1812e448dbcf6d6699592302211b843d0e0cab`
+      `af2a9dc8059782cbc647407b56e510fde645f4c60d14245bc28733a95f3ae8cb`
   - `Codex Pet Overlay-0.2.0-x64.zip`
     - Size: `145673735` bytes
     - SHA-256:
-      `84bb1757f51bcbc4ac6b5866ca130216ff096de49c1093c72e895d1e814bf699`
+      `3021db8fcf38951917a155c3e0c7a8500be4beb6e8e17fb76d3c49488e560d45`
   - `release-manifest.json`
 
 Validation:
