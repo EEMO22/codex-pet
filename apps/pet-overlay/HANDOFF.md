@@ -143,7 +143,7 @@ Do not commit cache folders from `tmp/user-data`.
 - [x] Add event-to-animation mapping settings.
   - Scope: keep Codex pet defaults, let each event choose an available animation
     from the selected pet.
-  - Completion: 2026-05-18, this stage commit. Added per-pet event animation
+  - Completion: 2026-05-18, commit `3f9d023`. Added per-pet event animation
     overrides in settings, settings-window selectors for all overlay events, and
     renderer support for applying overrides above pet manifest defaults.
   - Validation: `npm run check`, `npm run smoke`, and `npm run validate:pets`.
