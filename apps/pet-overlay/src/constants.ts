@@ -33,7 +33,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   rapidClickWindowMs: 1000,
   rapidClickLimit: 4,
   animationFrameMsMultiplier: 1,
-  eventAnimationOverridesByPet: {}
+  eventAnimationOverridesByPet: {},
+  firstRunNoticeDismissed: false
 };
 
 export const CODEX_DEFAULT_LAYOUT: PetLayout = {

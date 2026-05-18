@@ -159,10 +159,18 @@ Do not commit cache folders from `tmp/user-data`.
     `validate:pets` currently fails because local work-in-progress pet folders
     `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
     `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
-- [ ] Add optional startup/testing polish.
+- [x] Add optional startup/testing polish.
   - Scope: first-run notice, diagnostics window or copied environment summary,
     better packaging smoke checks if practical.
-  - Completion: pending.
+  - Completion: 2026-05-18, this stage commit. Added a one-time first-run
+    notice, Copy Diagnostics menu actions, diagnostics environment summaries,
+    and package output verification.
+  - Validation: PowerShell syntax parse for `scripts/package-win.ps1` and
+    `scripts/verify-package-output.ps1`, `npm run check`, `npm run smoke`,
+    `npm run validate:pets`, `npm run package:win`, and `npm run package:verify`.
+    `validate:pets` currently fails because local work-in-progress pet folders
+    `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+    `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
 
 ## Resume Prompt
 

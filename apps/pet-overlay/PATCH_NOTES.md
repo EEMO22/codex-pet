@@ -1,5 +1,34 @@
 # Patch Notes
 
+## 2026-05-18 - Startup and Testing Polish
+
+- Added a one-time first-run pet notice that points to the right-click menu and
+  settings surface.
+- Added `Copy Diagnostics` to both the tray menu and pet right-click menu.
+- Diagnostics copy app version, runtime mode, Electron/Node/Chrome versions,
+  user-data paths, pet roots, current pet, settings summary, event override
+  scope, and pet validation status.
+- Added `firstRunNoticeDismissed` to validated runtime settings.
+- Added `npm run package:verify` and `scripts/verify-package-output.ps1`.
+- `package:win` now verifies the generated unpacked app output after
+  `electron-builder` finishes.
+- Package verification checks the unpacked executable, `app.asar`, bundled pets,
+  and the keyboard activity helper. It also verifies release-manifest hashes
+  when a manifest is present.
+- Updated README controls, settings, and packaging documentation.
+
+Validation:
+
+- PowerShell syntax parse for `scripts/package-win.ps1`
+- PowerShell syntax parse for `scripts/verify-package-output.ps1`
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets` currently fails because local work-in-progress folders
+  `pets/mira`, `pets/noir`, `pets/noir-dual`, and `pets/noir-hq` are missing
+  `pet.json`; `Scopey`, `Vera`, and `Vera Clear` validate successfully.
+- `npm run package:win`
+- `npm run package:verify`
+
 ## 2026-05-18 - Pet Manager Polish
 
 - Added a `Pet Manager` section to the settings window.

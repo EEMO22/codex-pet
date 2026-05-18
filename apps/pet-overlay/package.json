@@ -15,6 +15,7 @@
     "start:vera-reviewer": "npm run build && electron . --pet=vera-reviewer",
     "check": "npm run build",
     "package:win": "npm run generate:icon && npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-win.ps1 -Target dir",
+    "package:verify": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-package-output.ps1",
     "dist:win": "npm run generate:icon && npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-win.ps1 -Target dist",
     "release:version": "node scripts/set-version.mjs",
     "release:win": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release-win.ps1",

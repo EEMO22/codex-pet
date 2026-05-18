@@ -6,7 +6,7 @@ import { DEFAULT_EVENT_MAP, DEFAULT_SETTINGS } from './constants';
 import type { AppSettings } from './mainTypes';
 import { readJson } from './stateStore';
 
-function getSettingsPath() {
+export function getSettingsPath() {
   return path.join(app.getPath('userData'), 'settings.json');
 }
 
@@ -81,7 +81,8 @@ export function normalizeSettings(raw: Partial<AppSettings> | null | undefined):
       0.25,
       4
     ),
-    eventAnimationOverridesByPet: asEventAnimationOverridesByPet(source.eventAnimationOverridesByPet)
+    eventAnimationOverridesByPet: asEventAnimationOverridesByPet(source.eventAnimationOverridesByPet),
+    firstRunNoticeDismissed: asBoolean(source.firstRunNoticeDismissed, DEFAULT_SETTINGS.firstRunNoticeDismissed)
   };
 }
 

@@ -13,6 +13,7 @@
     rapidClickLimit: number;
     animationFrameMsMultiplier: number;
     eventAnimationOverridesByPet: EventAnimationOverridesByPet;
+    firstRunNoticeDismissed: boolean;
   };
 
   type PetData = {

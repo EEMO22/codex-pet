@@ -1,9 +1,10 @@
-import { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen, shell, dialog } from 'electron';
+import { app, BrowserWindow, Menu, Tray, clipboard, dialog, ipcMain, nativeImage, screen, shell } from 'electron';
 import fs from 'node:fs';
 import path from 'node:path';
 
 import {
   APP_TRAY_ICON,
+  BUILT_IN_PETS_ROOT,
   DEFAULT_PET_ID,
   KEYBOARD_HOOK_SCRIPT,
   PETS_ROOT,
@@ -33,8 +34,8 @@ import {
   resolveOverlayFrameForWindowPosition
 } from './screenGeometry';
 import { runSmokeCheck } from './smokeTest';
-import { readSettings, resetSettings, writeSettings } from './settingsStore';
-import { configureUserData, readSavedState, writeSavedState } from './stateStore';
+import { getSettingsPath, readSettings, resetSettings, writeSettings } from './settingsStore';
+import { configureUserData, getStatePath, readSavedState, writeSavedState } from './stateStore';
 
 let overlayWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
@@ -200,6 +201,7 @@ function createOverlayWindow(pet: ResolvedPet) {
     window.webContents.send('pet:data', pet);
     sendOverlayLayout();
     sendSettingsData();
+    queueFirstRunNotice();
 
     if (SMOKE_TEST) {
       setTimeout(() => runSmokeCheck(overlayWindow, pet), 900);
@@ -255,6 +257,10 @@ function buildTrayMenu() {
     {
       label: 'Validate Pets',
       click: validatePetsFromMenu
+    },
+    {
+      label: 'Copy Diagnostics',
+      click: copyDiagnosticsToClipboard
     },
     { type: 'separator' },
     {
@@ -403,6 +409,10 @@ function showContextMenu() {
     {
       label: 'Validate Pets',
       click: validatePetsFromMenu
+    },
+    {
+      label: 'Copy Diagnostics',
+      click: copyDiagnosticsToClipboard
     },
     { type: 'separator' },
     {
@@ -565,6 +575,56 @@ function validatePetsFromMenu() {
   }
 }
 
+function buildDiagnosticsText() {
+  const validations = listPetValidations();
+  const validCount = validations.filter((validation) => !validation.hasErrors).length;
+  const invalidCount = validations.length - validCount;
+  const warningCount = validations.reduce(
+    (total, validation) => total + validation.issues.filter((issue) => issue.severity === 'warning').length,
+    0
+  );
+  const petSummary = validations.length
+    ? validations.map((validation) => {
+      const status = validation.hasErrors ? 'invalid' : 'ok';
+      const issues = validation.issues.length ? `; ${formatPetIssues(validation.issues)}` : '';
+      return `- ${validation.displayName} (${validation.petId}): ${status}${issues}`;
+    }).join('\n')
+    : '- No pet packages found.';
+
+  return [
+    'Codex Pet Overlay Diagnostics',
+    `Generated: ${new Date().toISOString()}`,
+    `App version: ${app.getVersion()}`,
+    `Mode: ${app.isPackaged ? 'packaged' : 'development'}`,
+    `Platform: ${process.platform} ${process.arch}`,
+    `Electron: ${process.versions.electron}`,
+    `Node: ${process.versions.node}`,
+    `Chrome: ${process.versions.chrome}`,
+    `User data: ${app.getPath('userData')}`,
+    `Settings path: ${getSettingsPath()}`,
+    `Overlay state path: ${getStatePath()}`,
+    `Pets root: ${PETS_ROOT}`,
+    `Built-in pets root: ${BUILT_IN_PETS_ROOT}`,
+    `Current pet: ${currentPet ? `${currentPet.displayName} (${currentPet.packageId})` : 'none'}`,
+    `Settings: keyboard=${settings.keyboardActivityEnabled}; proximity=${settings.mouseProximityEnabled}; alwaysOnTop=${settings.alwaysOnTopEnabled}; launchAtLogin=${settings.launchAtLoginEnabled}`,
+    `Event override pets: ${Object.keys(settings.eventAnimationOverridesByPet || {}).join(', ') || 'none'}`,
+    `Pet validation summary: ${validCount} ok, ${invalidCount} invalid, ${warningCount} warnings`,
+    '',
+    'Pet validations:',
+    petSummary
+  ].join('\n');
+}
+
+function copyDiagnosticsToClipboard() {
+  try {
+    clipboard.writeText(buildDiagnosticsText());
+    sendPetNotice('Diagnostics copied.');
+  } catch (error) {
+    console.error('Could not copy diagnostics.', error);
+    sendPetNotice('Could not copy diagnostics.');
+  }
+}
+
 function selectPet(petId: string) {
   if (!overlayWindow || overlayWindow.isDestroyed()) {
     return;
@@ -577,6 +637,18 @@ function selectPet(petId: string) {
     console.error(getPetLoadErrorMessage(petId, error));
     sendPetNotice(`Could not load pet "${petId}".`);
   }
+}
+
+function queueFirstRunNotice() {
+  if (SMOKE_TEST || VALIDATE_PETS || settings.firstRunNoticeDismissed) {
+    return;
+  }
+
+  setTimeout(() => {
+    sendPetNotice('Right-click for menu. Settings manages pets.');
+    settings = writeSettings({ firstRunNoticeDismissed: true });
+    sendSettingsData();
+  }, 900);
 }
 
 function selectPetOrThrow(petId: string) {

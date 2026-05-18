@@ -68,6 +68,16 @@ The unpacked executable is written under a timestamped folder:
 apps/pet-overlay/out/unpacked-YYYYMMDD-HHMMSS/win-unpacked/Codex Pet Overlay.exe
 ```
 
+Verify the latest packaged output:
+
+```powershell
+npm run package:verify
+```
+
+`package:win` runs the same verification automatically after `electron-builder`
+finishes. The verifier checks the unpacked executable, `app.asar`, bundled pets,
+and the packaged keyboard activity helper.
+
 Build distributable Windows artifacts:
 
 ```powershell
@@ -137,6 +147,8 @@ artifact sizes and SHA-256 hashes.
 - Use `Open Pets Folder` to add or edit pet packages.
 - Use `Reload Current Pet` after editing the current pet's manifest or spritesheet.
 - Use `Validate Pets` to check installed pet packages without leaving the overlay.
+- Use `Copy Diagnostics` to copy app version, runtime paths, selected pet,
+  settings summary, and pet validation status for debugging.
 - Use `Settings` to toggle keyboard activity, mouse proximity, and always-on-top behavior.
 - Use `Settings > Open Settings Window` to edit timing and interaction values.
 - Use the settings window `Pet Manager` section to select pets, open a specific
@@ -169,11 +181,15 @@ fields. Current settings include:
 - `rapidClickLimit`
 - `animationFrameMsMultiplier`
 - `eventAnimationOverridesByPet`
+- `firstRunNoticeDismissed`
 
 The settings window edits the same file and applies changes immediately after
 save. `Save` closes the settings window, and `Reset` restores the built-in
 defaults. When always-on-top is disabled, the pet is shown in the taskbar so it
 can be brought forward again.
+
+On first launch, the pet shows a short one-time notice that points to the
+right-click menu and settings surface.
 
 `Event Animations` in the settings window lets each installed pet override which
 animation is used for overlay events such as click, mouse proximity, dragging,

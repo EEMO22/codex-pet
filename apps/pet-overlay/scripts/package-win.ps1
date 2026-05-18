@@ -40,6 +40,8 @@ try {
   if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
   }
+
+  & (Join-Path $PSScriptRoot 'verify-package-output.ps1') -OutputDir (Join-Path $appRoot $outputDir) -Target $Target
 } finally {
   Pop-Location
 }
