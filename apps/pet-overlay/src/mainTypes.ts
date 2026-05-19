@@ -11,7 +11,10 @@ export type OverlayState = {
   selectedPetId?: string;
 };
 
+export type AppLanguage = 'system' | 'en' | 'ko';
+
 export type AppSettings = {
+  language: AppLanguage;
   keyboardActivityEnabled: boolean;
   mouseProximityEnabled: boolean;
   alwaysOnTopEnabled: boolean;

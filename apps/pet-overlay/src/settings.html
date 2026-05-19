@@ -10,84 +10,96 @@
   <body>
     <main class="settings-shell">
       <header class="settings-header">
-        <h1>Settings</h1>
+        <h1 data-i18n="title">Settings</h1>
         <div class="status" id="status" role="status" aria-live="polite"></div>
       </header>
 
       <form id="settings-form" class="settings-form">
         <section class="section">
-          <h2>Input</h2>
+          <h2 data-i18n="sectionGeneral">General</h2>
+          <label class="field-row">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="language" name="language">
+              <option value="system">System</option>
+              <option value="en">English</option>
+              <option value="ko">한국어</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="section">
+          <h2 data-i18n="sectionInput">Input</h2>
           <label class="toggle-row">
             <span>
-              <strong>Keyboard Activity</strong>
-              <small>React when typing is detected.</small>
+              <strong data-i18n="keyboardActivityTitle">Keyboard Activity</strong>
+              <small data-i18n="keyboardActivityHelp">React when typing is detected.</small>
             </span>
             <input id="keyboardActivityEnabled" name="keyboardActivityEnabled" type="checkbox">
           </label>
           <label class="toggle-row">
             <span>
-              <strong>Mouse Proximity</strong>
-              <small>React when the pointer is nearby.</small>
+              <strong data-i18n="mouseProximityTitle">Mouse Proximity</strong>
+              <small data-i18n="mouseProximityHelp">React when the pointer is nearby.</small>
             </span>
             <input id="mouseProximityEnabled" name="mouseProximityEnabled" type="checkbox">
           </label>
           <label class="toggle-row">
             <span>
-              <strong>Always On Top</strong>
-              <small>Keep the pet above normal windows.</small>
+              <strong data-i18n="alwaysOnTopTitle">Always On Top</strong>
+              <small data-i18n="alwaysOnTopHelp">Keep the pet above normal windows.</small>
             </span>
             <input id="alwaysOnTopEnabled" name="alwaysOnTopEnabled" type="checkbox">
           </label>
           <label class="toggle-row">
             <span>
-              <strong>Launch at Login</strong>
-              <small>Start the pet when you sign in to Windows.</small>
+              <strong data-i18n="launchAtLoginTitle">Launch at Login</strong>
+              <small data-i18n="launchAtLoginHelp">Start the pet when you sign in to Windows.</small>
             </span>
             <input id="launchAtLoginEnabled" name="launchAtLoginEnabled" type="checkbox">
           </label>
         </section>
 
         <section class="section">
-          <h2>Timing</h2>
+          <h2 data-i18n="sectionTiming">Timing</h2>
           <label class="field-row">
-            <span>Proximity Radius</span>
+            <span data-i18n="proximityRadius">Proximity Radius</span>
             <input id="proximityRadius" name="proximityRadius" type="number" min="40" max="600" step="10">
           </label>
           <label class="field-row">
-            <span>Keyboard Review Delay</span>
+            <span data-i18n="keyboardReviewDelay">Keyboard Review Delay</span>
             <input id="keyboardReviewMs" name="keyboardReviewMs" type="number" min="250" max="10000" step="250">
           </label>
           <label class="field-row">
-            <span>Waiting Delay</span>
+            <span data-i18n="waitingDelay">Waiting Delay</span>
             <input id="inactivityWaitingMs" name="inactivityWaitingMs" type="number" min="1000" max="60000" step="500">
           </label>
           <label class="field-row">
-            <span>Rapid Click Window</span>
+            <span data-i18n="rapidClickWindow">Rapid Click Window</span>
             <input id="rapidClickWindowMs" name="rapidClickWindowMs" type="number" min="250" max="5000" step="250">
           </label>
           <label class="field-row">
-            <span>Rapid Click Limit</span>
+            <span data-i18n="rapidClickLimit">Rapid Click Limit</span>
             <input id="rapidClickLimit" name="rapidClickLimit" type="number" min="2" max="20" step="1">
           </label>
           <label class="field-row">
-            <span>Animation Speed Multiplier</span>
+            <span data-i18n="animationSpeedMultiplier">Animation Speed Multiplier</span>
             <input id="animationFrameMsMultiplier" name="animationFrameMsMultiplier" type="number" min="0.25" max="4" step="0.05">
           </label>
         </section>
 
         <section class="section">
-          <h2>Pet Manager</h2>
+          <h2 data-i18n="sectionPetManager">Pet Manager</h2>
           <div id="petManager" class="pet-list"></div>
         </section>
 
         <section class="section">
-          <h2>Event Animations</h2>
+          <h2 data-i18n="sectionEventAnimations">Event Animations</h2>
           <div id="eventMappings" class="mapping-grid"></div>
         </section>
 
         <footer class="actions">
-          <button class="secondary" id="reset" type="button">Reset</button>
-          <button class="primary" type="submit">Save</button>
+          <button class="secondary" id="reset" type="button" data-i18n="reset">Reset</button>
+          <button class="primary" type="submit" data-i18n="save">Save</button>
         </footer>
       </form>
     </main>

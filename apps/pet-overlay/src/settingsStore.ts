@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { DEFAULT_EVENT_MAP, DEFAULT_SETTINGS } from './constants';
-import type { AppSettings } from './mainTypes';
+import type { AppLanguage, AppSettings } from './mainTypes';
 import { readJson } from './stateStore';
 
 export function getSettingsPath() {
@@ -24,6 +24,10 @@ function asNumber(value: unknown, fallback: number, min: number, max: number) {
 
 function asInteger(value: unknown, fallback: number, min: number, max: number) {
   return Math.round(asNumber(value, fallback, min, max));
+}
+
+function asLanguage(value: unknown, fallback: AppLanguage): AppLanguage {
+  return value === 'system' || value === 'en' || value === 'ko' ? value : fallback;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -66,6 +70,7 @@ export function normalizeSettings(raw: Partial<AppSettings> | null | undefined):
   const source = raw && typeof raw === 'object' ? raw : {};
 
   return {
+    language: asLanguage(source.language, DEFAULT_SETTINGS.language),
     keyboardActivityEnabled: asBoolean(source.keyboardActivityEnabled, DEFAULT_SETTINGS.keyboardActivityEnabled),
     mouseProximityEnabled: asBoolean(source.mouseProximityEnabled, DEFAULT_SETTINGS.mouseProximityEnabled),
     alwaysOnTopEnabled: asBoolean(source.alwaysOnTopEnabled, DEFAULT_SETTINGS.alwaysOnTopEnabled),

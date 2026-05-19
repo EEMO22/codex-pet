@@ -77,7 +77,7 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
     const settingsResult = await runSettingsWindowSmokeCheck();
     console.log('[smoke:settings]', JSON.stringify(settingsResult));
 
-    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasPetListApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.hasLaunchAtLogin || !settingsResult.hasEventOverrides || !settingsResult.hasPetData || !settingsResult.hasPetList || !settingsResult.hasPetManager || settingsResult.petRowCount < 3 || settingsResult.eventSelectCount < 9 || !settingsResult.fieldCount) {
+    if (!settingsResult.hasApi || !settingsResult.hasCloseApi || !settingsResult.hasPetListApi || !settingsResult.hasForm || !settingsResult.hasSettings || !settingsResult.hasLanguageSetting || !settingsResult.hasLanguageSelect || !settingsResult.canPreviewKorean || !settingsResult.hasLaunchAtLogin || !settingsResult.hasEventOverrides || !settingsResult.hasPetData || !settingsResult.hasPetList || !settingsResult.hasPetManager || settingsResult.petRowCount < 3 || settingsResult.eventSelectCount < 9 || !settingsResult.fieldCount) {
       app.exit(1);
       return;
     }
@@ -240,12 +240,25 @@ async function runSettingsWindowSmokeCheck() {
         const pet = window.petOverlay ? await window.petOverlay.getPetData() : null;
         const pets = window.petOverlay ? await window.petOverlay.getPetListData() : null;
         await new Promise((resolve) => setTimeout(resolve, 120));
+        const languageSelect = document.getElementById('language');
+        if (languageSelect) {
+          languageSelect.value = 'ko';
+          languageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        const koreanTitle = document.querySelector('h1')?.textContent || '';
+        if (languageSelect && settings) {
+          languageSelect.value = settings.language || 'system';
+          languageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
         return {
           hasApi: Boolean(window.petOverlay),
           hasCloseApi: Boolean(window.petOverlay && typeof window.petOverlay.closeSettingsWindow === 'function'),
           hasPetListApi: Boolean(window.petOverlay && typeof window.petOverlay.getPetListData === 'function'),
           hasForm: Boolean(document.getElementById('settings-form')),
           hasSettings: Boolean(settings && typeof settings.rapidClickLimit === 'number'),
+          hasLanguageSetting: Boolean(settings && typeof settings.language === 'string'),
+          hasLanguageSelect: Boolean(languageSelect),
+          canPreviewKorean: koreanTitle === '설정',
           hasLaunchAtLogin: Boolean(settings && typeof settings.launchAtLoginEnabled === 'boolean'),
           hasEventOverrides: Boolean(settings && settings.eventAnimationOverridesByPet && typeof settings.eventAnimationOverridesByPet === 'object'),
           hasPetData: Boolean(pet && pet.animations && pet.events),

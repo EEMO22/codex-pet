@@ -1,5 +1,20 @@
 # Patch Notes
 
+## 2026-05-19 - Korean Language Support
+
+- Added a `Language` setting with `System`, `English`, and `Korean` options.
+- Localized the settings window, tray menu, pet context menu, and pet notices
+  for Korean.
+- Kept `System` as the default so Korean Windows environments open in Korean
+  while English environments remain in English.
+- Added smoke coverage for switching the settings window preview to Korean.
+
+Validation:
+
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets`
+
 ## 2026-05-19 - Mixed Keyboard and Mouse Activity
 
 - Kept the pet in keyboard work mode when mouse movement arrives immediately

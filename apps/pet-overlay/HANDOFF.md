@@ -212,6 +212,12 @@ Do not commit cache folders from `tmp/user-data`.
   - Scope: keep keyboard work animation active when mouse movement follows
     recent keyboard activity, such as Space plus drag canvas panning.
   - Progress: implemented in renderer state machine and smoke coverage added.
+- [ ] Commit Korean language support.
+  - Started: 2026-05-19.
+  - Scope: add language setting and Korean text for settings window, tray menu,
+    pet context menu, and pet notices.
+  - Progress: implemented `system/en/ko` setting and smoke coverage for Korean
+    settings-window preview.
 
 ## Resume Prompt
 

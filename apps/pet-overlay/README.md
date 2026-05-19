@@ -170,6 +170,7 @@ apps/pet-overlay/tmp/user-data/settings.json
 The app validates the file and falls back to defaults for missing or invalid
 fields. Current settings include:
 
+- `language`
 - `keyboardActivityEnabled`
 - `mouseProximityEnabled`
 - `alwaysOnTopEnabled`
@@ -187,6 +188,10 @@ The settings window edits the same file and applies changes immediately after
 save. `Save` closes the settings window, and `Reset` restores the built-in
 defaults. When always-on-top is disabled, the pet is shown in the taskbar so it
 can be brought forward again.
+
+`language` can be `system`, `en`, or `ko`. The default `system` option follows
+the OS/browser locale, so Korean Windows environments use Korean UI text by
+default.
 
 On first launch, the pet shows a short one-time notice that points to the
 right-click menu and settings surface.

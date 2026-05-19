@@ -23,6 +23,7 @@ export const SMOKE_TEST = process.argv.includes('--smoke-test');
 export const VALIDATE_PETS = process.argv.includes('--validate-pets');
 
 export const DEFAULT_SETTINGS: AppSettings = {
+  language: 'system',
   keyboardActivityEnabled: true,
   mouseProximityEnabled: true,
   alwaysOnTopEnabled: true,

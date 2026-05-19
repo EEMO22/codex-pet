@@ -13,6 +13,7 @@ import {
   VALIDATE_PETS,
   WINDOW_SIZE
 } from './constants';
+import { createTranslator, type TranslationKey } from './i18n';
 import { startKeyboardActivityHook, stopKeyboardActivityHook } from './keyboardActivityHook';
 import type { AppSettings, OverlayFrame, Point, ResolvedPet } from './mainTypes';
 import {
@@ -58,6 +59,10 @@ app.commandLine.appendSwitch('disable-gpu');
 app.commandLine.appendSwitch('disable-gpu-sandbox');
 app.commandLine.appendSwitch('password-store', 'basic');
 
+function t(key: TranslationKey, values?: Record<string, string | number | boolean | null | undefined>) {
+  return createTranslator(settings.language, app.getLocale())(key, values);
+}
+
 if (!SMOKE_TEST && !VALIDATE_PETS) {
   const hasSingleInstanceLock = app.requestSingleInstanceLock();
 
@@ -93,7 +98,7 @@ function createSettingsWindow() {
     height: 760,
     minWidth: 420,
     minHeight: 620,
-    title: 'Codex Pet Settings',
+    title: t('windowSettingsTitle'),
     show: false,
     backgroundColor: '#f7f8fb',
     webPreferences: {
@@ -242,37 +247,37 @@ function createTray() {
 function buildTrayMenu() {
   return Menu.buildFromTemplate([
     {
-      label: 'Show Pet',
+      label: t('menuShowPet'),
       click: showExistingOverlay
     },
     {
-      label: 'Settings',
+      label: t('menuSettings'),
       click: createSettingsWindow
     },
     { type: 'separator' },
     {
-      label: 'Open Pets Folder',
+      label: t('menuOpenPetsFolder'),
       click: openPetsFolder
     },
     {
-      label: 'Validate Pets',
+      label: t('menuValidatePets'),
       click: validatePetsFromMenu
     },
     {
-      label: 'Copy Diagnostics',
+      label: t('menuCopyDiagnostics'),
       click: copyDiagnosticsToClipboard
     },
     { type: 'separator' },
     {
-      label: 'Always On Top',
+      label: t('menuAlwaysOnTop'),
       type: 'checkbox' as const,
       checked: settings.alwaysOnTopEnabled,
       click: () => updateSettings({
         alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
-      }, settings.alwaysOnTopEnabled ? 'Always on top off. Use the taskbar to bring the pet back.' : 'Always on top on.')
+      }, settings.alwaysOnTopEnabled ? t('noticeAlwaysOnTopOff') : t('noticeAlwaysOnTopOn'))
     },
     {
-      label: 'Launch at Login',
+      label: t('menuLaunchAtLogin'),
       type: 'checkbox' as const,
       checked: settings.launchAtLoginEnabled,
       click: () => updateSettings({
@@ -281,7 +286,7 @@ function buildTrayMenu() {
     },
     { type: 'separator' },
     {
-      label: 'Close Pet',
+      label: t('menuClosePet'),
       click: () => app.quit()
     }
   ]);
@@ -314,7 +319,7 @@ function showExistingOverlay() {
   overlayWindow.show();
   applyAlwaysOnTopSetting();
   overlayWindow.focus();
-  sendPetNotice('Pet already running.');
+  sendPetNotice(t('noticePetAlreadyRunning'));
 }
 
 function startProximityWatcher() {
@@ -380,7 +385,7 @@ function showContextMenu() {
   }
 
   const petItems = listAvailablePets().map((pet) => ({
-    label: pet.valid ? pet.displayName : `${pet.displayName} (invalid)`,
+    label: pet.valid ? pet.displayName : t('menuInvalidPet', { name: pet.displayName }),
     type: 'radio' as const,
     enabled: pet.valid,
     checked: pet.valid && pet.id === currentPet?.packageId,
@@ -389,66 +394,66 @@ function showContextMenu() {
 
   Menu.buildFromTemplate([
     {
-      label: 'Pets',
-      submenu: petItems.length ? petItems : [{ label: 'No pets found', enabled: false }]
+      label: t('menuPets'),
+      submenu: petItems.length ? petItems : [{ label: t('menuNoPetsFound'), enabled: false }]
     },
     { type: 'separator' },
     {
-      label: 'Import Pet Folder',
+      label: t('menuImportPetFolder'),
       click: importPetFolder
     },
     {
-      label: 'Open Pets Folder',
+      label: t('menuOpenPetsFolder'),
       click: openPetsFolder
     },
     {
-      label: 'Reload Current Pet',
+      label: t('menuReloadCurrentPet'),
       enabled: Boolean(currentPet),
       click: reloadCurrentPet
     },
     {
-      label: 'Validate Pets',
+      label: t('menuValidatePets'),
       click: validatePetsFromMenu
     },
     {
-      label: 'Copy Diagnostics',
+      label: t('menuCopyDiagnostics'),
       click: copyDiagnosticsToClipboard
     },
     { type: 'separator' },
     {
-      label: 'Settings',
+      label: t('menuSettings'),
       submenu: [
         {
-          label: 'Open Settings Window',
+          label: t('menuOpenSettingsWindow'),
           click: createSettingsWindow
         },
         { type: 'separator' },
         {
-          label: 'Keyboard Activity',
+          label: t('menuKeyboardActivity'),
           type: 'checkbox' as const,
           checked: settings.keyboardActivityEnabled,
           click: () => updateSettings({
             keyboardActivityEnabled: !settings.keyboardActivityEnabled
-          }, settings.keyboardActivityEnabled ? 'Keyboard activity off.' : 'Keyboard activity on.')
+          }, settings.keyboardActivityEnabled ? t('noticeKeyboardActivityOff') : t('noticeKeyboardActivityOn'))
         },
         {
-          label: 'Mouse Proximity',
+          label: t('menuMouseProximity'),
           type: 'checkbox' as const,
           checked: settings.mouseProximityEnabled,
           click: () => updateSettings({
             mouseProximityEnabled: !settings.mouseProximityEnabled
-          }, settings.mouseProximityEnabled ? 'Mouse proximity off.' : 'Mouse proximity on.')
+          }, settings.mouseProximityEnabled ? t('noticeMouseProximityOff') : t('noticeMouseProximityOn'))
         },
         {
-          label: 'Always On Top',
+          label: t('menuAlwaysOnTop'),
           type: 'checkbox' as const,
           checked: settings.alwaysOnTopEnabled,
           click: () => updateSettings({
             alwaysOnTopEnabled: !settings.alwaysOnTopEnabled
-          }, settings.alwaysOnTopEnabled ? 'Always on top off. Use the taskbar to bring the pet back.' : 'Always on top on.')
+          }, settings.alwaysOnTopEnabled ? t('noticeAlwaysOnTopOff') : t('noticeAlwaysOnTopOn'))
         },
         {
-          label: 'Launch at Login',
+          label: t('menuLaunchAtLogin'),
           type: 'checkbox' as const,
           checked: settings.launchAtLoginEnabled,
           click: () => updateSettings({
@@ -457,14 +462,14 @@ function showContextMenu() {
         },
         { type: 'separator' },
         {
-          label: 'Reset Settings',
+          label: t('menuResetSettings'),
           click: () => resetAllSettings()
         }
       ]
     },
     { type: 'separator' },
     {
-      label: 'Reset Position',
+      label: t('menuResetPosition'),
       click: () => {
         const { workArea } = screen.getPrimaryDisplay();
         const nextFrame = resolveOverlayFrameForWindowPosition({
@@ -476,7 +481,7 @@ function showContextMenu() {
     },
     { type: 'separator' },
     {
-      label: 'Close Pet',
+      label: t('menuClosePet'),
       click: () => app.quit()
     }
   ]).popup({ window: overlayWindow });
@@ -487,7 +492,7 @@ async function openPetsFolder() {
   const errorMessage = await shell.openPath(PETS_ROOT);
   if (errorMessage) {
     console.error(`Could not open pets folder: ${errorMessage}`);
-    sendPetNotice('Could not open pets folder.');
+    sendPetNotice(t('noticeCouldNotOpenPetsFolder'));
   }
 }
 
@@ -497,7 +502,7 @@ async function importPetFolder() {
   }
 
   const result = await dialog.showOpenDialog(overlayWindow, {
-    title: 'Import Pet Folder',
+    title: t('dialogImportPetFolder'),
     properties: ['openDirectory']
   });
 
@@ -514,17 +519,17 @@ async function importPetFolder() {
     sendPetData();
     sendPetListData();
     sendPetNotice(imported.copied
-      ? `Imported ${imported.pet.displayName}.`
-      : `${imported.pet.displayName} already installed.`);
+      ? t('noticeImportedPet', { name: imported.pet.displayName })
+      : t('noticePetAlreadyInstalled', { name: imported.pet.displayName }));
   } catch (error) {
     console.error(getPetLoadErrorMessage(path.basename(sourceDir), error));
-    sendPetNotice('Could not import pet folder.');
+    sendPetNotice(t('noticeCouldNotImportPetFolder'));
   }
 }
 
 function reloadCurrentPet() {
   if (!currentPet) {
-    sendPetNotice('No current pet to reload.');
+    sendPetNotice(t('noticeNoCurrentPetToReload'));
     return;
   }
 
@@ -534,10 +539,10 @@ function reloadCurrentPet() {
     writeSavedState({ selectedPetId: pet.packageId });
     sendPetData();
     sendPetListData();
-    sendPetNotice(`Reloaded ${pet.displayName}.`);
+    sendPetNotice(t('noticeReloadedPet', { name: pet.displayName }));
   } catch (error) {
     console.error(getPetLoadErrorMessage(currentPet.packageId, error));
-    sendPetNotice(`Could not reload ${currentPet.displayName}.`);
+    sendPetNotice(t('noticeCouldNotReloadPet', { name: currentPet.displayName }));
   }
 }
 
@@ -545,7 +550,7 @@ function validatePetsFromMenu() {
   const validations = listPetValidations();
   if (!validations.length) {
     console.log('No pet packages found.');
-    sendPetNotice('No pet packages found.');
+    sendPetNotice(t('menuNoPetsFound'));
     return;
   }
 
@@ -567,11 +572,11 @@ function validatePetsFromMenu() {
   }
 
   if (invalidCount > 0) {
-    sendPetNotice(`${invalidCount} invalid pet package(s).`);
+    sendPetNotice(t('noticeInvalidPetPackages', { count: invalidCount }));
   } else if (warningCount > 0) {
-    sendPetNotice(`${warningCount} pet warning(s).`);
+    sendPetNotice(t('noticePetWarnings', { count: warningCount }));
   } else {
-    sendPetNotice('All pets valid.');
+    sendPetNotice(t('noticeAllPetsValid'));
   }
 }
 
@@ -618,10 +623,10 @@ function buildDiagnosticsText() {
 function copyDiagnosticsToClipboard() {
   try {
     clipboard.writeText(buildDiagnosticsText());
-    sendPetNotice('Diagnostics copied.');
+    sendPetNotice(t('noticeDiagnosticsCopied'));
   } catch (error) {
     console.error('Could not copy diagnostics.', error);
-    sendPetNotice('Could not copy diagnostics.');
+    sendPetNotice(t('noticeCouldNotCopyDiagnostics'));
   }
 }
 
@@ -632,10 +637,10 @@ function selectPet(petId: string) {
 
   try {
     const pet = selectPetOrThrow(petId);
-    sendPetNotice(`Selected ${pet.displayName}.`);
+    sendPetNotice(t('noticeSelectedPet', { name: pet.displayName }));
   } catch (error) {
     console.error(getPetLoadErrorMessage(petId, error));
-    sendPetNotice(`Could not load pet "${petId}".`);
+    sendPetNotice(t('noticeCouldNotLoadPet', { name: petId }));
   }
 }
 
@@ -645,7 +650,7 @@ function queueFirstRunNotice() {
   }
 
   setTimeout(() => {
-    sendPetNotice('Right-click for menu. Settings manages pets.');
+    sendPetNotice(t('noticeFirstRun'));
     settings = writeSettings({ firstRunNoticeDismissed: true });
     sendSettingsData();
   }, 900);
@@ -713,7 +718,7 @@ function removePetPackageFromSettings(petId: string) {
 
   refreshTrayMenu();
   sendPetListData();
-  sendPetNotice(`Removed ${removedPet.displayName}.`);
+  sendPetNotice(t('noticeRemovedPet', { name: removedPet.displayName }));
 
   return {
     removedPet,
@@ -785,15 +790,14 @@ function updateSettings(nextSettings: Partial<AppSettings>, notice?: string) {
   }
 }
 
-function resetAllSettings(notice = 'Settings reset.') {
+function resetAllSettings(notice?: string) {
   settings = resetSettings();
   applyRuntimeSettings();
-  if (notice) {
-    sendPetNotice(notice);
-  }
+  sendPetNotice(notice || t('noticeSettingsReset'));
 }
 
 function applyRuntimeSettings() {
+  settingsWindow?.setTitle(t('windowSettingsTitle'));
   applyAlwaysOnTopSetting();
   syncLaunchAtLogin();
   syncKeyboardActivityHook();
@@ -848,10 +852,10 @@ function syncLaunchAtLogin() {
 
 function getLaunchAtLoginNotice(enabled: boolean) {
   if (!app.isPackaged) {
-    return 'Launch at login applies after install.';
+    return t('noticeLaunchAtLoginInstallOnly');
   }
 
-  return enabled ? 'Launch at login on.' : 'Launch at login off.';
+  return enabled ? t('noticeLaunchAtLoginOn') : t('noticeLaunchAtLoginOff');
 }
 
 function sendSettingsData() {
@@ -919,7 +923,7 @@ ipcMain.handle('pet:get-data', () => currentPet);
 ipcMain.handle('pets:get-list', () => getPetListData());
 ipcMain.handle('pets:select', (_event, petId: string) => {
   const pet = selectPetOrThrow(petId);
-  sendPetNotice(`Selected ${pet.displayName}.`);
+  sendPetNotice(t('noticeSelectedPet', { name: pet.displayName }));
   return {
     pet,
     pets: getPetListData()
@@ -929,11 +933,13 @@ ipcMain.handle('pets:open-folder', (_event, petId: string) => openPetPackageFold
 ipcMain.handle('pets:remove', (_event, petId: string) => removePetPackageFromSettings(petId));
 ipcMain.handle('settings:get-data', () => settings);
 ipcMain.handle('settings:save-data', (_event, nextSettings: Partial<AppSettings>) => {
-  updateSettings(nextSettings, 'Settings saved.');
+  settings = writeSettings(nextSettings);
+  applyRuntimeSettings();
+  sendPetNotice(t('noticeSettingsSaved'));
   return settings;
 });
 ipcMain.handle('settings:reset-data', () => {
-  resetAllSettings('Settings reset.');
+  resetAllSettings();
   return settings;
 });
 ipcMain.on('settings:close-window', (event) => {

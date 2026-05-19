@@ -3,6 +3,7 @@ const bubbleElement = document.getElementById('bubble');
 (window as unknown as Record<string, unknown>).__codexPetRendererLoaded = true;
 
 type DragDelta = { x: number; y: number };
+type LanguageSetting = 'system' | 'en' | 'ko';
 type PetAnimation = {
   row: number;
   frames: number;
@@ -46,6 +47,7 @@ type DragState = {
   moved: boolean;
 };
 type AppSettings = {
+  language: LanguageSetting;
   keyboardActivityEnabled: boolean;
   mouseProximityEnabled: boolean;
   alwaysOnTopEnabled: boolean;
@@ -84,6 +86,7 @@ const atlas = {
 };
 
 const defaultSettings: AppSettings = {
+  language: 'system',
   keyboardActivityEnabled: true,
   mouseProximityEnabled: true,
   alwaysOnTopEnabled: true,
@@ -129,6 +132,16 @@ const DRAG_THRESHOLD_PX = 5;
 const BUBBLE_GAP_PX = 12;
 const BUBBLE_MARGIN_PX = 8;
 const KEYBOARD_MOUSE_GRACE_MS = 800;
+const rendererMessages = {
+  en: {
+    ready: 'ready',
+    oops: 'oops'
+  },
+  ko: {
+    ready: '준비',
+    oops: '앗'
+  }
+} as const;
 
 function assertElement<T extends HTMLElement>(element: T | null, id: string): T {
   if (!element) {
@@ -148,6 +161,19 @@ function clamp(value: number, min: number, max: number) {
   }
 
   return Math.min(Math.max(value, min), max);
+}
+
+function resolveLocale(language: LanguageSetting) {
+  if (language === 'en' || language === 'ko') {
+    return language;
+  }
+
+  return navigator.language.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+}
+
+function t(key: keyof typeof rendererMessages.en) {
+  const locale = resolveLocale(overlaySettings.language);
+  return rendererMessages[locale][key];
 }
 
 function setFrame(row: number, frame: number) {
@@ -251,7 +277,7 @@ function react() {
   petButton.classList.remove('is-near');
   setState('react');
   setFrame(states.react.row, 0);
-  showBubble('ready');
+  showBubble(t('ready'));
 
   reactionTimer = window.setTimeout(() => {
     setState('idle');
@@ -266,7 +292,7 @@ function failAndHold() {
   petButton.classList.remove('is-near');
   failedLocked = true;
   setState('failed');
-  showBubble('oops', 900);
+  showBubble(t('oops'), 900);
 }
 
 function isPriorityInteractionActive() {
