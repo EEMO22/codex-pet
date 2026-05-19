@@ -55,6 +55,33 @@ function Assert-Directory {
   }
 }
 
+function Get-PackageFileSha256 {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string] $Path
+  )
+
+  try {
+    $hashCommand = Get-Command Get-FileHash -ErrorAction Stop
+    return (& $hashCommand -Algorithm SHA256 -LiteralPath $Path).Hash.ToLowerInvariant()
+  } catch [System.Management.Automation.CommandNotFoundException] {
+    # Fall through to the .NET implementation for PowerShell environments where
+    # Microsoft.PowerShell.Utility is unavailable or not auto-loaded.
+  }
+
+  $stream = [System.IO.File]::OpenRead($Path)
+  try {
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+      return (($sha256.ComputeHash($stream) | ForEach-Object { $_.ToString('x2') }) -join '')
+    } finally {
+      $sha256.Dispose()
+    }
+  } finally {
+    $stream.Dispose()
+  }
+}
+
 function Test-ManifestHashes {
   param([string] $ManifestPath)
 
@@ -67,7 +94,7 @@ function Test-ManifestHashes {
     $artifactPath = Join-Path $appRoot ([string] $artifact.path)
     Assert-File -Path $artifactPath -Label "release artifact $($artifact.path)"
 
-    $actualHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $artifactPath).Hash.ToLowerInvariant()
+    $actualHash = Get-PackageFileSha256 -Path $artifactPath
     if ($actualHash -ne [string] $artifact.sha256) {
       throw "Hash mismatch for $($artifact.path)."
     }

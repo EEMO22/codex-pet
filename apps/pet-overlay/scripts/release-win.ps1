@@ -42,6 +42,33 @@ function Write-Utf8Json {
   [System.IO.File]::WriteAllText($Path, "$json`n", $utf8NoBom)
 }
 
+function Get-ReleaseFileSha256 {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string] $Path
+  )
+
+  try {
+    $hashCommand = Get-Command Get-FileHash -ErrorAction Stop
+    return (& $hashCommand -Algorithm SHA256 -LiteralPath $Path).Hash.ToLowerInvariant()
+  } catch [System.Management.Automation.CommandNotFoundException] {
+    # Fall through to the .NET implementation for PowerShell environments where
+    # Microsoft.PowerShell.Utility is unavailable or not auto-loaded.
+  }
+
+  $stream = [System.IO.File]::OpenRead($Path)
+  try {
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+      return (($sha256.ComputeHash($stream) | ForEach-Object { $_.ToString('x2') }) -join '')
+    } finally {
+      $sha256.Dispose()
+    }
+  } finally {
+    $stream.Dispose()
+  }
+}
+
 function Invoke-Git {
   param(
     [Parameter(ValueFromRemainingArguments = $true)]
@@ -117,7 +144,7 @@ only, rerun with -AllowDirty.
     [ordered] @{
       path = $relativePath -replace '^\.[\\/]', ''
       bytes = $_.Length
-      sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $_.FullName).Hash.ToLowerInvariant()
+      sha256 = Get-ReleaseFileSha256 -Path $_.FullName
     }
   })
 

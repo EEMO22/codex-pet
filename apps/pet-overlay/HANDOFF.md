@@ -200,6 +200,13 @@ Do not commit cache folders from `tmp/user-data`.
 - [ ] Publish `0.2.0` draft as final release.
   - Scope: review the GitHub draft release notes/assets, publish the draft,
     and record the final public release URL if it changes after publication.
+- [ ] Commit release hash compatibility fix.
+  - Started: 2026-05-19.
+  - Scope: remove direct `Get-FileHash` dependency from release manifest
+    generation and package manifest verification.
+  - Progress: local rehearsal release
+    `C:\Projects\codex-pet\apps\pet-overlay\out\dist-20260519-093405`
+    generated `release-manifest.json`; `npm run package:verify` passes.
 
 ## Resume Prompt
 

@@ -1,5 +1,21 @@
 # Patch Notes
 
+## 2026-05-19 - Release Hash Compatibility
+
+- Fixed Windows release and package verification scripts so SHA-256 hashes can
+  still be generated when `Get-FileHash` is unavailable in the spawned
+  PowerShell process.
+- The scripts now fall back to .NET `SHA256` hashing for release manifests and
+  manifest verification.
+- Confirmed a local 0.2.0 rehearsal release writes `release-manifest.json`.
+
+Validation:
+
+- PowerShell syntax parse for `scripts/release-win.ps1`
+- PowerShell syntax parse for `scripts/verify-package-output.ps1`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release-win.ps1 -AllowDirty -SkipValidation`
+- `npm run package:verify`
+
 ## 2026-05-18 - 0.2.0 Release Prep
 
 - Bumped Codex Pet Overlay from `0.1.0` to `0.2.0`.
