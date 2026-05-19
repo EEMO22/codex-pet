@@ -48,6 +48,14 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
       return;
     }
 
+    const keyboardMouseResult = await runKeyboardMouseActivitySmokeCheck(overlayWindow);
+    console.log('[smoke:keyboard-mouse]', JSON.stringify(keyboardMouseResult));
+
+    if (keyboardMouseResult.state !== 'typing') {
+      app.exit(1);
+      return;
+    }
+
     const bubbleResult = await runBubbleSmokeCheck(overlayWindow);
     console.log('[smoke:bubble]', JSON.stringify(bubbleResult));
 
@@ -90,6 +98,23 @@ export async function runSmokeCheck(overlayWindow: BrowserWindow | null, pet: Re
     console.error('[smoke] failed', error);
     app.exit(1);
   }
+}
+
+async function runKeyboardMouseActivitySmokeCheck(overlayWindow: BrowserWindow) {
+  overlayWindow.webContents.send('pet:typing');
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  overlayWindow.webContents.send('pet:mouse-activity');
+  await new Promise((resolve) => setTimeout(resolve, 80));
+
+  return overlayWindow.webContents.executeJavaScript(`
+    (() => {
+      const pet = document.getElementById('pet');
+      return {
+        state: pet?.dataset.state || '',
+        backgroundPosition: pet ? getComputedStyle(pet).backgroundPosition : ''
+      };
+    })();
+  `);
 }
 
 async function runBubbleSmokeCheck(overlayWindow: BrowserWindow) {

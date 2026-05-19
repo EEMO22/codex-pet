@@ -1,5 +1,19 @@
 # Patch Notes
 
+## 2026-05-19 - Mixed Keyboard and Mouse Activity
+
+- Kept the pet in keyboard work mode when mouse movement arrives immediately
+  after keyboard activity.
+- This prevents `running` and `idle` from flickering during workflows such as
+  holding Space and dragging a canvas in design tools.
+- Added smoke coverage for keyboard activity followed by mouse activity.
+
+Validation:
+
+- `npm run check`
+- `npm run smoke`
+- `npm run validate:pets`
+
 ## 2026-05-19 - Release Hash Compatibility
 
 - Fixed Windows release and package verification scripts so SHA-256 hashes can

@@ -207,6 +207,11 @@ Do not commit cache folders from `tmp/user-data`.
   - Progress: local rehearsal release
     `C:\Projects\codex-pet\apps\pet-overlay\out\dist-20260519-093405`
     generated `release-manifest.json`; `npm run package:verify` passes.
+- [ ] Commit mixed keyboard/mouse activity smoothing.
+  - Started: 2026-05-19.
+  - Scope: keep keyboard work animation active when mouse movement follows
+    recent keyboard activity, such as Space plus drag canvas panning.
+  - Progress: implemented in renderer state machine and smoke coverage added.
 
 ## Resume Prompt
 

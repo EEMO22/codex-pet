@@ -123,10 +123,12 @@ let suppressWatchUntilExit = false;
 let currentPetData: PetData | null = null;
 let overlaySettings = defaultSettings;
 let currentPetOffset: Point = { x: 104, y: 88 };
+let keyboardActiveUntil = 0;
 
 const DRAG_THRESHOLD_PX = 5;
 const BUBBLE_GAP_PX = 12;
 const BUBBLE_MARGIN_PX = 8;
+const KEYBOARD_MOUSE_GRACE_MS = 800;
 
 function assertElement<T extends HTMLElement>(element: T | null, id: string): T {
   if (!element) {
@@ -138,6 +140,7 @@ function assertElement<T extends HTMLElement>(element: T | null, id: string): T 
 
 const petButton = assertElement(petElement, 'pet');
 const bubble = assertElement(bubbleElement, 'bubble');
+petButton.dataset.state = stateName;
 
 function clamp(value: number, min: number, max: number) {
   if (max < min) {
@@ -167,6 +170,7 @@ function setState(nextState: string) {
   }
 
   stateName = nextState;
+  petButton.dataset.state = nextState;
   atlas.currentFrame = 0;
   atlas.currentRow = states[nextState].row;
 
@@ -276,6 +280,10 @@ function clearKeyboardReviewTimer() {
   keyboardReviewTimer = null;
 }
 
+function isKeyboardWorkActive() {
+  return Date.now() < keyboardActiveUntil;
+}
+
 function resetInactivityTimer() {
   if (inactivityTimer !== null) {
     clearTimeout(inactivityTimer);
@@ -293,6 +301,7 @@ function showKeyboardActivity() {
     return;
   }
 
+  keyboardActiveUntil = Date.now() + Math.max(KEYBOARD_MOUSE_GRACE_MS, overlaySettings.keyboardReviewMs);
   suppressWatchUntilExit = false;
   setState('typing');
   clearKeyboardReviewTimer();
@@ -306,6 +315,11 @@ function showKeyboardActivity() {
 
 function showMouseActivity() {
   if (isPriorityInteractionActive()) {
+    return;
+  }
+
+  if (isKeyboardWorkActive()) {
+    resetInactivityTimer();
     return;
   }
 
