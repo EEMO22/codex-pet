@@ -6,10 +6,11 @@ Vera Clear variant with the OpenAI-style laptop mark replaced by a generic brows
 
 - `failed`: uses the v4 candidate with laptop blast, flying lid, soot aftermath, and fist-pounding irritation.
 - `waiting`: uses the v3 candidate with the chin-rest waiting action restored.
+- `jumping`: restores the one-hand hair-flick mouseover action with a subtle width correction so the face reads closer to idle/waving during transitions.
 - `running`: regenerated with imagegen to keep the laptop work loop while replacing the logo with a clockwise spinner.
 - `review`: regenerated with imagegen to keep crossed arms and a left/right head-tilt review loop while replacing the logo with a clockwise spinner.
 
-Rows without laptop logos are unchanged from the original Vera Clear pet.
+Rows without laptop logos are otherwise unchanged from the original Vera Clear pet.
 
 ## QA
 
