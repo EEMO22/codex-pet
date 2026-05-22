@@ -29,6 +29,31 @@ function Invoke-Npm {
   }
 }
 
+function Invoke-NpmWithRetry {
+  param(
+    [int] $Attempts = 2,
+    [int] $DelayMilliseconds = 1500,
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]] $Arguments
+  )
+
+  for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
+    Write-Host "npm $($Arguments -join ' ')"
+    & npm @Arguments
+    if ($LASTEXITCODE -eq 0) {
+      return
+    }
+
+    $exitCode = $LASTEXITCODE
+    if ($attempt -ge $Attempts) {
+      throw "npm $($Arguments -join ' ') failed with exit code $exitCode."
+    }
+
+    Write-Warning "npm $($Arguments -join ' ') failed with exit code $exitCode. Retrying in $DelayMilliseconds ms..."
+    Start-Sleep -Milliseconds $DelayMilliseconds
+  }
+}
+
 function Write-Utf8Json {
   param(
     [Parameter(Mandatory = $true)]
@@ -119,7 +144,7 @@ only, rerun with -AllowDirty.
     Write-Warning 'Skipping validation because -SkipValidation was provided.'
   }
 
-  Invoke-Npm run dist:win
+  Invoke-NpmWithRetry -Attempts 2 -DelayMilliseconds 1500 run dist:win
 
   $outRoot = Join-Path $appRoot 'out'
   $latestOutput = Get-ChildItem -LiteralPath $outRoot -Directory -Filter 'dist-*' |
