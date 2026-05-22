@@ -15,7 +15,7 @@ Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolutio
 
 Use this prompt as an authoritative sprite-production spec. Do not expand it into a polished illustration, painterly character image, anime key art, 3D render, vector mascot, glossy app icon, realistic animal portrait, or marketing artwork.
 
-Animation action: subtle mouseover hair-tidy gesture: one hand rises to the ear, gently sweeps the side hair behind the ear, then settles.
+Animation action: subtle mouseover hair-tidy gesture: one hand rises in front of the ear, gathers the side hair there, gently sweeps it behind the ear, then settles.
 
 Current canonical character lock:
 - Preserve the first approved base's slightly longer soft oval face, warm gray-brown eyes, tiny friendly smile, side-swept black bob, and broad simple hair highlights.
@@ -26,7 +26,7 @@ Current canonical character lock:
 
 User motion directive:
 - No laptop in this row.
-- Replace the old jump with a one-hand hair-tidy gesture: only the same one hand throughout the row reaches beside the ear/back hair, lightly gathers the side hair, and sweeps it behind the ear.
+- Replace the old jump with a one-hand hair-tidy gesture: only the same one hand throughout the row reaches in front of the ear, lightly gathers the side hair there, and sweeps it behind the ear.
 - Do not flick the hair outward, fan the hair tips away from the head, or scale the whole character down to make room for motion. The hair should stay close to the idle silhouette.
 - Keep the other hand down or near the body for the entire row. Do not switch hands between frames and do not use both hands.
 - Show a small confident/cute head tilt, a tidy gentle expression, and light inward/behind-ear hair movement. Keep the body mostly bust-only and compact.
@@ -34,9 +34,10 @@ User motion directive:
 - Preserve the base outfit proportions: white V-neck shirt ends near the waist, then a thin readable dark/black waistband or pants-start shape appears at the bottom of the bust. Avoid an all-white torso below the chest.
 - Keep the torso vertically shorter than the current/previous jumping version; the body should not feel elongated compared with the head.
 - Match the current idle/waving silhouette width. In each 192 x 208 source cell, keep the visible character bbox roughly 130-136 px wide, centered near x=96. Do not create narrow 116 px settle frames or wide 150 px hair-fan frames.
+- Match the current `idle` and `waving` row rendering style closely: same thick dark outline density, same stepped/pixel-adjacent edges, same hair highlight shape language, same face size, same white shirt/collar rendering, and same small dark waist hint. Do not make this row smoother, thinner-lined, darker, or more polished than those rows.
 
 State-specific requirements:
-- Across 5 frames: the same hand starts low, rises beside the ear, fingers touch the side hair, sweeps/tucks the hair behind the ear, then settles back toward the idle pose.
+- Across 5 frames: the same hand starts low, rises in front of the ear, fingers touch the hair in front of the ear, sweeps/tucks the hair behind the ear, then settles back toward the idle pose.
 - The hair-tidy hand must stay on one consistent side of the character across all frames.
 - Use hand position and a small behind-ear hair shift to sell the action; do not use floor shadows, dust, landing marks, bounce marks, outward hair fans, or detached effects.
 - Keep the pose tasteful and non-explicit.

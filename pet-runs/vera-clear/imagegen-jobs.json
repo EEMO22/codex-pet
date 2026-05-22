@@ -275,15 +275,15 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "prompt_revision_note": "2026-05-22 targeted jumping revision: replace outward hair flick with a subtle one-hand behind-ear hair-tidy gesture, keep the idle/waving silhouette width, preserve visible dark waistline, and avoid clipped hands.",
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e4e0a-588e-7f40-bdc3-7ef3c2da6ab6\\ig_0ed56137c5b41621016a0fe239dd7c8191a69341254c96baf7.png",
+      "prompt_revision_note": "2026-05-22 targeted jumping revision: replace outward hair flick with a subtle one-hand hair-tidy gesture that starts in front of the ear and sweeps behind it; match idle/waving outline style and silhouette width, preserve visible dark waistline, and avoid clipped hands.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e4e20-2c8a-7a32-80a9-c3480622ca89\\ig_00684feb72fa81de016a0fe7d160f08191813afd3a417a2b62.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "48108960a18f39edff203fd7226e73c6979082424cbe96de6e6877d224cdbee6",
-      "output_sha256": "48108960a18f39edff203fd7226e73c6979082424cbe96de6e6877d224cdbee6",
-      "completed_at": "2026-05-22T05:07:20.684048+00:00",
+      "source_sha256": "bc3d0d689ca705e6c62533f1a114c0a6e5de43c7b57e23ab0fd0d05aa6e7da39",
+      "output_sha256": "bc3d0d689ca705e6c62533f1a114c0a6e5de43c7b57e23ab0fd0d05aa6e7da39",
+      "completed_at": "2026-05-22T05:32:07.001595+00:00",
       "metadata": {
-        "width": 1881,
-        "height": 836,
+        "width": 1905,
+        "height": 825,
         "mode": "RGB",
         "format": "PNG"
       }

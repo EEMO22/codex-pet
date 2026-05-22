@@ -13,6 +13,9 @@
 - Retargeted the `jumping` action away from a width-changing hair flick toward
   a subtler behind-ear hair-tidy gesture that can stay closer to the idle
   silhouette.
+- Tightened the `jumping` prompt so the hand starts in front of the ear before
+  sweeping the hair behind it, while matching the existing `idle`/`waving`
+  outline style more closely.
 
 Validation:
 
