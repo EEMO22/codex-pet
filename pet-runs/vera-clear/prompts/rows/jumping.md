@@ -15,7 +15,7 @@ Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolutio
 
 Use this prompt as an authoritative sprite-production spec. Do not expand it into a polished illustration, painterly character image, anime key art, 3D render, vector mascot, glossy app icon, realistic animal portrait, or marketing artwork.
 
-Animation action: slightly smug pretty hair-flick pose, flipping the hair outward to show off the hair texture.
+Animation action: subtle mouseover hair-tidy gesture: one hand rises to the ear, gently sweeps the side hair behind the ear, then settles.
 
 Current canonical character lock:
 - Preserve the first approved base's slightly longer soft oval face, warm gray-brown eyes, tiny friendly smile, side-swept black bob, and broad simple hair highlights.
@@ -26,18 +26,19 @@ Current canonical character lock:
 
 User motion directive:
 - No laptop in this row.
-- Replace the old jump with a one-hand pretty/coy gesture: only the same one hand throughout the row reaches beside the ear/back hair and flicks the hair outward away from the head.
-- Do not tuck the hair neatly behind the ear. The motion is an outward fluttering hair toss, as if showing off the hair texture, with the hair tips fanning outward briefly.
+- Replace the old jump with a one-hand hair-tidy gesture: only the same one hand throughout the row reaches beside the ear/back hair, lightly gathers the side hair, and sweeps it behind the ear.
+- Do not flick the hair outward, fan the hair tips away from the head, or scale the whole character down to make room for motion. The hair should stay close to the idle silhouette.
 - Keep the other hand down or near the body for the entire row. Do not switch hands between frames and do not use both hands.
-- Show a small confident/cute head tilt, a slightly smug pretty-face expression, and light outward hair movement. Keep the body mostly bust-only and compact.
+- Show a small confident/cute head tilt, a tidy gentle expression, and light inward/behind-ear hair movement. Keep the body mostly bust-only and compact.
 - Do not make this a vertical jump, bounce, or airborne motion.
 - Preserve the base outfit proportions: white V-neck shirt ends near the waist, then a thin readable dark/black waistband or pants-start shape appears at the bottom of the bust. Avoid an all-white torso below the chest.
 - Keep the torso vertically shorter than the current/previous jumping version; the body should not feel elongated compared with the head.
+- Match the current idle/waving silhouette width. In each 192 x 208 source cell, keep the visible character bbox roughly 130-136 px wide, centered near x=96. Do not create narrow 116 px settle frames or wide 150 px hair-fan frames.
 
 State-specific requirements:
-- Across 5 frames: the same hand starts low, rises to the ear/back hair, flicks the hair outward away from the head, holds a slightly smug show-off pose briefly with hair tips fanned outward, then settles.
-- The hair-flick hand must stay on one consistent side of the character across all frames.
-- Use outward hair movement and hand position to sell the action; do not use floor shadows, dust, landing marks, bounce marks, or detached effects.
+- Across 5 frames: the same hand starts low, rises beside the ear, fingers touch the side hair, sweeps/tucks the hair behind the ear, then settles back toward the idle pose.
+- The hair-tidy hand must stay on one consistent side of the character across all frames.
+- Use hand position and a small behind-ear hair shift to sell the action; do not use floor shadows, dust, landing marks, bounce marks, outward hair fans, or detached effects.
 - Keep the pose tasteful and non-explicit.
 - In every frame, keep a consistent small dark/black waistline or lower-torso hint visible below the white shirt. The black part should be small and not become visible legs.
 

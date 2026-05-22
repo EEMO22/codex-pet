@@ -275,15 +275,15 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "prompt_revision_note": "2026-05-11 targeted jumping revision: one-side outward hair flick showing off hair texture with slightly smug pretty expression, restore visible dark/black pants-start waistline, shorten torso, preserve head-dominant chibi proportion.",
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e15ce-cb50-78b0-a1ee-d2a23cd6fe50\\ig_08944a568eeab043016a017eeafaa08191b8cf991d5f1760a1.png",
+      "prompt_revision_note": "2026-05-22 targeted jumping revision: replace outward hair flick with a subtle one-hand behind-ear hair-tidy gesture, keep the idle/waving silhouette width, preserve visible dark waistline, and avoid clipped hands.",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e4e0a-588e-7f40-bdc3-7ef3c2da6ab6\\ig_0ed56137c5b41621016a0fe239dd7c8191a69341254c96baf7.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "423a4bb8a5b570bf33c877fce8995c804d3be92ae6cafa98d7e20de44b2c0199",
-      "output_sha256": "423a4bb8a5b570bf33c877fce8995c804d3be92ae6cafa98d7e20de44b2c0199",
-      "completed_at": "2026-05-11T07:07:16.315294+00:00",
+      "source_sha256": "48108960a18f39edff203fd7226e73c6979082424cbe96de6e6877d224cdbee6",
+      "output_sha256": "48108960a18f39edff203fd7226e73c6979082424cbe96de6e6877d224cdbee6",
+      "completed_at": "2026-05-22T05:07:20.684048+00:00",
       "metadata": {
-        "width": 1880,
-        "height": 837,
+        "width": 1881,
+        "height": 836,
         "mode": "RGB",
         "format": "PNG"
       }

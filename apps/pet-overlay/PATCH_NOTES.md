@@ -1,5 +1,24 @@
 # Patch Notes
 
+## 2026-05-22 - Vera Clear Gesture Rows
+
+- Regenerated the Vera Clear Spinner Candidate `idle`, `jumping`, and `waving`
+  rows from the original single canonical Vera Clear reference and the saved
+  row prompts.
+- Replaced the failed partial-composite jumping attempt with a full regenerated
+  gesture row so the arm no longer appears clipped.
+- Kept `waving` as the original blown-kiss action, not a hand wave.
+- Corrected the blown-kiss timing so the wink happens when the hand extends
+  forward, using Vera's left eye.
+- Retargeted the `jumping` action away from a width-changing hair flick toward
+  a subtler behind-ear hair-tidy gesture that can stay closer to the idle
+  silhouette.
+
+Validation:
+
+- `validate_atlas.py pets/vera-clear-spinner-candidate/spritesheet.webp`
+- `npm run validate:pets`
+
 ## 2026-05-19 - Korean Language Support
 
 - Added a `Language` setting with `System`, `English`, and `Korean` options.
