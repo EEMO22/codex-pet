@@ -219,6 +219,26 @@ Do not commit cache folders from `tmp/user-data`.
   - Progress: implemented `system/en/ko` setting and smoke coverage for Korean
     settings-window preview.
 
+## Active Pet Work
+
+- [ ] Regenerate Vera Clear Spinner as the default pet.
+  - Started: 2026-05-24.
+  - Scope: rebuild every action row through `$hatch-pet` using the Vera Clear
+    canonical base, the current `vera-clear-spinner-candidate` rows, the
+    original Vera Clear approved rows, and the user's action-specific motion
+    notes.
+  - Working run:
+    `C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild`.
+  - Progress: run folder created, current spinner row references extracted,
+    original Vera Clear row references copied, `imagegen-jobs.json` updated
+    with row-specific references, and row prompts patched with final
+    action-specific overrides.
+  - Next: generate and record the grounded base image, then use `$hatch-pet`
+    row generation for `idle` and `running-right` first as identity/scale
+    checks before regenerating the remaining rows.
+  - Note: row-strip generation requires subagents under the `$hatch-pet` skill
+    unless the user explicitly requests sequential generation for this run.
+
 ## Resume Prompt
 
 When opening this repo on another PC, a good first message to Codex is:
