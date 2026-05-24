@@ -233,9 +233,11 @@ Do not commit cache folders from `tmp/user-data`.
     original Vera Clear row references copied, `imagegen-jobs.json` updated
     with row-specific references, and row prompts patched with final
     action-specific overrides. Grounded base image recorded to
-    `decoded/base.png`. First identity/scale rows recorded to
-    `decoded/idle.png` and `decoded/running-right.png`; extracted 192x208
-    frames are under `frames-check-initial/`.
+    `decoded/base.png`. Identity/scale rows recorded to `decoded/idle.png`,
+    `decoded/running-right.png`, and `decoded/waving.png`; extracted 192x208
+    frames are under `frames-check-initial/` and `frames-check-style-lock/`.
+    `jumping` was reopened as a repair job after visual QA rejected the raised
+    elbow width and incorrect ear-front-to-ear-back motion.
   - QA: first-row contact sheet and bbox metrics are under
     `qa/initial-idle-running-right-contact.png` and
     `qa/initial-idle-running-right-metrics.json`; a plain-text summary is at
@@ -244,10 +246,24 @@ Do not commit cache folders from `tmp/user-data`.
     the repo root and the working run. `idle` stays fixed at 198px visible source
     height across 6 frames; `running-right` stays within 193-198px visible source
     height across 8 frames.
-  - Next: regenerate the remaining rows, starting with `running-left` so it
-    can stay very close to `running-right`, then continue through `waving`,
-    `jumping`, laptop rows, and finally decide whether to keep or replace the
-    existing preferred `failed` row.
+  - QA: accepted `waving` is documented in
+    `qa/style-lock-idle-waving-running-right-contact.png` and
+    `qa/style-lock-idle-waving-running-right-metrics.txt`. It stays at 198px
+    visible source height, with width 136-138px across 4 frames, close to idle's
+    131-133px width and within the accepted gesture range.
+  - Jumping repair notes: the old approved/current jumping references are useful
+    for rough intent but should not be copied as positive silhouette references;
+    they tend to produce a raised forearm/elbow outside the bob-hair width. A
+    too-compact hand/fingertip-only attempt preserved the silhouette but shrank
+    the visible bbox to about 126-130px and was unreadable at actual app size.
+    The next `jumping` attempt should keep the idle hair/body width around
+    131-133px, allow only very small hand/finger motion near the viewer-right ear,
+    and ensure the hand path reads front-of-ear -> behind-ear without adding a
+    new arm outline outside the hair.
+  - Next: continue with `jumping` repair using the stricter width/motion notes,
+    or skip temporarily to `running-left` if the row remains blocked. Then
+    continue through laptop rows and finally decide whether to keep or replace
+    the existing preferred `failed` row.
   - Note: row-strip generation requires subagents under the `$hatch-pet` skill
     unless the user explicitly requests sequential generation for this run.
 

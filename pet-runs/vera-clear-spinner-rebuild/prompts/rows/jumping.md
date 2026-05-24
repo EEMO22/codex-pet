@@ -57,3 +57,20 @@ Final Vera Clear Spinner jumping override:
 - Across 5 frames: left hand starts low, rises in front of Vera's left ear, lightly touches/gathers the side hair, sweeps the hair behind the ear, then returns to an idle-like settle pose.
 - Keep the hair close to the idle silhouette. Do not fan the hair outward, widen the silhouette, shrink the character, or change the shirt/body ratio.
 - Match idle and waving almost exactly in character scale, face size, outline density, shirt rendering, and dark waist hint.
+
+Specific elbow-width repair constraints:
+- Keep the total visible character width close to the accepted idle and waving rows. Target a per-frame visible bbox width near 131-138 px inside the 192x208 source cell; do not let any jumping frame expand to 140 px or wider.
+- The raised elbow and forearm must stay inside Vera's existing hair silhouette width. Do not push the elbow outward beyond the side edge of the bob hair.
+- The hand path must read in this exact order: low/resting hand, hand rises in front of the ear, fingers touch hair at the front edge of the ear, fingers tuck/sweep the hair behind the ear while the elbow remains tucked inward, idle-like settle.
+- Avoid any frame where the hand already appears behind the ear before first appearing in front of the ear.
+- Use small wrist/finger changes and a tucked elbow rather than a wide raised-arm pose.
+
+Repair attempt 1:
+- The previous `jumping` strip failed QA: visual QA rejected the row: the raised elbow expands the character width beyond the idle/waving silhouette, and the hand motion reads as ear-back to front to back instead of front-of-ear to behind-ear. Repair must keep the elbow and forearm inside the existing hair silhouette width so the visible bbox stays close to idle/waving while the hand moves from in front of the ear to behind the ear.
+- Regenerate the entire row, not just one pose.
+- Fill every requested frame slot with one complete centered full-body pet pose.
+- Keep large gaps of pure chroma key only between slots; do not leave a requested slot empty.
+- Avoid pose overlap, clipping, edge slivers, extra partial sprites, and detached fragments from neighboring poses.
+- Use the canonical base image and any original references listed in `imagegen-jobs.json` as grounding inputs.
+- Do not redesign the pet. Keep the exact same head shape, face design, markings, body proportions, palette, outline weight, materials, and props as the approved base pet.
+- If the contact sheet shows identity drift, repair only this row while preserving the canonical base identity.

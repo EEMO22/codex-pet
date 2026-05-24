@@ -214,7 +214,7 @@
     {
       "id": "waving",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/waving.md",
       "input_images": [
         {
@@ -257,7 +257,18 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e5987-20c6-7ba0-b1a9-3260878496ec\\ig_074d08dc1d8cd6b3016a12d2f33bcc8191be052ed16e75a932.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "012a19bb595a4383eb8aa7019b1d16cc9a3ee183319f62037986ca0b5baa1147",
+      "output_sha256": "012a19bb595a4383eb8aa7019b1d16cc9a3ee183319f62037986ca0b5baa1147",
+      "completed_at": "2026-05-24T10:31:35.679166+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "jumping",
@@ -305,7 +316,17 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "repair_attempt": 1,
+      "repair_reason": "visual QA rejected the row: the raised elbow expands the character width beyond the idle/waving silhouette, and the hand motion reads as ear-back to front to back instead of front-of-ear to behind-ear. Repair must keep the elbow and forearm inside the existing hair silhouette width so the visible bbox stays close to idle/waving while the hand moves from in front of the ear to behind the ear.",
+      "queued_at": "2026-05-24T10:42:23.216394+00:00",
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\jumping-attempt-1-previous.png",
+          "archived_at": "2026-05-24T10:42:23.216394+00:00"
+        }
+      ]
     },
     {
       "id": "failed",

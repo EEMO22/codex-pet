@@ -1,5 +1,24 @@
 # Patch Notes
 
+## 2026-05-24 - Vera Clear Spinner Rebuild Progress
+
+- Recorded the rebuilt Vera Clear Spinner `base`, `idle`, `running-right`, and
+  `waving` rows in `pet-runs/vera-clear-spinner-rebuild`.
+- Added style-lock QA for `idle`, `waving`, and `running-right`; accepted
+  `waving` stays at 198px visible source height and 136-138px visible width.
+- Reopened `jumping` as a repair job after rejecting raised-elbow variants that
+  widened the character and tiny-finger variants that became too narrow or
+  unreadable at the actual app size.
+- Documented the next `jumping` constraint: keep idle's 131-133px visible width,
+  hide the arm/elbow inside the hair silhouette, and make the motion read
+  front-of-ear to behind-ear.
+
+Validation:
+
+- `pet_job_status.py --run-dir C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild`
+- Partial frame extraction for `idle,waving,running-right`
+- Manual visual QA of generated row strips and actual app-size previews
+
 ## 2026-05-22 - Vera Clear Gesture Rows
 
 - Regenerated the Vera Clear Spinner Candidate `idle`, `jumping`, and `waving`

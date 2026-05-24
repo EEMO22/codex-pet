@@ -1,0 +1,11 @@
+{
+  "rows": [
+    {
+      "state": "jumping",
+      "errors": [
+        "visual QA rejected the row: the raised elbow expands the character width beyond the idle/waving silhouette, and the hand motion reads as ear-back to front to back instead of front-of-ear to behind-ear. Repair must keep the elbow and forearm inside the existing hair silhouette width so the visible bbox stays close to idle/waving while the hand moves from in front of the ear to behind the ear."
+      ],
+      "warnings": []
+    }
+  ]
+}
