@@ -7,7 +7,7 @@
     {
       "id": "base",
       "kind": "base-pet",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/base-pet.md",
       "input_images": [
         {
@@ -20,12 +20,24 @@
       "generation_skill": "$imagegen",
       "requires_grounded_generation": true,
       "allow_prompt_only_generation": false,
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e398b-ef22-76e0-baf7-b8978cb89976\\ig_045f8467ee2578ce016a12cb5987e081918f8deadd4bafddf8.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "3bf275dfb19304fead94eb35da1f92ed9e3926fc1d714df2592e44bfd3002d1b",
+      "output_sha256": "3bf275dfb19304fead94eb35da1f92ed9e3926fc1d714df2592e44bfd3002d1b",
+      "completed_at": "2026-05-24T09:59:06.067244+00:00",
+      "metadata": {
+        "width": 1206,
+        "height": 1305,
+        "mode": "RGB",
+        "format": "PNG"
+      },
+      "canonical_reference_path": "references\\canonical-base.png"
     },
     {
       "id": "idle",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/idle.md",
       "input_images": [
         {
@@ -68,12 +80,23 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e596d-6ffe-70d0-aa6a-e744ef15a090\\ig_0a54c15081af9f55016a12cc68bab08191a663c9a4efc33a35.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "870059e0d55f3f01fbd66af660b13f82db2acb393880e00ece197d0674ac4787",
+      "output_sha256": "870059e0d55f3f01fbd66af660b13f82db2acb393880e00ece197d0674ac4787",
+      "completed_at": "2026-05-24T10:04:23.798559+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "running-right",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/running-right.md",
       "input_images": [
         {
@@ -116,7 +139,18 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e596d-855a-7572-8502-f74a7e052955\\ig_0beaf6095d908c49016a12cc6ac3048191a4171d5be8414293.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "551cc49d8e7f8c74bc3fbf1bc72b2a862bbde363a20d555c25b1075bbb288843",
+      "output_sha256": "551cc49d8e7f8c74bc3fbf1bc72b2a862bbde363a20d555c25b1075bbb288843",
+      "completed_at": "2026-05-24T10:04:21.664555+00:00",
+      "metadata": {
+        "width": 2098,
+        "height": 750,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "running-left",
@@ -465,5 +499,16 @@
       "mirror_policy": {},
       "recording_owner": "parent"
     }
-  ]
+  ],
+  "canonical_identity_reference": {
+    "path": "references\\canonical-base.png",
+    "source_job": "base",
+    "sha256": "3bf275dfb19304fead94eb35da1f92ed9e3926fc1d714df2592e44bfd3002d1b",
+    "metadata": {
+      "width": 1206,
+      "height": 1305,
+      "mode": "RGB",
+      "format": "PNG"
+    }
+  }
 }

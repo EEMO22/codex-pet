@@ -232,10 +232,22 @@ Do not commit cache folders from `tmp/user-data`.
   - Progress: run folder created, current spinner row references extracted,
     original Vera Clear row references copied, `imagegen-jobs.json` updated
     with row-specific references, and row prompts patched with final
-    action-specific overrides.
-  - Next: generate and record the grounded base image, then use `$hatch-pet`
-    row generation for `idle` and `running-right` first as identity/scale
-    checks before regenerating the remaining rows.
+    action-specific overrides. Grounded base image recorded to
+    `decoded/base.png`. First identity/scale rows recorded to
+    `decoded/idle.png` and `decoded/running-right.png`; extracted 192x208
+    frames are under `frames-check-initial/`.
+  - QA: first-row contact sheet and bbox metrics are under
+    `qa/initial-idle-running-right-contact.png` and
+    `qa/initial-idle-running-right-metrics.json`; a plain-text summary is at
+    `qa/initial-idle-running-right-metrics.txt`. Real app-size preview is saved
+    as `previews/vera-clear-spinner-rebuild-initial-display-preview.png` in both
+    the repo root and the working run. `idle` stays fixed at 198px visible source
+    height across 6 frames; `running-right` stays within 193-198px visible source
+    height across 8 frames.
+  - Next: regenerate the remaining rows, starting with `running-left` so it
+    can stay very close to `running-right`, then continue through `waving`,
+    `jumping`, laptop rows, and finally decide whether to keep or replace the
+    existing preferred `failed` row.
   - Note: row-strip generation requires subagents under the `$hatch-pet` skill
     unless the user explicitly requests sequential generation for this run.
 

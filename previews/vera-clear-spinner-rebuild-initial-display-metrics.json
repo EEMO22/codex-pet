@@ -1,0 +1,80 @@
+[
+  {
+    "state": "idle",
+    "frame": 0,
+    "source_cell": [
+      192,
+      208
+    ],
+    "app_frame": [
+      113,
+      122
+    ],
+    "source_bbox": [
+      29,
+      5,
+      162,
+      203
+    ],
+    "source_visible_size": [
+      133,
+      198
+    ],
+    "app_bbox": [
+      17,
+      3,
+      95,
+      119
+    ],
+    "app_visible_size": [
+      78.28,
+      116.53
+    ],
+    "scale": 0.5885416666666666,
+    "readability_target": [
+      "hair silhouette",
+      "large eyes/face marker",
+      "white outfit block",
+      "arm/point gesture where present"
+    ]
+  },
+  {
+    "state": "running-right",
+    "frame": 0,
+    "source_cell": [
+      192,
+      208
+    ],
+    "app_frame": [
+      113,
+      122
+    ],
+    "source_bbox": [
+      7,
+      5,
+      184,
+      203
+    ],
+    "source_visible_size": [
+      177,
+      198
+    ],
+    "app_bbox": [
+      4,
+      3,
+      108,
+      119
+    ],
+    "app_visible_size": [
+      104.17,
+      116.53
+    ],
+    "scale": 0.5885416666666666,
+    "readability_target": [
+      "hair silhouette",
+      "large eyes/face marker",
+      "white outfit block",
+      "arm/point gesture where present"
+    ]
+  }
+]

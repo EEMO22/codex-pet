@@ -1,0 +1,16 @@
+idle: width 131-133, height 198-198, frames 6
+  00: bbox=(29, 5, 162, 203) size=133x198 pixels=21023
+  01: bbox=(29, 5, 162, 203) size=133x198 pixels=20998
+  02: bbox=(30, 5, 162, 203) size=132x198 pixels=20929
+  03: bbox=(30, 5, 161, 203) size=131x198 pixels=20796
+  04: bbox=(30, 5, 162, 203) size=132x198 pixels=20892
+  05: bbox=(30, 5, 161, 203) size=131x198 pixels=20765
+running-right: width 170-182, height 193-198, frames 8
+  00: bbox=(7, 5, 184, 203) size=177x198 pixels=21725
+  01: bbox=(10, 5, 182, 203) size=172x198 pixels=21352
+  02: bbox=(5, 7, 187, 200) size=182x193 pixels=20785
+  03: bbox=(5, 6, 187, 202) size=182x196 pixels=20934
+  04: bbox=(6, 5, 186, 203) size=180x198 pixels=21387
+  05: bbox=(5, 7, 187, 201) size=182x194 pixels=21093
+  06: bbox=(11, 5, 181, 203) size=170x198 pixels=20758
+  07: bbox=(9, 5, 183, 203) size=174x198 pixels=21054
