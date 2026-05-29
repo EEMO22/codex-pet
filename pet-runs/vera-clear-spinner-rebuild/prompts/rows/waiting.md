@@ -66,3 +66,13 @@ Repair attempt 3:
 - Keep the chin-rest pose: one hand supports her chin, the other stays near the laptop. Expression is slightly bored, patient, and tired, not cheerful.
 - Use this frame rhythm: frame 1 bored chin-rest looking at laptop, frame 2 tiny left micro-tilt while still looking down, frame 3 blink/eyes closed, frame 4 tiny right micro-tilt while still looking down, frame 5 eyes reopen looking down, frame 6 settle back to bored laptop gaze.
 - The visible head angle change should be subtle. If the head tilt changes the silhouette dramatically, pushes hair far sideways, or makes the pose look cute/playful instead of bored, the row is failed.
+
+Canonical-base repair pass:
+- User QA rejected the assembled pet because `waiting` popped in the middle and
+  did not stay consistent with the canonical-base character.
+- Match the new non-laptop model-sheet rows for face width, skin tone, black bob
+  shape, shirt rendering, outline weight, and bust scale.
+- Keep the laptop stable and make the spinner visibly rotate clockwise with one
+  white arc/head. No static spinner, duplicate heads, or back-and-forth swing.
+- Motion should be a stable bored chin-rest with tiny blink/breathing only; no
+  mid-row character jump.

@@ -13,12 +13,22 @@
 - Rebuilt `running` with a sharper laptop-focused work expression.
 - Rebuilt `review` so the head tilt reads in screen coordinates as
   left -> center -> right -> center, instead of repeating a left tilt.
+- Ran an additional canonical-base consistency pass for `idle`, `jumping`,
+  `waving`, `waiting`, `running`, and `review` after installed-app QA showed
+  row-to-row render drift.
+- Repaired `jumping` again so the mouseover gesture reads as a hand moving
+  from in front of Vera's ear to behind the ear, instead of looking static.
+- Refreshed the calibrated real-size preview and added a dedicated jumping
+  motion preview:
+  `previews/vera-clear-spinner-final-display-preview.png` and
+  `previews/vera-clear-spinner-jumping-front-back-preview.png`.
 
 Validation:
 
 - `finalize_pet_run.py --run-dir C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild --allow-slot-extraction --skip-videos --skip-package`
 - `validate_atlas.py C:\Projects\codex-pet\pets\vera-clear-spinner-candidate\spritesheet.webp`
 - `electron . --validate-pets`
+- `git diff --check`
 
 ## 2026-05-28 - Vera Clear Spinner Gaze And Scale Repair
 

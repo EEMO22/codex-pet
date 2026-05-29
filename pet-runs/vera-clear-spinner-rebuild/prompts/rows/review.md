@@ -97,3 +97,12 @@ Repair attempt 5:
 - Frames 4 and 5 must visually oppose frames 1 and 2. They should look like the head tilt direction has changed sides on screen.
 - If the model cannot preserve crossed arms while making the right-side tilt clear, prioritize the right-side head tilt and laptop focus over crossed arms.
 - Keep the laptop steady in nearly the same screen position across all frames, so only Vera's head/neck tilt changes.
+
+Canonical-base repair pass:
+- User QA rejected the assembled pet because the forced head-waggle still felt
+  wrong and the overall character identity was inconsistent across rows.
+- Prefer a stable inspecting/review loop over exaggerated head wagging. A small
+  blink, serious gaze, or subtle lean is enough if it preserves identity.
+- Match the new non-laptop model-sheet rows for face width, skin tone, black
+  bob, shirt, outline density, and bust scale.
+- Keep the laptop stable and make the generic spinner visibly rotate clockwise.

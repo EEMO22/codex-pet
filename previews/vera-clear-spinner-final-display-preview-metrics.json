@@ -1,33 +1,34 @@
 {
-  "spritesheet": "C:\\Projects\\codex-pet\\pets\\vera-clear-spinner-candidate\\spritesheet.webp",
-  "cell": {
+  "atlas": "C:\\Projects\\codex-pet\\pets\\vera-clear-spinner-candidate\\spritesheet.webp",
+  "sourceCell": {
     "width": 192,
-    "height": 208
+    "height": 208,
+    "bbox": [
+      30,
+      5,
+      161,
+      203
+    ],
+    "visibleWidth": 131,
+    "visibleHeight": 198
   },
-  "appFrameApprox": {
+  "appFrame": {
     "width": 113,
-    "height": 122
+    "height": 122,
+    "bbox": [
+      18,
+      3,
+      95,
+      119
+    ],
+    "visibleWidth": 77,
+    "visibleHeight": 116
   },
-  "sourceVisibleBbox": {
-    "left": 29,
-    "top": 5,
-    "right": 162,
-    "bottom": 203,
-    "width": 133,
-    "height": 198
-  },
-  "appVisibleBbox": {
-    "left": 17,
-    "top": 3,
-    "right": 95,
-    "bottom": 119,
-    "width": 78,
-    "height": 116
-  },
-  "readabilityTargets": [
+  "readabilityTarget": [
     "hair silhouette",
-    "face/eyes",
-    "white shirt block",
-    "bust silhouette"
+    "face and blink shape",
+    "white top block",
+    "laptop spinner on laptop rows",
+    "front-to-back hair-tuck hand motion on jumping row"
   ]
 }

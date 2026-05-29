@@ -81,11 +81,11 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e596d-6ffe-70d0-aa6a-e744ef15a090\\ig_0a54c15081af9f55016a12cc68bab08191a663c9a4efc33a35.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7266-d3c0-70a1-a43b-6944d609f81e\\ig_036349c035369fe8016a19311c7b54819190a34b3ff3e38b67.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "870059e0d55f3f01fbd66af660b13f82db2acb393880e00ece197d0674ac4787",
-      "output_sha256": "870059e0d55f3f01fbd66af660b13f82db2acb393880e00ece197d0674ac4787",
-      "completed_at": "2026-05-24T10:04:23.798559+00:00",
+      "source_sha256": "6aac3dc87af497cf35affd14ff1cdb407511d3a284cc395d9a13d1f0c720d8b0",
+      "output_sha256": "6aac3dc87af497cf35affd14ff1cdb407511d3a284cc395d9a13d1f0c720d8b0",
+      "completed_at": "2026-05-29T07:13:35.395511+00:00",
       "metadata": {
         "width": 2172,
         "height": 724,
@@ -296,14 +296,14 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e5987-20c6-7ba0-b1a9-3260878496ec\\ig_074d08dc1d8cd6b3016a12d2f33bcc8191be052ed16e75a932.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7266-d3c0-70a1-a43b-6944d609f81e\\ig_036349c035369fe8016a1931b0cf7c8191aa2b80e8ba1c56cb.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "012a19bb595a4383eb8aa7019b1d16cc9a3ee183319f62037986ca0b5baa1147",
-      "output_sha256": "012a19bb595a4383eb8aa7019b1d16cc9a3ee183319f62037986ca0b5baa1147",
-      "completed_at": "2026-05-24T10:31:35.679166+00:00",
+      "source_sha256": "891bde63e7ee02afe22f52ff8f5d7a774140cc14722b9d862e3dafcc79843462",
+      "output_sha256": "891bde63e7ee02afe22f52ff8f5d7a774140cc14722b9d862e3dafcc79843462",
+      "completed_at": "2026-05-29T07:13:35.652207+00:00",
       "metadata": {
-        "width": 2172,
-        "height": 724,
+        "width": 2086,
+        "height": 754,
         "mode": "RGB",
         "format": "PNG"
       }
@@ -373,11 +373,11 @@
           "archived_at": "2026-05-29T04:58:21.303707+00:00"
         }
       ],
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e721a-6181-7c80-bee6-1ef11d712c19\\ig_0179f2bf525a4369016a191e6830f0819180f8e2b864af7f05.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7299-1b38-7ef0-8371-897851850af0\\ig_0ea04c88e45c0fc9016a193df37408819186887813fe7b7bef.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "cddeacf02beb856b551cd145c8feb8f0ad05f010ca0c2884e29be5b6f9cdc083",
-      "output_sha256": "cddeacf02beb856b551cd145c8feb8f0ad05f010ca0c2884e29be5b6f9cdc083",
-      "completed_at": "2026-05-29T05:11:43.444214+00:00",
+      "source_sha256": "75cf882dc9b7e30c98fcbea7ddd3c542b0455dd9edf9757bb077b28950184f82",
+      "output_sha256": "75cf882dc9b7e30c98fcbea7ddd3c542b0455dd9edf9757bb077b28950184f82",
+      "completed_at": "2026-05-29T07:25:36.714364+00:00",
       "metadata": {
         "width": 2172,
         "height": 724,
@@ -531,14 +531,14 @@
           "archived_at": "2026-05-28T05:01:17.640844+00:00"
         }
       ],
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e6d02-2df4-7b62-acec-74399b9e11e6\\ig_060735283bcbf5a7016a17d00ed9b88191a2ca5e5bd94e0465.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7267-8ae7-77e2-95cf-8a3a7041aa6b\\ig_06f88a4063ba3668016a1937280834819196a6b67521e15250.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "aabefa30ae488acae0b1e4f8ecabd51b2ae6b18a9be22e993c8fa010d6528308",
-      "output_sha256": "aabefa30ae488acae0b1e4f8ecabd51b2ae6b18a9be22e993c8fa010d6528308",
-      "completed_at": "2026-05-28T05:21:05.954569+00:00",
+      "source_sha256": "8d21c8074c27f1f1aa81682dd4c3095b8a91852567dde0ce4f1b3df8c09ba243",
+      "output_sha256": "8d21c8074c27f1f1aa81682dd4c3095b8a91852567dde0ce4f1b3df8c09ba243",
+      "completed_at": "2026-05-29T07:13:35.775571+00:00",
       "metadata": {
-        "width": 2048,
-        "height": 768,
+        "width": 1864,
+        "height": 844,
         "mode": "RGB",
         "format": "PNG"
       }
@@ -617,14 +617,14 @@
         }
       ],
       "repair_attempt": 4,
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e721a-8afe-79c1-8ad0-a7acbcfe01e0\\ig_0552c56b9cfe28f4016a191dd12f788191b60de19de8e82da9.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7267-8ae7-77e2-95cf-8a3a7041aa6b\\ig_06f88a4063ba3668016a1937b348948191a2ba6c52aba7eff1.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "fc3df3f19243d22a9496363f49052fc1f83a24f7262df6397ef95176c4c31056",
-      "output_sha256": "fc3df3f19243d22a9496363f49052fc1f83a24f7262df6397ef95176c4c31056",
-      "completed_at": "2026-05-29T05:04:27.770894+00:00",
+      "source_sha256": "34f8cd8d475b4694740a950335e1b5f8bd5c20e63ac5b840446dbd19b94dbb62",
+      "output_sha256": "34f8cd8d475b4694740a950335e1b5f8bd5c20e63ac5b840446dbd19b94dbb62",
+      "completed_at": "2026-05-29T07:13:35.904999+00:00",
       "metadata": {
-        "width": 2048,
-        "height": 768,
+        "width": 1774,
+        "height": 887,
         "mode": "RGB",
         "format": "PNG"
       }
@@ -708,11 +708,11 @@
           "archived_at": "2026-05-29T05:22:16.739446+00:00"
         }
       ],
-      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e722f-3ec5-7c11-a285-22befa675131\\ig_032463cdcb8ff8bf016a192475ee0881918e73eedb6171cf82.png",
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e7267-8ae7-77e2-95cf-8a3a7041aa6b\\ig_06f88a4063ba3668016a19384b93cc81919f226ba398be50e6.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "9c042ad103781c60e786d7003869066f865309bf3175041b2ee69fc847114ecc",
-      "output_sha256": "9c042ad103781c60e786d7003869066f865309bf3175041b2ee69fc847114ecc",
-      "completed_at": "2026-05-29T05:39:45.189212+00:00",
+      "source_sha256": "fa30d61ac26383882d24f3da3f0677fa926b001f1ef569b902a63952091ea011",
+      "output_sha256": "fa30d61ac26383882d24f3da3f0677fa926b001f1ef569b902a63952091ea011",
+      "completed_at": "2026-05-29T07:13:36.035904+00:00",
       "metadata": {
         "width": 2172,
         "height": 724,

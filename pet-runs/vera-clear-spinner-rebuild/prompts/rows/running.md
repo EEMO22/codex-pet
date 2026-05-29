@@ -76,3 +76,13 @@ Repair attempt 4:
 - Running should look like Vera is actively working: eyes open and clear, pupils aimed at the laptop screen/keyboard, focused eyebrows, small determined mouth or neutral concentration.
 - Do not use droopy sleepy eyelids, bored waiting expression, chin-rest posture, or review-like crossed arms.
 - Keep typing hands low and subtle, but make the face more alert than `waiting`.
+
+Canonical-base repair pass:
+- User QA rejected the assembled pet because `running` looked too static and
+  the character still drifted away from the canonical-base/non-laptop rows.
+- Match the new non-laptop model-sheet rows for face width, skin tone, bob hair,
+  shirt, outline density, and bust scale.
+- Make hand/finger/forearm changes visible across frames so the row reads as
+  active work rather than a still image.
+- Keep the generic laptop spinner visible and rotating clockwise with exactly
+  one bright arc/head.

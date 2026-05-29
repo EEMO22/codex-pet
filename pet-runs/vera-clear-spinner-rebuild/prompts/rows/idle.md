@@ -58,3 +58,12 @@ Final Vera Clear Spinner idle override:
 - Show only quiet breathing and one natural blink across the 6 frames.
 - Keep the character scale, visible bbox, face size, hair outline, shirt shape, and lower dark waist hint nearly identical to the canonical base and the current spinner idle row.
 - The row must feel like the same drawing held steady, not a newly rendered character in each frame.
+
+Canonical-base repair pass:
+- User QA rejected the assembled pet because rows no longer looked like the same
+  character. Rebuild this row as the non-laptop model-sheet anchor.
+- Lock to canonical-base face width, skin tone, black bob silhouette, hair
+  highlights, outline thickness, white shirt shape, bust scale, and flat sprite
+  rendering.
+- Later rows should match this row's identity rather than introducing their own
+  face, skin, hair, or rendering style.

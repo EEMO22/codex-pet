@@ -54,3 +54,10 @@ Final Vera Clear Spinner waving override:
 - This is the existing blown-kiss gesture, not a generic side-to-side hand wave.
 - Across 4 frames: one hand rises toward the mouth, touches/near-mouth pose, hand extends forward while Vera winks and blows a kiss, then returns to the idle-like settle pose.
 - Keep idle/waving/jumping character size, face, hair silhouette, line style, and body proportions almost identical.
+
+Canonical-base repair pass:
+- Rebuild with `idle` and `jumping` as a single non-laptop identity set.
+- Preserve the blown-kiss action, but keep Vera's face, skin tone, bob hair,
+  shirt, outline density, and body scale matched to canonical-base and the new
+  idle anchor.
+- Do not let the wink or extended hand turn into a different rendering style.

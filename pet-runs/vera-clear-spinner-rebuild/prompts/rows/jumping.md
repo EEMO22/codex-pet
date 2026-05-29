@@ -88,3 +88,20 @@ Repair attempt 3:
 - Do not make Vera taller, smaller, darker-skinned, glossier, sharper, or more detailed than `idle`/`waving`.
 - Keep the same action intent: a small hair-tuck gesture near the ear. The movement should be readable but secondary; matching `idle`/`waving` identity is more important than dramatic motion.
 - Frame rhythm: idle-like pose, hand starts to rise near ear, fingertips touch hair, tiny tuck behind ear, return to idle-like pose. No big elbow, no hair fan, no new hairstyle.
+
+Canonical-base repair pass:
+- User QA rejected the assembled pet because `jumping` still differed from
+  `idle`/`waving` in body size, skin color, hairstyle, and rendering.
+- Regenerate as part of the same non-laptop model-sheet set as `idle` and
+  `waving`; match their face width, skin tone, bob silhouette, outline weight,
+  shirt rendering, and bust scale exactly.
+- Keep only the small hair-tuck mouseover gesture. The first and final frames
+  should read as the same Vera as `idle`.
+
+Front-to-back hair tuck repair:
+- User QA accepted the style direction but rejected the motion because the hand
+  looked nearly still. Make the hand path read clearly as ear-front to
+  ear-back.
+- Frame 2 should show the hand in front of the ear/hair edge, frame 3 should
+  touch the front edge of the ear, and frame 4 should sweep/tuck behind the ear.
+- Keep the elbow tucked and preserve the `idle`/`waving` model-sheet identity.

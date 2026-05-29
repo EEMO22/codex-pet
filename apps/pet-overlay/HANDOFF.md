@@ -259,6 +259,10 @@ Do not commit cache folders from `tmp/user-data`.
     `failed` from an active laptop-work start with a vertical fist strike, made
     `running` look focused at the laptop, and corrected `review` to read in
     screen coordinates as left -> center -> right -> center.
+  - Repair: later 2026-05-29 canonical-base pass regenerated `idle`,
+    `jumping`, `waving`, `waiting`, `running`, and `review` to reduce
+    installed-app render drift, then repaired `jumping` again so the hand
+    motion reads from in front of the ear to behind the ear.
   - Next: run the overlay and inspect the rebuilt pet in motion. If the user
     rejects any row visually, queue a focused repair for that specific row
     instead of regenerating the whole pet.

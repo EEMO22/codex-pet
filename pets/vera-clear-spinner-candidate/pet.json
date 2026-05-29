@@ -1,6 +1,6 @@
 {
   "id": "vera-clear-spinner-candidate",
   "displayName": "Vera Clear Spinner Candidate",
-  "description": "Vera Clear with a generic browser-spinner laptop cue and rebuilt consistent action rows.",
+  "description": "Vera Clear with a generic browser-spinner laptop cue and canonical-base locked action rows.",
   "spritesheetPath": "spritesheet.webp"
 }
