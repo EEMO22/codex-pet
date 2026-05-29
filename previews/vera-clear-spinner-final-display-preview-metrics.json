@@ -1,0 +1,33 @@
+{
+  "spritesheet": "C:\\Projects\\codex-pet\\pets\\vera-clear-spinner-candidate\\spritesheet.webp",
+  "cell": {
+    "width": 192,
+    "height": 208
+  },
+  "appFrameApprox": {
+    "width": 113,
+    "height": 122
+  },
+  "sourceVisibleBbox": {
+    "left": 29,
+    "top": 5,
+    "right": 162,
+    "bottom": 203,
+    "width": 133,
+    "height": 198
+  },
+  "appVisibleBbox": {
+    "left": 17,
+    "top": 3,
+    "right": 95,
+    "bottom": 119,
+    "width": 78,
+    "height": 116
+  },
+  "readabilityTargets": [
+    "hair silhouette",
+    "face/eyes",
+    "white shirt block",
+    "bust silhouette"
+  ]
+}

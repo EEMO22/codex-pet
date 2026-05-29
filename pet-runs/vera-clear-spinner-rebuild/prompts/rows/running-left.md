@@ -9,7 +9,7 @@ Identity lock:
 - If the pet has a prop or accessory, preserve its size, side, palette, and attachment style unless the row action requires a small pose-only adjustment.
 - Prefer a subtler animation over any change that mutates the pet identity.
 
-Output exactly 8 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state temporarily adds oversized dark work glasses. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
+Output exactly 8 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state uses no glasses or added eyewear. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
 
 Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolution mascot sprite, compact chibi proportions, chunky whole-body silhouette, thick dark 1-2 px outline, visible stepped/pixel edges, limited palette, flat cel shading with at most one small highlight and one shadow step, simple readable face, tiny limbs, and no detail that disappears at 192x208. Avoid polished illustration, painterly rendering, anime key art, 3D render, vector app-icon polish, glossy lighting, soft gradients, realistic fur or material texture, anti-aliased high-detail edges, and complex tiny accessories. Additional user style notes: Codex digital pet sprite style optimized for the actual app render around 113 x 122 CSS pixels. Thick dark 1-2 px outlines, pixel-art-adjacent stepped edges, flat cel shading, limited palette, compact chibi bust-only silhouette, high-contrast readable eyes and mouth. In each 192 x 208 source cell, maximize useful space while preserving safe padding; target visible character height around 170-180 px and keep idle, jumping, and waving almost identical in character size, ratio, face, line style, and silhouette. Avoid polished anime key art, painterly rendering, soft gradients, glossy lighting, texture, micro-accessories, detached effects, shadows, text, UI, scenery, and high-detail anti-aliased edges..
 
@@ -48,6 +48,19 @@ Layout requirements:
 - Keep every frame self-contained with safe padding. No pet body part should be clipped by the frame slot.
 - Avoid motion blur. Use clear pose changes readable at 192x208.
 - Preserve the same silhouette, face, proportions, palette, material, and props across every frame.
+
+Final Vera Clear Spinner running-left repair override:
+- No laptop, no glasses, no props, no detached effects.
+- Vera turns her body slightly toward the movement direction and points to the left with one hand.
+- This row should mirror the rhythm and scale of running-right, but should be generated as a normal row if mirroring would make the hair shape or face look wrong.
+- The previous running-left strip failed QA because the wind-swept hair read too long, closer to mid-back length than Vera's shoulder-length bob.
+- Regenerate the row with a short shoulder-length rounded bob. Hair may trail slightly opposite movement, but the ends must stay around jaw/neck/shoulder height and must not extend like long hair down the back.
+- Preserve the same face size, body scale, shirt shape, outline weight, and sprite rendering as idle/waving.
+
+Repair attempt 2:
+- The previous left/right movement pair failed user QA because the two directions differed in hair movement amount, body lean, and motion feel.
+- Prefer deterministic mirroring from the accepted `running-right` row when possible so the two directions match exactly in rhythm, body tilt, hair movement, scale, and silhouette.
+- There is no laptop, logo, readable text, or side-specific prop in this movement row, so mirroring is acceptable if it preserves Vera's identity at app size.
 
 Final Vera Clear Spinner running-left override:
 - No laptop, no glasses, no props, no detached effects.

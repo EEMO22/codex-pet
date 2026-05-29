@@ -221,23 +221,19 @@ Do not commit cache folders from `tmp/user-data`.
 
 ## Active Pet Work
 
-- [ ] Regenerate Vera Clear Spinner as the default pet.
+- [x] Regenerate Vera Clear Spinner as the default pet.
   - Started: 2026-05-24.
+  - Completed: 2026-05-28.
   - Scope: rebuild every action row through `$hatch-pet` using the Vera Clear
     canonical base, the current `vera-clear-spinner-candidate` rows, the
     original Vera Clear approved rows, and the user's action-specific motion
     notes.
   - Working run:
     `C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild`.
-  - Progress: run folder created, current spinner row references extracted,
-    original Vera Clear row references copied, `imagegen-jobs.json` updated
-    with row-specific references, and row prompts patched with final
-    action-specific overrides. Grounded base image recorded to
-    `decoded/base.png`. Identity/scale rows recorded to `decoded/idle.png`,
-    `decoded/running-right.png`, and `decoded/waving.png`; extracted 192x208
-    frames are under `frames-check-initial/` and `frames-check-style-lock/`.
-    `jumping` was reopened as a repair job after visual QA rejected the raised
-    elbow width and incorrect ear-front-to-ear-back motion.
+  - Completion: all 9 animation rows were recorded and finalized into
+    `pet-runs/vera-clear-spinner-rebuild/final/spritesheet.webp`; the package
+    in `pets/vera-clear-spinner-candidate` now uses the rebuilt atlas and shows
+    as `Vera Clear Spinner Candidate`.
   - QA: first-row contact sheet and bbox metrics are under
     `qa/initial-idle-running-right-contact.png` and
     `qa/initial-idle-running-right-metrics.json`; a plain-text summary is at
@@ -251,19 +247,21 @@ Do not commit cache folders from `tmp/user-data`.
     `qa/style-lock-idle-waving-running-right-metrics.txt`. It stays at 198px
     visible source height, with width 136-138px across 4 frames, close to idle's
     131-133px width and within the accepted gesture range.
-  - Jumping repair notes: the old approved/current jumping references are useful
-    for rough intent but should not be copied as positive silhouette references;
-    they tend to produce a raised forearm/elbow outside the bob-hair width. A
-    too-compact hand/fingertip-only attempt preserved the silhouette but shrank
-    the visible bbox to about 126-130px and was unreadable at actual app size.
-    The next `jumping` attempt should keep the idle hair/body width around
-    131-133px, allow only very small hand/finger motion near the viewer-right ear,
-    and ensure the hand path reads front-of-ear -> behind-ear without adding a
-    new arm outline outside the hair.
-  - Next: continue with `jumping` repair using the stricter width/motion notes,
-    or skip temporarily to `running-left` if the row remains blocked. Then
-    continue through laptop rows and finally decide whether to keep or replace
-    the existing preferred `failed` row.
+  - Final QA: `qa/contact-sheet.png`, `final/validation.json`, and
+    `previews/vera-clear-spinner-final-display-preview.png`. The final atlas is
+    `1536 x 1872`, uses `192 x 208` cells, and validated with no errors or
+    warnings. The 2026-05-28 repair pass retargeted `waiting`, `running`, and
+    `review` so Vera looks down at the laptop instead of at the viewer, reduced
+    `waiting` to a quiet chin-rest loop, shortened movement-row hair back to a
+    shoulder-length bob, and kept `jumping` as a compact hair-tuck row.
+  - Repair: 2026-05-29 pass matched `running-left` to `running-right` through a
+    deterministic mirror, tightened `jumping` against `idle`/`waving`, rebuilt
+    `failed` from an active laptop-work start with a vertical fist strike, made
+    `running` look focused at the laptop, and corrected `review` to read in
+    screen coordinates as left -> center -> right -> center.
+  - Next: run the overlay and inspect the rebuilt pet in motion. If the user
+    rejects any row visually, queue a focused repair for that specific row
+    instead of regenerating the whole pet.
   - Note: row-strip generation requires subagents under the `$hatch-pet` skill
     unless the user explicitly requests sequential generation for this run.
 

@@ -140,14 +140,22 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "source_path": "C:\\Users\\battl\\.codex\\generated_images\\019e596d-855a-7572-8502-f74a7e052955\\ig_0beaf6095d908c49016a12cc6ac3048191a4171d5be8414293.png",
+      "repair_attempt": 1,
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\running-right-attempt-1-previous.png",
+          "archived_at": "2026-05-27T05:26:31.867178+00:00"
+        }
+      ],
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e6801-ec2e-7bb1-983d-1638db84be36\\ig_00d74c976e5a0d53016a16887d82508191b0e445191c391468.png",
       "source_provenance": "built-in-imagegen",
-      "source_sha256": "551cc49d8e7f8c74bc3fbf1bc72b2a862bbde363a20d555c25b1075bbb288843",
-      "output_sha256": "551cc49d8e7f8c74bc3fbf1bc72b2a862bbde363a20d555c25b1075bbb288843",
-      "completed_at": "2026-05-24T10:04:21.664555+00:00",
+      "source_sha256": "191741b890f6119494245c19eb806db07d486414bd11ba0747a00b326978a8a4",
+      "output_sha256": "191741b890f6119494245c19eb806db07d486414bd11ba0747a00b326978a8a4",
+      "completed_at": "2026-05-27T06:29:51.071133+00:00",
       "metadata": {
-        "width": 2098,
-        "height": 750,
+        "width": 2065,
+        "height": 762,
         "mode": "RGB",
         "format": "PNG"
       }
@@ -155,7 +163,7 @@
     {
       "id": "running-left",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/running-left.md",
       "input_images": [
         {
@@ -209,7 +217,37 @@
         "requires_explicit_approval": true,
         "fallback_generation_skill": "$imagegen"
       },
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "repair_attempt": 2,
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\running-left-attempt-1-previous.png",
+          "archived_at": "2026-05-27T07:00:55.961721+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\running-left-attempt-2-previous.png",
+          "archived_at": "2026-05-29T04:58:21.302762+00:00"
+        }
+      ],
+      "source_path": "decoded\\running-right.png",
+      "source_provenance": "deterministic-mirror",
+      "derived_from": "running-right",
+      "source_sha256": "191741b890f6119494245c19eb806db07d486414bd11ba0747a00b326978a8a4",
+      "output_sha256": "4911c0775a4551a29fd2c50592e584a8ef1139e2cfbbc8c895b67d23936146b4",
+      "completed_at": "2026-05-29T04:58:46.317150+00:00",
+      "metadata": {
+        "width": 2065,
+        "height": 762,
+        "mode": "RGBA",
+        "format": "PNG"
+      },
+      "mirror_decision": {
+        "approved": true,
+        "approved_at": "2026-05-29T04:58:46.317150+00:00",
+        "note": "No laptop, logo, text, or side-specific prop in directional movement; mirroring keeps hair motion, body lean, scale, and timing matched across left/right movement."
+      }
     },
     {
       "id": "waving",
@@ -273,7 +311,7 @@
     {
       "id": "jumping",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/jumping.md",
       "input_images": [
         {
@@ -317,21 +355,40 @@
       ],
       "mirror_policy": {},
       "recording_owner": "parent",
-      "repair_attempt": 1,
-      "repair_reason": "visual QA rejected the row: the raised elbow expands the character width beyond the idle/waving silhouette, and the hand motion reads as ear-back to front to back instead of front-of-ear to behind-ear. Repair must keep the elbow and forearm inside the existing hair silhouette width so the visible bbox stays close to idle/waving while the hand moves from in front of the ear to behind the ear.",
-      "queued_at": "2026-05-24T10:42:23.216394+00:00",
+      "repair_attempt": 3,
       "previous_outputs": [
         {
           "attempt": 1,
           "path": "decoded\\repair-archive\\jumping-attempt-1-previous.png",
           "archived_at": "2026-05-24T10:42:23.216394+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\jumping-attempt-2-previous.png",
+          "archived_at": "2026-05-27T05:26:31.866178+00:00"
+        },
+        {
+          "attempt": 3,
+          "path": "decoded\\repair-archive\\jumping-attempt-3-previous.png",
+          "archived_at": "2026-05-29T04:58:21.303707+00:00"
         }
-      ]
+      ],
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e721a-6181-7c80-bee6-1ef11d712c19\\ig_0179f2bf525a4369016a191e6830f0819180f8e2b864af7f05.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "cddeacf02beb856b551cd145c8feb8f0ad05f010ca0c2884e29be5b6f9cdc083",
+      "output_sha256": "cddeacf02beb856b551cd145c8feb8f0ad05f010ca0c2884e29be5b6f9cdc083",
+      "completed_at": "2026-05-29T05:11:43.444214+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "failed",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/failed.md",
       "input_images": [
         {
@@ -357,6 +414,10 @@
         {
           "path": "references/approved-vera-clear-failed.png",
           "role": "approved original Vera Clear row for this state; use as line style, scale, silhouette, timing, and pose rhythm reference"
+        },
+        {
+          "path": "decoded/waiting.png",
+          "role": "accepted waiting row; use as the primary laptop size, laptop angle, spinner shape, ring thickness, bright arc/head, and clockwise progress reference for laptop rows"
         }
       ],
       "output_path": "decoded/failed.png",
@@ -374,12 +435,41 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\failed-attempt-1-previous.png",
+          "archived_at": "2026-05-26T03:55:03.294059+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\failed-attempt-2-previous.png",
+          "archived_at": "2026-05-27T05:58:41.329597+00:00"
+        },
+        {
+          "attempt": 3,
+          "path": "decoded\\repair-archive\\failed-attempt-3-previous.png",
+          "archived_at": "2026-05-29T04:58:21.304717+00:00"
+        }
+      ],
+      "repair_attempt": 3,
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e721a-7606-7f20-a343-3c3087cb35a4\\ig_08659e9472a4d83f016a191d72ce0c8191ba1105baac1dd6f7.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "fac94f4d4cc663e6e1fbd8c982e4ad65503888f60e286099250abeba4d5b2a7d",
+      "output_sha256": "fac94f4d4cc663e6e1fbd8c982e4ad65503888f60e286099250abeba4d5b2a7d",
+      "completed_at": "2026-05-29T05:03:05.259426+00:00",
+      "metadata": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "waiting",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/waiting.md",
       "input_images": [
         {
@@ -422,12 +512,41 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "repair_attempt": 3,
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\waiting-attempt-1-previous.png",
+          "archived_at": "2026-05-27T05:01:52.869370+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\waiting-attempt-2-previous.png",
+          "archived_at": "2026-05-27T05:57:38.715371+00:00"
+        },
+        {
+          "attempt": 3,
+          "path": "decoded\\repair-archive\\waiting-attempt-3-previous.png",
+          "archived_at": "2026-05-28T05:01:17.640844+00:00"
+        }
+      ],
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e6d02-2df4-7b62-acec-74399b9e11e6\\ig_060735283bcbf5a7016a17d00ed9b88191a2ca5e5bd94e0465.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "aabefa30ae488acae0b1e4f8ecabd51b2ae6b18a9be22e993c8fa010d6528308",
+      "output_sha256": "aabefa30ae488acae0b1e4f8ecabd51b2ae6b18a9be22e993c8fa010d6528308",
+      "completed_at": "2026-05-28T05:21:05.954569+00:00",
+      "metadata": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "running",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/running.md",
       "input_images": [
         {
@@ -453,6 +572,10 @@
         {
           "path": "references/approved-vera-clear-running.png",
           "role": "approved original Vera Clear row for this state; use as line style, scale, silhouette, timing, and pose rhythm reference"
+        },
+        {
+          "path": "decoded/waiting.png",
+          "role": "accepted waiting row; use as the primary laptop size, laptop angle, spinner shape, ring thickness, bright arc/head, and clockwise progress reference for laptop rows"
         }
       ],
       "output_path": "decoded/running.png",
@@ -470,12 +593,46 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\running-attempt-1-previous.png",
+          "archived_at": "2026-05-26T03:55:03.294059+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\running-attempt-2-previous.png",
+          "archived_at": "2026-05-27T05:58:41.327597+00:00"
+        },
+        {
+          "attempt": 3,
+          "path": "decoded\\repair-archive\\running-attempt-3-previous.png",
+          "archived_at": "2026-05-28T05:01:17.641844+00:00"
+        },
+        {
+          "attempt": 4,
+          "path": "decoded\\repair-archive\\running-attempt-4-previous.png",
+          "archived_at": "2026-05-29T04:58:21.305719+00:00"
+        }
+      ],
+      "repair_attempt": 4,
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e721a-8afe-79c1-8ad0-a7acbcfe01e0\\ig_0552c56b9cfe28f4016a191dd12f788191b60de19de8e82da9.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "fc3df3f19243d22a9496363f49052fc1f83a24f7262df6397ef95176c4c31056",
+      "output_sha256": "fc3df3f19243d22a9496363f49052fc1f83a24f7262df6397ef95176c4c31056",
+      "completed_at": "2026-05-29T05:04:27.770894+00:00",
+      "metadata": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     },
     {
       "id": "review",
       "kind": "row-strip",
-      "status": "pending",
+      "status": "complete",
       "prompt_file": "prompts/rows/review.md",
       "input_images": [
         {
@@ -501,6 +658,10 @@
         {
           "path": "references/approved-vera-clear-review.png",
           "role": "approved original Vera Clear row for this state; use as line style, scale, silhouette, timing, and pose rhythm reference"
+        },
+        {
+          "path": "decoded/waiting.png",
+          "role": "accepted waiting row; use as the primary laptop size, laptop angle, spinner shape, ring thickness, bright arc/head, and clockwise progress reference for laptop rows"
         }
       ],
       "output_path": "decoded/review.png",
@@ -518,7 +679,46 @@
         "base"
       ],
       "mirror_policy": {},
-      "recording_owner": "parent"
+      "recording_owner": "parent",
+      "previous_outputs": [
+        {
+          "attempt": 1,
+          "path": "decoded\\repair-archive\\review-attempt-1-previous.png",
+          "archived_at": "2026-05-26T03:55:03.294059+00:00"
+        },
+        {
+          "attempt": 2,
+          "path": "decoded\\repair-archive\\review-attempt-2-previous.png",
+          "archived_at": "2026-05-27T05:58:41.328597+00:00"
+        },
+        {
+          "attempt": 3,
+          "path": "decoded\\repair-archive\\review-attempt-3-previous.png",
+          "archived_at": "2026-05-29T04:58:21.305719+00:00"
+        }
+      ],
+      "repair_attempt": 5,
+      "repair_archives": [
+        {
+          "path": "decoded\\repair-archive\\review-attempt-4-previous.png",
+          "archived_at": "2026-05-29T05:14:09.278680+00:00"
+        },
+        {
+          "path": "decoded\\repair-archive\\review-attempt-5-previous.png",
+          "archived_at": "2026-05-29T05:22:16.739446+00:00"
+        }
+      ],
+      "source_path": "C:\\Users\\powers\\.codex\\generated_images\\019e722f-3ec5-7c11-a285-22befa675131\\ig_032463cdcb8ff8bf016a192475ee0881918e73eedb6171cf82.png",
+      "source_provenance": "built-in-imagegen",
+      "source_sha256": "9c042ad103781c60e786d7003869066f865309bf3175041b2ee69fc847114ecc",
+      "output_sha256": "9c042ad103781c60e786d7003869066f865309bf3175041b2ee69fc847114ecc",
+      "completed_at": "2026-05-29T05:39:45.189212+00:00",
+      "metadata": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGB",
+        "format": "PNG"
+      }
     }
   ],
   "canonical_identity_reference": {

@@ -1,6 +1,6 @@
 {
   "id": "vera-clear-spinner-candidate",
   "displayName": "Vera Clear Spinner Candidate",
-  "description": "A Vera Clear test build with browser-spinner laptop marks instead of the OpenAI-style logo.",
+  "description": "Vera Clear with a generic browser-spinner laptop cue and rebuilt consistent action rows.",
   "spritesheetPath": "spritesheet.webp"
 }

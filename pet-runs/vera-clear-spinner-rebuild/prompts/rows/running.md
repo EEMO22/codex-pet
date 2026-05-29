@@ -9,7 +9,7 @@ Identity lock:
 - If the pet has a prop or accessory, preserve its size, side, palette, and attachment style unless the row action requires a small pose-only adjustment.
 - Prefer a subtler animation over any change that mutates the pet identity.
 
-Output exactly 6 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state temporarily adds oversized dark work glasses. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
+Output exactly 6 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state uses no glasses or added eyewear. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
 
 Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolution mascot sprite, compact chibi proportions, chunky whole-body silhouette, thick dark 1-2 px outline, visible stepped/pixel edges, limited palette, flat cel shading with at most one small highlight and one shadow step, simple readable face, tiny limbs, and no detail that disappears at 192x208. Avoid polished illustration, painterly rendering, anime key art, 3D render, vector app-icon polish, glossy lighting, soft gradients, realistic fur or material texture, anti-aliased high-detail edges, and complex tiny accessories. Additional user style notes: Codex digital pet sprite style optimized for the actual app render around 113 x 122 CSS pixels. Thick dark 1-2 px outlines, pixel-art-adjacent stepped edges, flat cel shading, limited palette, compact chibi bust-only silhouette, high-contrast readable eyes and mouth. In each 192 x 208 source cell, maximize useful space while preserving safe padding; target visible character height around 170-180 px and keep idle, jumping, and waving almost identical in character size, ratio, face, line style, and silhouette. Avoid polished anime key art, painterly rendering, soft gradients, glossy lighting, texture, micro-accessories, detached effects, shadows, text, UI, scenery, and high-detail anti-aliased edges..
 
@@ -51,8 +51,28 @@ Layout requirements:
 
 Final Vera Clear Spinner running override:
 - Laptop required in all 6 frames.
-- Vera wears oversized dark work glasses only in this row; the glasses must be readable but must not hide the eyes.
-- The laptop is dark charcoal/black and its lid shows one large centered generic browser loading spinner mark. Do not draw an OpenAI knot, brand logo, text, UI, or code.
+- No glasses, no eyewear, and no added accessories; keep Vera's eyes unobstructed.
+- Match the laptop body size, lid angle, thickness, and placement to the accepted `waiting` row reference. The running laptop should look like the same laptop, not a different prop.
+- The laptop is dark charcoal/black and its lid shows one large centered generic browser loading spinner mark. The spinner must match the accepted `waiting` row spinner: same simple segmented ring, same ring thickness, same bright arc/head shape, and the bright head should advance clockwise across frames. Do not draw a different loader style, an OpenAI knot, brand logo, text, UI, or code.
 - Show task-running as focused keyboard typing: both hands stay low near the keyboard and alternate through small fast typing positions.
 - Keep the head, torso, laptop angle, laptop size, character scale, and character-to-laptop placement stable and close to the current spinner running row.
 - No literal foot-running, travel, raised knees, speed lines, dust, motion trails, or large arm lifts.
+
+Repair attempt 2:
+- Regenerate this row only after the new waiting row is available, using that waiting row as the laptop/spinner scale reference.
+- Vera and the laptop must match the new waiting and review rows in perceived size: no larger face, no taller laptop, no shifted laptop placement, no extra eyewear.
+- The spinner must match the new waiting spinner exactly in ring thickness, gray ring color, single bright white arc/head, and clockwise progression. Do not make the spinner head swing back and forth or duplicate into two heads.
+- Keep typing motion small and low near the keyboard so the body and laptop silhouette stay stable across all 6 frames.
+
+Repair attempt 3:
+- The previous running strip failed user QA because Vera looked at the viewer instead of the laptop.
+- Running is focused typing/working. Vera's gaze must point down toward the laptop screen or keyboard in every frame. Do not make eye contact with the viewer.
+- Keep both hands low near the keyboard with small alternating typing changes. Do not raise arms, wave, or look outward.
+- Match the new waiting row's laptop size, laptop angle, spinner style, and character scale, but use a focused working expression instead of bored waiting.
+- The spinner remains one simple bright arc/head progressing clockwise; no two heads, no swing-back motion, no brand mark.
+
+Repair attempt 4:
+- The previous running strip failed user QA because the expression still read bored or sleepy.
+- Running should look like Vera is actively working: eyes open and clear, pupils aimed at the laptop screen/keyboard, focused eyebrows, small determined mouth or neutral concentration.
+- Do not use droopy sleepy eyelids, bored waiting expression, chin-rest posture, or review-like crossed arms.
+- Keep typing hands low and subtle, but make the face more alert than `waiting`.

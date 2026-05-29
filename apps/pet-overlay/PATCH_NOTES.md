@@ -1,5 +1,74 @@
 # Patch Notes
 
+## 2026-05-29 - Vera Clear Spinner Event Row Repair
+
+- Repaired the latest Vera Clear Spinner candidate after visual QA:
+  `running-left` is now derived from `running-right` so left/right movement
+  uses matched hair motion, body tilt, scale, and timing.
+- Rebuilt `jumping` to sit closer to `idle` and `waving` in body size, skin
+  tone, face width, and bob hairstyle.
+- Rebuilt `failed` so the first frame starts from an active laptop-work pose,
+  the strike uses a vertical fist, soot is heavier, and the ending no longer
+  returns to a chin-rest pose.
+- Rebuilt `running` with a sharper laptop-focused work expression.
+- Rebuilt `review` so the head tilt reads in screen coordinates as
+  left -> center -> right -> center, instead of repeating a left tilt.
+
+Validation:
+
+- `finalize_pet_run.py --run-dir C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild --allow-slot-extraction --skip-videos --skip-package`
+- `validate_atlas.py C:\Projects\codex-pet\pets\vera-clear-spinner-candidate\spritesheet.webp`
+- `electron . --validate-pets`
+
+## 2026-05-28 - Vera Clear Spinner Gaze And Scale Repair
+
+- Repaired the latest Vera Clear Spinner candidate after visual QA:
+  `waiting`, `running`, and `review` now look down toward the laptop instead
+  of facing the viewer.
+- Reduced `waiting` from an exaggerated head sway to a quiet bored chin-rest
+  loop with only tiny left/right movement.
+- Rebuilt `running-right` and `running-left` so the wind-swept hair remains a
+  shoulder-length bob.
+- Rebuilt `jumping` as a closer idle/waving-style hair-tuck row with a less
+  narrow face and less blocky hair.
+- Rebuilt `failed` so the explosion overlaps normal-size Vera, with heavier
+  soot and a clearer damaged-laptop recovery.
+
+Validation:
+
+- `finalize_pet_run.py --run-dir C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild --allow-slot-extraction --skip-videos --skip-package`
+- `validate_atlas.py pet-runs/vera-clear-spinner-rebuild/final/spritesheet.webp`
+- `electron . --validate-pets`
+
+Note: `npm run validate:pets` could not be rerun in this pass because the
+currently running Electron app had `apps/pet-overlay/dist/*.js` files locked,
+causing TypeScript `EPERM` writes before pet validation started.
+
+## 2026-05-26 - Vera Clear Spinner Complete Row Rebuild
+
+- Completed the Vera Clear Spinner rebuild for all Codex pet rows:
+  `idle`, `running-right`, `running-left`, `waving`, `jumping`, `failed`,
+  `waiting`, `running`, and `review`.
+- Repaired the laptop rows after visual QA: `failed` now has heavier soot on
+  Vera's face/body and a vertical hammer-fist impact, while `running` and
+  `review` now use the `waiting` row as the laptop size and spinner-style
+  reference.
+- Packaged the rebuilt atlas into `pets/vera-clear-spinner-candidate` while
+  keeping the existing package id and changing the display name to
+  `Vera Clear Spinner`.
+- Added final QA assets:
+  `pet-runs/vera-clear-spinner-rebuild/qa/contact-sheet.png`,
+  `pet-runs/vera-clear-spinner-rebuild/final/spritesheet.webp`, and
+  `previews/vera-clear-spinner-final-display-preview.png`.
+- Kept `jumping` as a compact hair-tuck mouseover row; it is not perfectly
+  wrist-only, but the finalized row stays close to idle width at app scale.
+
+Validation:
+
+- `finalize_pet_run.py --run-dir C:\Projects\codex-pet\pet-runs\vera-clear-spinner-rebuild --allow-slot-extraction --skip-videos --skip-package`
+- `validate_atlas.py pet-runs/vera-clear-spinner-rebuild/final/spritesheet.webp`
+- `npm run validate:pets`
+
 ## 2026-05-24 - Vera Clear Spinner Rebuild Progress
 
 - Recorded the rebuilt Vera Clear Spinner `base`, `idle`, `running-right`, and

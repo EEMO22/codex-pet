@@ -9,7 +9,7 @@ Identity lock:
 - If the pet has a prop or accessory, preserve its size, side, palette, and attachment style unless the row action requires a small pose-only adjustment.
 - Prefer a subtler animation over any change that mutates the pet identity.
 
-Output exactly 8 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state temporarily adds oversized dark work glasses. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
+Output exactly 8 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state uses no glasses or added eyewear. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
 
 Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolution mascot sprite, compact chibi proportions, chunky whole-body silhouette, thick dark 1-2 px outline, visible stepped/pixel edges, limited palette, flat cel shading with at most one small highlight and one shadow step, simple readable face, tiny limbs, and no detail that disappears at 192x208. Avoid polished illustration, painterly rendering, anime key art, 3D render, vector app-icon polish, glossy lighting, soft gradients, realistic fur or material texture, anti-aliased high-detail edges, and complex tiny accessories. Additional user style notes: Codex digital pet sprite style optimized for the actual app render around 113 x 122 CSS pixels. Thick dark 1-2 px outlines, pixel-art-adjacent stepped edges, flat cel shading, limited palette, compact chibi bust-only silhouette, high-contrast readable eyes and mouth. In each 192 x 208 source cell, maximize useful space while preserving safe padding; target visible character height around 170-180 px and keep idle, jumping, and waving almost identical in character size, ratio, face, line style, and silhouette. Avoid polished anime key art, painterly rendering, soft gradients, glossy lighting, texture, micro-accessories, detached effects, shadows, text, UI, scenery, and high-detail anti-aliased edges..
 
@@ -52,9 +52,33 @@ Layout requirements:
 
 Final Vera Clear Spinner failed override:
 - Laptop required in all 8 frames.
-- The laptop starts dark charcoal/black with one large centered generic browser loading spinner mark. Do not draw an OpenAI knot, brand logo, text, UI, or code.
+- Match the laptop body size, lid angle, thickness, and placement to the accepted `waiting` row reference. Do not make the laptop larger, smaller, taller, or flatter than the other laptop rows.
+- The laptop starts dark charcoal/black with one large centered generic browser loading spinner mark matching the accepted `waiting` row spinner: same simple segmented ring, same ring thickness, same bright arc/head style. Do not draw an OpenAI knot, brand logo, text, UI, or code.
 - This row may reuse the current spinner failed row if a new generation does not match the canonical style, because the current failed action is approved.
 - Across 8 frames: (1) Vera uses the laptop normally; (2) surprise as the laptop begins to burst; (3) laptop explodes, a blast from the laptop overlaps and covers Vera's face/hair, and the lid flies upward; (4) blast clears, only the plain logo-free bottom base remains, Vera is shocked with soot on face/clothes; (5) soot and burned marks remain, expression shifts annoyed; (6) annoyed Vera raises one fist over the remaining base; (7) fist comes straight down onto the base; (8) hold annoyed charred pose with fist near/on the base.
 - Explosion/smoke/fire must be attached to the laptop or overlapping the pet, inside the frame slot. Do not add loose debris except the single flying lid during the burst.
 - After the explosion, no lid and no spinner mark remain on the base plate.
-- Soot should be readable on face and clothing, with eyes visible. Keep the row family-friendly and bust-only.
+- Soot should be much more visible than the previous candidate: dark smudges on Vera's cheeks, forehead, hair edges, shirt front, sleeves, and hands/body. Keep eyes visible and keep the row family-friendly and bust-only.
+- In the pounding frames, the striking hand must be a vertical hammer-fist: fist upright with the knuckle side driving downward. Do not draw a flat sideways fist, open palm, or horizontal glove-like hand.
+
+Repair attempt 2:
+- The previous failed strip failed QA because Vera became too small behind the explosion. The explosion may cover her, but it must not shrink her scale.
+- Keep Vera's head, torso, and laptop size stable from frames 1-8. In the explosion frame, draw the blast in front of and overlapping the normal-size Vera and laptop, rather than scaling the person down behind a large fireball.
+- The flying laptop lid is optional. It is acceptable if the lid disappears after the explosion, as long as the next frames clearly show the missing lid and logo-free base.
+- Increase soot coverage on face, hair edges, shirt front, sleeves, hands, and visible body. Keep the face readable and the expression annoyed rather than furious.
+- The first strike frame must show a vertical hammer-fist, with the fist upright and moving straight down onto the laptop base.
+- Match the new waiting/running/review laptop scale and spinner style in frame 1 before the explosion.
+
+Latest laptop-gaze override:
+- Before the failure, Vera is using the laptop, so her gaze should aim at the laptop screen/keyboard, not at the viewer.
+- During the burst, the explosion overlaps normal-size Vera and may hide her eyes briefly. After the burst, her eyes can face the damaged laptop/base with annoyed frustration.
+
+Repair attempt 3:
+- The previous failed strip failed user QA because frame 1 started from a chin-rest/waiting pose instead of a working laptop pose, and the final recovery drifted back toward chin-rest.
+- Frame 1 must look like Vera is actively working on the laptop: both hands low near the keyboard, focused eyes aimed at the screen/keyboard, alert posture. Do not rest her chin on her hand in frame 1.
+- Frame 2 can show surprise and the laptop beginning to crack or burst while Vera is still at normal size.
+- Frame 3 explosion should overlap normal-size Vera and the laptop. Do not shrink Vera behind the explosion.
+- Frames 4-5: damaged base remains, Vera is soot-covered and annoyed.
+- Frame 6: Vera raises one fist above the damaged base.
+- Frame 7: the fist must be a vertical hammer-fist, knuckles/side of fist driving straight down. Do not draw an open palm, flat sideways fist, or resting hand.
+- Frame 8: hold the annoyed post-impact pose with the fist still down/on the base, or let the hand lower beside the base. Do not return to chin-rest.

@@ -9,7 +9,7 @@ Identity lock:
 - If the pet has a prop or accessory, preserve its size, side, palette, and attachment style unless the row action requires a small pose-only adjustment.
 - Prefer a subtler animation over any change that mutates the pet identity.
 
-Output exactly 6 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state temporarily adds oversized dark work glasses. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
+Output exactly 6 separate animation frames arranged left-to-right in one single row. Each frame must show the same pet: Adult anime-style female chibi bust-only Codex pet named Vera Clear Spinner, using the existing Vera Clear canonical base as the immutable character identity. Black rounded bob hair, large readable head, slim compact upper body, warm gray-brown eyes, thick eyelids, tiny readable mouth, deep V-neck fitted short-sleeve white shirt, dark lower torso hint only, no legs. No laptop in idle, waving, jumping, running-right, or running-left. Laptop appears only in running, review, waiting, and failed rows. When laptop appears, it is dark charcoal or black and shows one large centered generic browser loading spinner mark, not an OpenAI logo, not text. Running state uses no glasses or added eyewear. Preserve canonical base line art, outline weight, face, proportions, palette, scale, and character size across every row. Failed may be regenerated, but the existing failed action is an approved fallback if a new row does not match the style..
 
 Style contract: Codex digital pet sprite style: pixel-art-adjacent low-resolution mascot sprite, compact chibi proportions, chunky whole-body silhouette, thick dark 1-2 px outline, visible stepped/pixel edges, limited palette, flat cel shading with at most one small highlight and one shadow step, simple readable face, tiny limbs, and no detail that disappears at 192x208. Avoid polished illustration, painterly rendering, anime key art, 3D render, vector app-icon polish, glossy lighting, soft gradients, realistic fur or material texture, anti-aliased high-detail edges, and complex tiny accessories. Additional user style notes: Codex digital pet sprite style optimized for the actual app render around 113 x 122 CSS pixels. Thick dark 1-2 px outlines, pixel-art-adjacent stepped edges, flat cel shading, limited palette, compact chibi bust-only silhouette, high-contrast readable eyes and mouth. In each 192 x 208 source cell, maximize useful space while preserving safe padding; target visible character height around 170-180 px and keep idle, jumping, and waving almost identical in character size, ratio, face, line style, and silhouette. Avoid polished anime key art, painterly rendering, soft gradients, glossy lighting, texture, micro-accessories, detached effects, shadows, text, UI, scenery, and high-detail anti-aliased edges..
 
@@ -51,7 +51,49 @@ Layout requirements:
 
 Final Vera Clear Spinner review override:
 - Laptop required in all 6 frames.
-- The laptop is dark charcoal/black and its lid shows one large centered generic browser loading spinner mark. Do not draw an OpenAI knot, brand logo, text, UI, or code.
+- Match the laptop body size, lid angle, thickness, and placement to the accepted `waiting` row reference. The review laptop should look like the same laptop, not a different prop.
+- The laptop is dark charcoal/black and its lid shows one large centered generic browser loading spinner mark. The spinner must match the accepted `waiting` row spinner: same simple segmented ring, same ring thickness, same bright arc/head shape, and the bright head should advance clockwise across frames. Do not draw a different loader style, an OpenAI knot, brand logo, text, UI, or code.
 - Vera is not typing. She has put the laptop down in front of her, crosses her arms, and looks serious.
 - Across 6 frames: serious stare, slight head tilt one way, deeper skeptical tilt, return through center, slight tilt the other way, settle.
 - Keep the arms-crossed pose, laptop size/angle, character scale, and app-readable facial expression close to the current spinner review row, but fix any style drift against idle.
+
+Repair attempt 2:
+- Regenerate this row only after the new waiting row is available, using that waiting row as the laptop/spinner scale reference.
+- The head tilt must clearly go both directions: center, small left, return, small right, return, settle. Do not tilt only to one side for most of the loop.
+- Vera and the laptop must match the new waiting and running rows in perceived size: same visible character height, same laptop width, same lid angle, and same vertical placement.
+- The spinner must match the new waiting spinner exactly in ring thickness, gray ring color, single bright white arc/head, and clockwise progression. Do not make the spinner head swing back and forth or duplicate into two heads.
+
+Latest laptop-gaze override:
+- Vera is reviewing what is on the laptop, so her eyes should aim at the laptop screen/keyboard area, not at the viewer.
+- Keep the serious arms-crossed pose, but make the head tilt subtle and skeptical rather than playful or exaggerated.
+- Match the accepted laptop-row scale: waiting, running, and review should look like the same person with the same laptop.
+
+Repair attempt 3:
+- The previous review strip failed user QA because the head tilt did not clearly travel left -> center -> right.
+- Keep the laptop and arms-crossed serious review pose, but make the head movement sequence readable:
+  frame 1 slight tilt left, frame 2 return toward center, frame 3 center/blink, frame 4 slight tilt right, frame 5 hold/inspect right tilt, frame 6 settle near center.
+- The tilt should be visible at app size but not exaggerated. Do not turn it into a playful sway.
+- Eyes should stay focused on the laptop area, not directly at the viewer.
+
+Repair attempt 4:
+- The last strip still failed user QA: it read as Vera simply crossing her arms and glaring, with no clear left-center-right head tilt.
+- The head tilt is now the highest priority action. It must be visible through the whole head silhouette, not only through eye direction or expression.
+- Use this exact readable sequence from the viewer's perspective: frame 1 head top leans to viewer-left, frame 2 still viewer-left but easing back, frame 3 upright center, frame 4 head top leans to viewer-right, frame 5 still viewer-right while inspecting, frame 6 upright center.
+- Show the tilt with the face centerline, bangs, ear height, jaw angle, and shoulder/neck connection. The laptop must remain stable so the head motion is obvious.
+- Keep Vera focused on the laptop, not looking at the viewer. The expression should be skeptical/concentrating, not angry glaring.
+- Arms may stay crossed, but do not let crossed arms become the only readable action. If needed, loosen the arms slightly so the head/neck tilt is visually dominant.
+- Keep laptop size, lid angle, spinner ring style, and character scale consistent with waiting/running.
+
+Repair attempt 5:
+- The previous attempt failed user QA again because frames 4 and 5 still leaned to the viewer's LEFT. It looked like: left tilt -> center -> deeper left tilt -> center.
+- Interpret directions strictly in screen/image coordinates, not character anatomy. Viewer-left means the LEFT side of the output image. Viewer-right means the RIGHT side of the output image.
+- Required 6-frame head/crown positions:
+  frame 1: hair crown/top of head clearly shifted toward the LEFT side of its frame, chin/neck counterbalances slightly RIGHT.
+  frame 2: still shifted LEFT but closer to upright.
+  frame 3: upright CENTER; hair crown above neck.
+  frame 4: hair crown/top of head clearly shifted toward the RIGHT side of its frame, chin/neck counterbalances slightly LEFT.
+  frame 5: still shifted RIGHT, a little deeper or held while inspecting.
+  frame 6: upright CENTER; hair crown above neck.
+- Frames 4 and 5 must visually oppose frames 1 and 2. They should look like the head tilt direction has changed sides on screen.
+- If the model cannot preserve crossed arms while making the right-side tilt clear, prioritize the right-side head tilt and laptop focus over crossed arms.
+- Keep the laptop steady in nearly the same screen position across all frames, so only Vera's head/neck tilt changes.

@@ -1,19 +1,26 @@
-# Vera Clear Spinner Candidate
+# Vera Clear Spinner
 
 Vera Clear variant with the OpenAI-style laptop mark replaced by a generic browser loading spinner.
 
 ## Changed Rows
 
-- `failed`: uses the v4 candidate with laptop blast, flying lid, soot aftermath, and fist-pounding irritation.
-- `waiting`: uses the v3 candidate with the chin-rest waiting action restored.
-- `idle`, `waving`, and `jumping`: regenerated from separate imagegen worker candidates and applied as a matched no-laptop gesture set. `idle` keeps a quiet blink/breathing loop, `waving` keeps the original hand-to-mouth blown-kiss action with wink, and `jumping` keeps the one-hand hair-flick mouseover action.
-- `running`: regenerated with imagegen to keep the laptop work loop while replacing the logo with a clockwise spinner.
-- `review`: regenerated with imagegen to keep crossed arms and a left/right head-tilt review loop while replacing the logo with a clockwise spinner.
+- `idle`: rebuilt as a quiet blink/breathing loop with the locked Vera Clear scale.
+- `running-right` and `running-left`: rebuilt as matched directional movement rows.
+- `waving`: rebuilt as the blown-kiss gesture, not a generic hand wave.
+- `jumping`: rebuilt as a compact mouseover hair-tuck gesture close to the idle silhouette.
+- `failed`: rebuilt with laptop failure, popped lid, heavier face/body soot, vertical hammer-fist impact, and annoyed recovery beats that do not return to chin-rest.
+- `waiting`: rebuilt as a quieter chin-rest waiting loop where Vera looks down at the laptop with only tiny head movement.
+- `running`: rebuilt as the active laptop work loop with a `waiting`-matched laptop size, focused downward laptop gaze, and clockwise spinner.
+- `review`: rebuilt as a laptop review loop with a screen-left -> center -> screen-right -> center head tilt, downward laptop focus, and a `waiting`-matched laptop/spinner.
 
-Rows without laptop logos are otherwise unchanged from the original Vera Clear pet.
+The left movement row is derived from the right movement row so the two directions keep matched hair motion, body tilt, scale, and timing.
+
+Laptop rows use a generic browser-style spinner mark instead of any brand logo.
 
 ## QA
 
 - Atlas size: `1536 x 1872`
 - Cell size: `192 x 208`
+- Contact sheet: `pet-runs/vera-clear-spinner-rebuild/qa/contact-sheet.png`
+- Display preview: `previews/vera-clear-spinner-final-display-preview.png`
 - Validation: passed with no errors or warnings during local packaging.
